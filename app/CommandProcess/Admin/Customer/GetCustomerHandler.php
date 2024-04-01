@@ -8,7 +8,7 @@ use App\Http\Resources\Admin\Customer\CustomerResource;
 use App\Models\Admin;
 use App\Models\SalesPerson;
 use App\Models\UserContract;
-use App\Models\UserProduct;
+use App\Models\UserService;
 use App\Services\Admin\CustomerService;
 use Rosamarsky\CommandBus\Command;
 use Rosamarsky\CommandBus\Handler;
@@ -27,10 +27,6 @@ class GetCustomerHandler implements Handler
     public function handle(Command $command)
     {
         $customer = $this->dbService->getById($command->customerId);
-
-        $customer->forms = $this->convertToFormAttributes(UserProduct::where('user_id', $command->customerId)->get());
-
-        $customer->document = UserContract::where('user_id', $command->customerId)->first();
 
         $customer->salesperson = Admin::select('admins.*')
             ->join('leads', 'admins.id', 'leads.salesperson_id')

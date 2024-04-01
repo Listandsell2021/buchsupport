@@ -57,26 +57,6 @@ export default {
             "related": ["/admin/mail-management/*"]
         },
         {
-            "title": "Comments",
-            "icon": "fa fa-comments",
-            "type": "link",
-            "path": "/admin/comments",
-            "active": false,
-            "permission": Permissions.LIST_NOTIFICATION,
-            "skip_permission": false,
-            "related": ["/admin/comments/*"]
-        },
-        {
-            "title": "User Inquiries",
-            "icon": "fa fa-anchor",
-            "type": "link",
-            "path": "/admin/inquiries",
-            "active": false,
-            "permission": Permissions.LIST_USER_INQUIRY,
-            "skip_permission": false,
-            "related": ["/admin/inquiries/*"]
-        },
-        {
             "title": "Notifications",
             "icon": "fa fa-inbox",
             "type": "link",
@@ -91,25 +71,12 @@ export default {
             "skip_permission": true
         },
         {
-            "title": "Product Categories",
-            "icon": "fa fa-list-alt",
-            "type": "link",
-            "path": "/admin/product-categories",
-            "active": false,
-            "permission": Permissions.LIST_PRODUCT_CATEGORY,
-            "skip_permission": false,
-            "related": [
-                "/admin/product-categories/create",
-                "/admin/product-categories/*"
-            ]
-        },
-        {
-            "title": "Products",
+            "title": "Services",
             "icon": "fa fa-book",
             "type": "link",
-            "path": "/admin/products",
+            "path": "/admin/services",
             "active": false,
-            "permission": Permissions.LIST_PRODUCT,
+            "permission": Permissions.LIST_SERVICE,
             "skip_permission": false,
             "related": [
                 "/admin/products/create",
@@ -126,7 +93,8 @@ export default {
             "skip_permission": false,
             "related": [
                 "/admin/customers/create",
-                "/admin/customers/*"
+                "/admin/customers/*",
+                //"/admin/birthday-calendar"
             ]
         },
         {

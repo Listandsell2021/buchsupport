@@ -4,7 +4,7 @@
 namespace App\Libraries\HelperTraits;
 
 
-use App\Models\Product;
+use App\Models\Service;
 use App\Models\User;
 
 trait SortingEloquent

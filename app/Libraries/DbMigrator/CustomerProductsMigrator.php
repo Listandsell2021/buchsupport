@@ -4,9 +4,9 @@
 namespace App\Libraries\DbMigrator;
 
 
-use App\Models\Product;
+use App\Models\Service;
 use App\Models\User;
-use App\Models\UserProduct;
+use App\Models\UserService;
 use Illuminate\Support\Facades\DB;
 
 class CustomerProductsMigrator
@@ -15,11 +15,11 @@ class CustomerProductsMigrator
 	
 	public static function execute($command)
 	{
-		UserProduct::truncate();
+		UserService::truncate();
         $userProducts = self::getUserProducts();
 
         foreach (array_chunk($userProducts, 50) as $chuckedUserProducts) {
-    		UserProduct::insert($chuckedUserProducts);
+    		UserService::insert($chuckedUserProducts);
         }
 
 		$command->info('User Products Seeded');

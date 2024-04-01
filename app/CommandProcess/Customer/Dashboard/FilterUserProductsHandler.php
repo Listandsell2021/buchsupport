@@ -2,7 +2,7 @@
 
 namespace App\CommandProcess\Customer\Dashboard;
 
-use App\Models\Product;
+use App\Models\Service;
 use Rosamarsky\CommandBus\Command;
 use Rosamarsky\CommandBus\Handler;
 
@@ -18,7 +18,7 @@ class FilterUserProductsHandler implements Handler
         $sortOrder = $this->getSortOrder(request()->get('sort_order'));
         $paginationNo = request()->has('pagination_no') ? request()->get('pagination_no') : 12;
 
-        $queryBuilder = Product::withDetails(0)
+        $queryBuilder = Service::withDetails(0)
             ->where('user_products.user_id', $command->userId)
             ->where(function ($query) use ($productName, $productConditions, $categoryIds, $sortBy, $sortOrder) {
                 if (!empty($productName)) {

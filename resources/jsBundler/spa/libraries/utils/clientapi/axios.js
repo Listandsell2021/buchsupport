@@ -10,7 +10,6 @@ import qs from 'qs';
 import __has from 'lodash/has';
 import {useRouter} from "vue-router";
 
-
 const axiosInstance = AxiosLib.create({
     baseURL: config.apiServerUrl,
     headers: {
@@ -125,6 +124,7 @@ const axios = {
         if (loader) {
             this.setLoading();
         }
+        console.log(axiosInstance);
         return await axiosInstance
             .post(`${endpoint}`, data, config)
             .then((response) => response)

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 
 use App\DataHolders\Enum\Membership;
 use App\Models\Admin;
-use App\Models\ContractProduct;
+use App\Models\ContractService;
 use App\Models\Lead;
 use App\Models\LeadContract;
 use App\Models\LeadStatus;
@@ -32,58 +32,19 @@ class LeadSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         Lead::truncate();
-        LeadContract::truncate();
-        ContractProduct::truncate();
+        ContractService::truncate();
         SmartList::truncate();
         Notification::truncate();
 
-        //$defaultLeadStatus = LeadStatus::where('default', 1)->first();
         $this->defaultLeadStatusId = 3; //$defaultLeadStatus->id
-        $customers = User::with('forms')->get();
+        $customers = User::all();
         $salespersons = Admin::salesperson()->take(5)->get()->toArray();
 
         foreach ($customers as $customer) {
-
-            $lead = Lead::create($this->getLeadData($customer, $salespersons));
-
-            $leadContract = LeadContract::create([
-                'lead_id'       => $lead->id,
-                'membership'    => $customer->membership,
-                'document_name' => 'testing.pdf',
-                'document_path' => $lead->id.'/testing.pdf',
-            ]);
-
-            ContractProduct::insert($this->getContractProducts($customer->forms, $leadContract->id));
+            Lead::create($this->getLeadData($customer, $salespersons));
         }
 
-        $customerContracts = [];
-        foreach ($customers as $customer) {
-            $customerContracts[] = [
-                'user_id' => $customer->id,
-                'document_name' => 'testing.pdf',
-                'document_path' => $customer->id.'/testing.pdf',
-            ];
-        }
-        foreach (array_chunk($customerContracts, 50) as $chuckedCustomerContracts) {
-            UserContract::insert($chuckedCustomerContracts);
-        }
-
-
-        $leads = Lead::factory()->count(250)->create();
-
-        $leadContracts = [];
-        foreach ($leads as $lead) {
-            $leadContracts[] = [
-                'lead_id'       => $lead->id,
-                'membership'    => Membership::silver->name,
-                'document_name' => null,
-                'document_path' => null,
-            ];
-        }
-
-        foreach (array_chunk($leadContracts, 50) as $chunkedLeadContracts) {
-            LeadContract::insert($chunkedLeadContracts);
-        }
+        Lead::factory()->count(250)->create();
 
         Schema::enableForeignKeyConstraints();
     }
@@ -101,36 +62,17 @@ class LeadSeeder extends Seeder
             'is_converted'  => 1,
             'converted_at'  => $customer->created_at,
             'converted_to'  => $customer->id,
-            'salesperson_id' => $salesperson['id']
+            'salesperson_id' => $salesperson['id'],
+            'contract_document' => 'testing.pdf',
+            'contract_document_path' => 'testing.pdf',
         ]);
     }
 
-    public function getContractProducts($forms, $contractId): array
-    {
-        $contractProducts = [];
-
-        $productIds = [];
-        foreach ($forms as $form) {
-            if (!in_array($form->product_id, $productIds)) {
-                $contractProducts[] = [
-                    "contract_id" => $contractId,
-                    "product_id" => $form->product_id,
-                    "price" => $form->price,
-                    "quantity" => $form->quantity,
-                    "condition" => $form->condition,
-                ];
-            }
-
-            $productIds[] = $form->product_id;
-        }
-
-        return $contractProducts;
-    }
 
     public function getMapLocation(): array
     {
-        $latitude = 52.489974;
-        $longitude = 13.408845;
+        $latitude = 52.466498;
+        $longitude = 13.431378;
 
         $center = [
             'lng' => $longitude,

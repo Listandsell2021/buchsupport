@@ -3,7 +3,7 @@
 namespace App\Services\Admin;
 
 use App\Models\MailTemplate;
-use App\Models\Product;
+use App\Models\Service;
 
 
 class MailService

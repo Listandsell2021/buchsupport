@@ -57,7 +57,7 @@ use App\Http\Requests\Admin\Lead\UpdateLeadSalespersonRequest;
 use App\Http\Requests\Admin\Lead\UpdateLeadTablePreferenceRequest;
 use App\Http\Requests\Admin\Lead\UploadContractDocumentRequest;
 use App\Http\Requests\Admin\LeadStatus\CreateLeadStatusRequest;
-use App\Http\Requests\Admin\Product\CreateProductRequest;
+use App\Http\Requests\Admin\Service\CreateServiceRequest;
 use App\Http\Requests\Admin\ProductCategory\CreateProductCategoryRequest;
 use App\Libraries\LaraExcel\Admin\LeadsImport;
 use App\Models\Lead;
@@ -516,10 +516,10 @@ class LeadController extends Controller
     /**
      * Create Lead Product
      *
-     * @param CreateProductRequest $request
+     * @param CreateServiceRequest $request
      * @return JsonResponse
      */
-    public function createLeadProduct(CreateProductRequest $request): JsonResponse
+    public function createLeadProduct(CreateServiceRequest $request): JsonResponse
     {
         $this->commandBus->execute(new CreateLeadProduct((int) $request->get('lead_id'), $request->all()));
 

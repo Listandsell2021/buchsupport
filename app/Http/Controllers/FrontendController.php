@@ -22,10 +22,10 @@ use App\Libraries\HelperTraits\JsonResponseHelper;
 use App\Libraries\HelperTraits\LibraryHelper;
 use App\Models\CallUser;
 use App\Models\Comment;
-use App\Models\Product;
+use App\Models\Service;
 use App\Models\ProductCategory;
 use App\Models\User;
-use App\Models\UserProduct;
+use App\Models\UserService;
 use App\Models\Visitor;
 use App\Models\VisitorPack;
 use Illuminate\Contracts\Foundation\Application;
@@ -63,7 +63,7 @@ class FrontendController extends Controller
      */
     public function getHomePage(Request $request)
     {
-        $latestProducts = Product::withDetails()
+        $latestProducts = Service::withDetails()
             ->orderBy('user_products.id', 'desc')
             ->take(8)
             ->get();
@@ -94,7 +94,7 @@ class FrontendController extends Controller
         $products = [];
         $customers = [];
 
-        $minProducts = (UserProduct::select(DB::raw('COUNT(*) as min'))
+        $minProducts = (UserService::select(DB::raw('COUNT(*) as min'))
             ->join('users', 'user_products.user_id', 'users.id')
             ->where('users.is_active', 1)
             ->groupBy(['user_products.user_id'])
@@ -102,7 +102,7 @@ class FrontendController extends Controller
             ->first()
         )->min;
 
-        $maxProducts = (UserProduct::select(DB::raw('COUNT(*) as max'))
+        $maxProducts = (UserService::select(DB::raw('COUNT(*) as max'))
             ->join('users', 'user_products.user_id', 'users.id')
             ->where('users.is_active', 1)
             ->groupBy(['user_products.user_id'])
@@ -177,7 +177,7 @@ class FrontendController extends Controller
             abort(404);
         }
 
-        $customers = UserProduct::select('user_products.*', 'users.uid')->where('user_products.product_id', $bookId)
+        $customers = UserService::select('user_products.*', 'users.uid')->where('user_products.product_id', $bookId)
             ->join('users', 'user_products.user_id', 'users.id')
             ->where('users.uid', 'LIKE', '%' . $request->get('user-id') . '%')
             ->where('user_products.user_id', '!=', $book->user_id)
@@ -311,7 +311,7 @@ class FrontendController extends Controller
         $phone = $request->get('phone');
         $price = $request->get('price');
         $userFromBook = User::findOrFail($request->get('user_id'));
-        $product = Product::find($request->get('book_id'));
+        $product = Service::find($request->get('book_id'));
 
         $userDetail = '';
         if ($userFromBook) {
@@ -463,7 +463,7 @@ class FrontendController extends Controller
         $phone = $request->get('phone');
         $price = $request->get('price');
         $bookUser = User::find($request->get('userId'));
-        $product = Product::find($request->get('productId'));
+        $product = Service::find($request->get('productId'));
         $title = $product->title;
 
         $note = "$firstName $lastName interessiert sich für das Werk \"$title\" von $bookUser->first_name $bookUser->last_name ($bookUser->id)";
@@ -493,7 +493,7 @@ class FrontendController extends Controller
         $email = $request->get('email');
         $phone = $request->get('phone');
         $price = $request->get('price');
-        $product = Product::find($request->get('productId'));
+        $product = Service::find($request->get('productId'));
 
         $note = $first_name." ".$last_name. " interessiert sich für das Werk ".$product->title;
 

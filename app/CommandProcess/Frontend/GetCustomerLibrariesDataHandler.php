@@ -3,7 +3,7 @@
 namespace App\CommandProcess\Frontend;
 
 use App\Libraries\HelperTraits\LibraryHelper;
-use App\Models\UserProduct;
+use App\Models\UserService;
 use Rosamarsky\CommandBus\Command;
 use Rosamarsky\CommandBus\Handler;
 
@@ -40,9 +40,9 @@ class GetCustomerLibrariesDataHandler implements Handler
 
         $products = $queryBuilder->paginate(8);
 
-        $productConditionAggregate = UserProduct::where('user_products.user_id', $command->userId)->avg('user_products.condition');
+        $productConditionAggregate = UserService::where('user_products.user_id', $command->userId)->avg('user_products.condition');
 
-        $totalProducts = UserProduct::where('user_products.user_id', $command->userId)->sum('user_products.quantity');
+        $totalProducts = UserService::where('user_products.user_id', $command->userId)->sum('user_products.quantity');
 
         $categories = $this->searchProductCategoriesByUserId($command->userId)->get();
 

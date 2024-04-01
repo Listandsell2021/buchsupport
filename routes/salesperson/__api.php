@@ -6,7 +6,7 @@ use App\Http\Controllers\API\Admin\LeadController;
 use App\Http\Controllers\API\Admin\LeadDocumentController;
 use App\Http\Controllers\API\Admin\LeadTaskController;
 use App\Http\Controllers\API\Admin\ProductCategoryController;
-use App\Http\Controllers\API\Admin\ProductController;
+use App\Http\Controllers\API\Admin\ServiceController;
 use App\Http\Controllers\API\Admin\SmartListController;
 use App\Http\Controllers\API\Salesperson\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +34,7 @@ Route::prefix('salesperson')->middleware(['auth:sanctum'])->group( function () {
     Route::post('leads/update-contract-membership', [LeadController::class, 'updateContractMembership'])->name('salesperson.leads.update_contract_membership');
     Route::post('leads/update-contract-products',   [LeadController::class, 'updateContractProducts'])->name('salesperson.leads.update_contract_products');
     Route::post('leads/request-new-customer',       [LeadController::class, 'requestNewCustomer'])->name('salesperson.leads.request_new_customer');
-    Route::post('contract/products',                [ProductController::class, 'getAllProducts'])->name('salesperson.contract.products');
+    Route::post('contract/products',                [ServiceController::class, 'getAllProducts'])->name('salesperson.contract.products');
     Route::post('contract/product-categories',      [ProductCategoryController::class, 'getActiveCategories'])->name('salesperson.contract.product_categories');
     Route::post('contract/memberships',             [CustomerController::class, 'getMemberships'])->name('salesperson.contract.memberships');
     Route::post('contract/create-product-category', [LeadController::class, 'createLeadProductCategory'])->name('salesperson.contract.create_product_category');

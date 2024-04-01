@@ -148,12 +148,12 @@ export default {
             ];
         }
     },
-    product: {
+    service: {
         list() {
             return [
                 {
-                    "url": "/admin/products",
-                    "name": "Products",
+                    "url": "/admin/services",
+                    "name": "Services",
                     "active": 0
                 },
                 {

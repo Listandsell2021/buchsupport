@@ -3,7 +3,7 @@
 namespace App\CommandProcess\Admin\Dashboard;
 
 use App\Models\Admin;
-use App\Models\Product;
+use App\Models\Service;
 use App\Models\User;
 use App\Models\Visitor;
 use Rosamarsky\CommandBus\Command;
@@ -14,7 +14,7 @@ class GetDashboardCardsHandler implements Handler
 
     public function handle(Command $command)
     {
-        $productsCount = Product::count();
+        $productsCount = Service::count();
         $customersCount = User::count();
         $adminsCount = Admin::admin()->count();
         $salespersonsCount = Admin::salesperson()->count();

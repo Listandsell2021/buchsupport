@@ -6,7 +6,7 @@ namespace App\Libraries\DbMigrator;
 
 use App\DataHolders\Enum\Gender;
 use App\DataHolders\Enum\Membership;
-use App\Models\Product;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 

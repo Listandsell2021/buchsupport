@@ -29,8 +29,6 @@
     window.Laravel = {!! json_encode([
         'config' => [
             'homePageUrl' => url('/'),
-            'getContactPageUrl' => route('frontend.page.contact'),
-            'getTelephoneNoLink' => config('buch.company.phone_no_link'),
             'getPreviousUrl' => url()->previous(),
         ]
     ]) !!};

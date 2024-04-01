@@ -16,7 +16,7 @@ use App\Models\LeadActivity;
 use App\Models\LeadContract;
 use App\Models\LeadNote;
 use App\Models\LeadStatus;
-use App\Models\Product;
+use App\Models\Service;
 use App\Models\ProductCategory;
 use App\Models\User;
 use Illuminate\Database\Query\JoinClause;
@@ -497,7 +497,7 @@ class LeadService
         }
 
         if (count($productIds) > 0) {
-            Product::whereIn('id', $productIds)->update(['is_archived' => 0]);
+            Service::whereIn('id', $productIds)->update(['is_archived' => 0]);
         }
         if (count($categoryIds) > 0) {
             ProductCategory::whereIn('id', $categoryIds)->update(['is_archived' => 0]);

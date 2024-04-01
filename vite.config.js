@@ -27,7 +27,7 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            '@': 'C:\\laragon\\www\\listandsell\\buchapi/resources/jsBundler/spa',
+            '@': 'C:\\laragon\\www\\listandsell\\buchsupport/resources/jsBundler/spa',
             //'@': '/resources/jsBundler/spa',
         },
         extensions: ['.js', '.ts', '.tsx', '.vue', '.json'],

@@ -40,18 +40,18 @@ class GenerateAdminPermissionToJs extends Command
     public function handle()
     {
         $permissions = AdminPermission::onlyNames();
-        $filePath = "../buchspa/storage/data/AdminPermissions.js";
+        $filePath = resource_path("jsBundler/spa/storage/data/AdminPermissions.js");
 
         $this->makeDirectory($filePath);
-        $this->files->put(base_path($filePath), 'export default '.json_encode($permissions, JSON_PRETTY_PRINT));
+        $this->files->put($filePath, 'export default '.json_encode($permissions, JSON_PRETTY_PRINT));
 
         $this->info('File generated!');
     }
 
     protected function makeDirectory($path)
     {
-        if (! $this->files->isDirectory(dirname(base_path($path)))) {
-            $this->files->makeDirectory(dirname(base_path($path)), 0755, true, true);
+        if (! $this->files->isDirectory(dirname($path))) {
+            $this->files->makeDirectory(dirname($path), 0755, true, true);
         }
 
         return $path;

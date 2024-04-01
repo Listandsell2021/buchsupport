@@ -36,14 +36,7 @@ class ImportPreviousDatabase extends Command
     public function handle()
     {
         Schema::disableForeignKeyConstraints();
-        ProductCategoriesMigrator::execute($this);
-        ProductsMigrator::execute($this);
-        ProductImagesMigrator::execute($this);
         CustomersMigrator::execute($this);
-        CustomerProductsMigrator::execute($this);
-        CommentsMigrator::execute($this);
-        UserInquiriesMigrator::execute($this);
-
         Schema::enableForeignKeyConstraints();
     }
 }

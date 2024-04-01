@@ -11,40 +11,6 @@ import {useApiFetch} from "@/composables/useApiFetch";
 
 const routes = [
 
-    // Customer Routes
-    {
-        path: '/login',
-        beforeEnter: [guestCustomer],
-        component: () => import('./pages/login.vue'),
-    },
-    {
-        path: '/customer',
-        beforeEnter: [authCustomer],
-        component: () => import('./layouts/customer-panel.vue'),
-        redirect: '/customer/dashboard',
-        children: [
-            {
-                path: 'dashboard',
-                name: 'customer_dashboard',
-                meta: { title: 'Admin Dashboard' },
-                component: () => import('./pages/customer/dashboard.vue'),
-            },
-            {
-                path: 'profile',
-                name: 'customer_profile',
-                props: route => ({ data: route.meta.data }),
-                component: () => import('./pages/customer/profile.vue'),
-                beforeEnter: [async (route) => {
-                    useLoadingStore().setLoading();
-                    const { error, data } = await useApiFetch(ziggyRoute('customer.profile.get_detail', {user_id: useAuthStore().getAuthId()}) );
-                    useLoadingStore().removeLoading();
-                    route.meta.data = data.value
-                }],
-            },
-        ],
-    },
-
-
     // Admin Routes
     {
         path: '/admin/login',
@@ -119,58 +85,28 @@ const routes = [
                 beforeEnter: (route) => ResourceFinder(ziggyRoute('admin.mails.show', {id: route.params.id}), route),
                 component: () => import('./pages/admin/mail-management/[id].vue'),
             },
-
-
             {
                 path: 'notifications',
                 name: 'admin_notifications',
                 component: () => import('./pages/admin/notifications/index.vue'),
             },
-            {
-                path: 'comments',
-                name: 'admin_comments',
-                component: () => import('./pages/admin/comments/index.vue'),
-            },
-            {
-                path: 'inquiries',
-                name: 'admin_inquiries',
-                component: () => import('./pages/admin/inquiries/index.vue'),
-            },
 
             {
-                path: 'product-categories',
-                name: 'admin_product_categories',
-                component: () => import('./pages/admin/product-categories/index.vue'),
+                path: 'services',
+                name: 'admin_services',
+                component: () => import('./pages/admin/services/index.vue'),
             },
             {
-                path: 'product-categories/create',
-                name: 'admin_product_category_create',
-                component: () => import('./pages/admin/product-categories/create.vue'),
+                path: 'services/create',
+                name: 'admin_service_create',
+                component: () => import('./pages/admin/services/create.vue'),
             },
             {
-                path: 'product-categories/:id',
-                name: 'admin_product_category_edit',
+                path: 'services/:id',
+                name: 'admin_service_edit',
                 props: route => ({ data: route.meta.data }),
-                beforeEnter: (route) => ResourceFinder(ziggyRoute('admin.product_categories.show', {id: route.params.id}), route),
-                component: () => import('./pages/admin/product-categories/[id].vue'),
-            },
-
-            {
-                path: 'products',
-                name: 'admin_products',
-                component: () => import('./pages/admin/products/index.vue'),
-            },
-            {
-                path: 'products/create',
-                name: 'admin_product_create',
-                component: () => import('./pages/admin/products/create.vue'),
-            },
-            {
-                path: 'products/:id',
-                name: 'admin_product_edit',
-                props: route => ({ data: route.meta.data }),
-                beforeEnter: (route) => ResourceFinder(ziggyRoute('admin.products.show', {id: route.params.id}), route),
-                component: () => import('./pages/admin/products/[id].vue'),
+                beforeEnter: (route) => ResourceFinder(ziggyRoute('admin.services.show', {id: route.params.id}), route),
+                component: () => import('./pages/admin/services/[id].vue'),
             },
 
             {
@@ -241,6 +177,7 @@ const routes = [
     },
 
 ];
+
 
 const router = createRouter({
     routes,

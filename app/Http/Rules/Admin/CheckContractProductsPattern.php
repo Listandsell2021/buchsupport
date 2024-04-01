@@ -3,7 +3,7 @@
 namespace App\Http\Rules\Admin;
 
 
-use App\Models\Product;
+use App\Models\Service;
 use Illuminate\Contracts\Validation\Rule;
 
 class CheckContractProductsPattern implements Rule
@@ -83,7 +83,7 @@ class CheckContractProductsPattern implements Rule
             return false;
         }
 
-        $countProducts = Product::whereIn('id', $productIds)->count();
+        $countProducts = Service::whereIn('id', $productIds)->count();
 
         if (count($productIds) != $countProducts) {
             $this->addMessageList('Products are not available');

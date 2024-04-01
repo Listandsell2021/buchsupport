@@ -4,7 +4,7 @@ namespace App\Services\Admin;
 
 use App\Models\Invoice;
 use App\Models\User;
-use App\Models\UserProduct;
+use App\Models\UserService;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -64,7 +64,7 @@ class InvoiceService
         $user = User::select('users.*')
             ->where('users.id', $customerId)
             ->first();
-        $userPivot = UserProduct::select(DB::raw('SUM(user_products.price) as product_price'))
+        $userPivot = UserService::select(DB::raw('SUM(user_products.price) as product_price'))
             ->where('user_products.user_id', $customerId)
             ->first();
         $user->product_price = $userPivot->product_price;

@@ -2,8 +2,8 @@
 
 namespace App\Exports\Frontend;
 
-use App\Models\Product;
-use App\Models\UserProduct;
+use App\Models\Service;
+use App\Models\UserService;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -20,7 +20,7 @@ class ProductExport implements FromCollection, WithHeadings, WithMapping
     */
     public function collection()
     {
-        return Product::with('images', 'category')->get();
+        return Service::with('images', 'category')->get();
     }
     public function map($product): array
     {
@@ -34,7 +34,7 @@ class ProductExport implements FromCollection, WithHeadings, WithMapping
             $i++;
         }
 
-        $price = UserProduct::where('user_products.product_id', $product->id)->max('price');
+        $price = UserService::where('user_products.product_id', $product->id)->max('price');
 
         $category = !empty($product->category) ? $product->category->title : '';
 

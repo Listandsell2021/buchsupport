@@ -1,18 +1,15 @@
 <?php
 
-use App\Http\Controllers\API\Admin\CommentController;
 use App\Http\Controllers\API\Admin\LeadAppointmentController;
 use App\Http\Controllers\API\Admin\LeadDocumentController;
 use App\Http\Controllers\API\Admin\LeadStatusController;
 use App\Http\Controllers\API\Admin\LeadTaskController;
 use App\Http\Controllers\API\Admin\PipelineController;
-use App\Http\Controllers\API\Admin\UserInquiryController;
 use Illuminate\Support\Facades\Route;
 use \App\DataHolders\Enum\AdminPermission;
 use App\Http\Controllers\API\Admin\AdminController;
 use \App\Http\Controllers\API\Admin\RoleController;
-use \App\Http\Controllers\API\Admin\ProductCategoryController;
-use \App\Http\Controllers\API\Admin\ProductController;
+use \App\Http\Controllers\API\Admin\ServiceController;
 use \App\Http\Controllers\API\Admin\LeadController;
 use \App\Http\Controllers\API\Admin\SmartListController;
 use \App\Http\Controllers\API\Admin\CustomerController;
@@ -63,32 +60,15 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('salespersons/commission-graph-data',   [DashboardController::class, 'getSalespersonCommissionGraph'])->name('admin.salespersons.commission_graph');
 
 
-    // Product Category
-    Route::get('product-categories',            [ProductCategoryController::class, 'index'])->name('admin.product_categories.index')->middleware('can:'.AdminPermission::LIST_PRODUCT_CATEGORY->name);
-    Route::post('product-categories',           [ProductCategoryController::class, 'store'])->name('admin.product_categories.store')->middleware('can:'.AdminPermission::CREATE_PRODUCT_CATEGORY->name);
-    Route::get('product-categories/{id}',       [ProductCategoryController::class, 'show'])->name('admin.product_categories.show')->middleware('can:'.AdminPermission::SHOW_PRODUCT_CATEGORY->name);
-    Route::put('product-categories/{id}',       [ProductCategoryController::class, 'update'])->name('admin.product_categories.update')->middleware('can:'.AdminPermission::UPDATE_PRODUCT_CATEGORY->name);
-    Route::delete('product-categories/{id}',    [ProductCategoryController::class, 'destroy'])->name('admin.product_categories.destroy')->middleware('can:'.AdminPermission::DELETE_PRODUCT_CATEGORY->name);
-    Route::post('product-categories/change-status', [ProductCategoryController::class, 'changeActiveStatus'])->name('admin.product_categories.change_status')->middleware('can:'.AdminPermission::UPDATE_PRODUCT_CATEGORY->name);
-    Route::post('product-categories/get-active',    [ProductCategoryController::class, 'getActiveCategories'])->name('admin.product_categories.get_active')->middleware('can:'.AdminPermission::LIST_PRODUCT_CATEGORY->name);
-    Route::post('product-categories/bulk-action',   [ProductCategoryController::class, 'updateBulkAction'])->name('admin.product_categories.bulk_action')->middleware('can:'.AdminPermission::UPDATE_PRODUCT_CATEGORY->name);
-
-
-    // Products
-    Route::get('products',                  [ProductController::class, 'index'])->name('admin.products.index')->middleware('can:'.AdminPermission::LIST_PRODUCT->name);
-    Route::post('products',                 [ProductController::class, 'store'])->name('admin.products.store')->middleware('can:'.AdminPermission::CREATE_PRODUCT->name);
-    Route::get('products/{id}',             [ProductController::class, 'show'])->name('admin.products.show')->middleware('can:'.AdminPermission::SHOW_PRODUCT->name);
-    Route::put('products/{id}',             [ProductController::class, 'update'])->name('admin.products.update')->middleware('can:'.AdminPermission::UPDATE_PRODUCT->name);
-    Route::delete('products/{id}',          [ProductController::class, 'destroy'])->name('admin.products.destroy')->middleware('can:'.AdminPermission::DELETE_PRODUCT->name);
-    Route::post('products/all',             [ProductController::class, 'getAllProducts'])->name('admin.products.all')->middleware('can:'.AdminPermission::LIST_PRODUCT->name);
-    Route::post('products/bulk-action',     [ProductController::class, 'updateBulkAction'])->name('admin.products.bulk_action')->middleware('can:'.AdminPermission::UPDATE_PRODUCT->name);
-
-
-    // Product Image
-    Route::post('products/add-image',       [ProductController::class, 'addProductImage'])->name('admin.products.add_image')->middleware('can:'.AdminPermission::UPDATE_PRODUCT->name);
-    Route::post('products/remove-image',    [ProductController::class, 'removeProductImage'])->name('admin.products.remove_image')->middleware('can:'.AdminPermission::UPDATE_PRODUCT->name);
-    Route::get('products/images/all',       [ProductController::class, 'getProductImages'])->name('admin.products.images')->middleware('can:'.AdminPermission::UPDATE_PRODUCT->name);
-    Route::post('products/images/sort',     [ProductController::class, 'sortProductImages'])->name('admin.products.sort_images')->middleware('can:'.AdminPermission::UPDATE_PRODUCT->name);
+    // Services
+    Route::get('services',                  [ServiceController::class, 'index'])->name('admin.services.index')->middleware('can:'.AdminPermission::LIST_SERVICE->name);
+    Route::post('services',                 [ServiceController::class, 'store'])->name('admin.services.store')->middleware('can:'.AdminPermission::CREATE_SERVICE->name);
+    Route::get('services/{id}',             [ServiceController::class, 'show'])->name('admin.services.show')->middleware('can:'.AdminPermission::SHOW_SERVICE->name);
+    Route::put('services/{id}',             [ServiceController::class, 'update'])->name('admin.services.update')->middleware('can:'.AdminPermission::UPDATE_SERVICE->name);
+    Route::delete('services/{id}',          [ServiceController::class, 'destroy'])->name('admin.services.destroy')->middleware('can:'.AdminPermission::DELETE_SERVICE->name);
+    Route::post('services/change-status',   [ServiceController::class, 'changeActiveStatus'])->name('admin.services.change_status')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);
+    Route::post('services/all',             [ServiceController::class, 'getAllProducts'])->name('admin.services.all')->middleware('can:'.AdminPermission::LIST_SERVICE->name);
+    Route::post('services/bulk-action',     [ServiceController::class, 'updateBulkAction'])->name('admin.services.bulk_action')->middleware('can:'.AdminPermission::UPDATE_SERVICE->name);
 
 
     // Customers
@@ -205,19 +185,6 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('notifications/get-unread',     [NotificationController::class, 'getUnreadNotifications'])->name('admin.notifications.unread')->middleware('can:'.AdminPermission::LIST_NOTIFICATION->name);
     Route::post('notifications/get-read',       [NotificationController::class, 'getReadNotifications'])->name('admin.notifications.read')->middleware('can:'.AdminPermission::LIST_NOTIFICATION->name);
     Route::post('notifications/mark-read',      [NotificationController::class, 'markAsRead'])->name('admin.notifications.mark_read')->middleware('can:'.AdminPermission::LIST_NOTIFICATION->name);
-
-
-    // Comments
-    Route::get('comments/all',                  [CommentController::class, 'index'])->name('admin.comments.all')->middleware('can:'.AdminPermission::LIST_COMMENT->name);
-    Route::delete('comments/{id}',              [CommentController::class, 'destroy'])->name('admin.comments.destroy')->middleware('can:'.AdminPermission::DELETE_COMMENT->name);
-    Route::post('comments/update-approved',     [CommentController::class, 'updateApprovedStatus'])->name('admin.comments.update_approved')->middleware('can:'.AdminPermission::UPDATE_COMMENT->name);
-    Route::post('comments/bulk-action',         [CommentController::class, 'updateBulkAction'])->name('admin.comments.bulk_action')->middleware('can:'.AdminPermission::UPDATE_COMMENT->name);
-
-
-    // User Inquiries
-    Route::get('user-inquiries/all',            [UserInquiryController::class, 'index'])->name('admin.user_inquiries.all')->middleware('can:'.AdminPermission::LIST_USER_INQUIRY->name);
-    Route::delete('user-inquiries/{id}',        [UserInquiryController::class, 'destroy'])->name('admin.user_inquiries.destroy')->middleware('can:'.AdminPermission::DELETE_USER_INQUIRY->name);
-    Route::post('user-inquiries/bulk-action',   [UserInquiryController::class, 'updateBulkAction'])->name('admin.user_inquiries.bulk_action')->middleware('can:'.AdminPermission::UPDATE_USER_INQUIRY->name);
 
 
     //Invoices

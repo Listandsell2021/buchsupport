@@ -5,7 +5,7 @@ namespace App\Libraries\HelperTraits;
 
 
 use App\DataHolders\Enum\Membership;
-use App\Models\Product;
+use App\Models\Service;
 use App\Models\ProductCategory;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -18,7 +18,7 @@ trait LibraryHelper
 {
     public function getProductWithDetails($hideHidden = 1)
     {
-        $query = Product::select([
+        $query = Service::select([
             'products.id', 'products.id as product_id', 'products.name as product_name', 'products.description', 'products.youtube_link',
             'user_products.quantity', 'user_products.condition', 'user_products.position', 'user_products.purchased_date', 'user_products.price', 'user_products.status',
             'user_products.is_hidden as is_hidden',
@@ -95,7 +95,7 @@ trait LibraryHelper
             $filters['sort_order'] = in_array(request()->input('sort_order'), ['asc', 'desc']) ? request()->input('sort_order') : $filters['sort_order'];
         }
 
-        $products = Product::select([
+        $products = Service::select([
             'products.id', 'products.id as product_id', 'products.category_id', 'products.name as product_name',
             'products.description', 'products.youtube_link', 'product_categories.id as category_id',
             'product_categories.name as category_name'

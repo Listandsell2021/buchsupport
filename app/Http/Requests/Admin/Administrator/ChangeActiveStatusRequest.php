@@ -22,7 +22,7 @@ class ChangeActiveStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'admin_id' => 'required|exists:admins,id',
+            'model_id'  => 'required|exists:admins,id',
             'is_active' => 'required',
         ];
     }
@@ -36,8 +36,8 @@ class ChangeActiveStatusRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'admin_id.required' => trans('Admin is required'),
-            'admin_id.exists' => trans('Admin does not exist'),
+            'model_id.required' => trans('Admin is required'),
+            'model_id.exists' => trans('Admin does not exist'),
             'is_active.required' => trans('Invalid Request'),
         ];
     }

@@ -59,7 +59,7 @@ return [
 
     'frontend_url' => env('FRONTEND_URL', 'https://buchsupport.berlin-webdesign-agentur.de'),
 
-    'asset_url' => env('ASSET_URL'),
+    'asset_url' => env('ASSET_URL', ''),
 
     /*
     |--------------------------------------------------------------------------

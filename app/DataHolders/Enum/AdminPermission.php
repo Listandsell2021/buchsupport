@@ -22,17 +22,11 @@ enum AdminPermission: string
     case UPDATE_SALESPERSON = 'Edit Salesperson';
     case DELETE_SALESPERSON = 'Delete Salesperson';
 
-    case LIST_PRODUCT_CATEGORY = 'List Product Category';
-    case CREATE_PRODUCT_CATEGORY = 'Create Product Category';
-    case SHOW_PRODUCT_CATEGORY = 'Show Product Category';
-    case UPDATE_PRODUCT_CATEGORY = 'Edit Product Category';
-    case DELETE_PRODUCT_CATEGORY = 'Delete Product Category';
-
-    case LIST_PRODUCT = 'List Product';
-    case CREATE_PRODUCT = 'Create Product';
-    case SHOW_PRODUCT = 'Show Product';
-    case UPDATE_PRODUCT = 'Edit Product';
-    case DELETE_PRODUCT = 'Delete Product';
+    case LIST_SERVICE = 'List Service';
+    case CREATE_SERVICE = 'Create Service';
+    case SHOW_SERVICE = 'Show Service';
+    case UPDATE_SERVICE = 'Edit Service';
+    case DELETE_SERVICE = 'Delete Service';
 
     case LIST_CUSTOMER = 'List Customer';
     case CREATE_CUSTOMER = 'Create Customer';

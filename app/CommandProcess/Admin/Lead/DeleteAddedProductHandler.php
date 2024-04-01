@@ -2,7 +2,7 @@
 
 namespace App\CommandProcess\Admin\Lead;
 
-use App\CommandProcess\Admin\Product\DeleteProduct;
+use App\CommandProcess\Admin\Service\DeleteService;
 use App\CommandProcess\Admin\ProductCategory\DeleteCategory;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Calculation\Category;
@@ -33,7 +33,7 @@ class DeleteAddedProductHandler implements Handler
         }
 
         if ($addedProduct->type == 'product') {
-            $this->commandBus->execute(new DeleteProduct($addedProduct->related_id));
+            $this->commandBus->execute(new DeleteService($addedProduct->related_id));
         }
 
         DB::table('lead_new_products')->where('id', $command->addedProductId)->delete();

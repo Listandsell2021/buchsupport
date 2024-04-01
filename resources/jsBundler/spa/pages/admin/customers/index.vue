@@ -77,14 +77,6 @@
                                                 <td>{{ customer.city }}</td>
                                                 <td>{{ customer.dob }}</td>
                                                 <td>{{ customer.registered_at }}</td>
-                                                <td>
-                                                    {{ customer.products_count }}
-                                                    <a v-if="hasProducts(customer.products_count)"
-                                                       @click.prevent="toggleShowProduct(customer.id)"
-                                                       class="m-l-10"
-                                                       href="#"
-                                                    >{{ $t('View') }}</a>
-                                                </td>
                                                 <td class="switcher-col">
                                                     <StatusSwitcher :is_active="customer.is_active"
                                                                     @toggle="changeActiveStatus(customer.id, $event)"
@@ -223,7 +215,6 @@ const form = ref({
         gender: '',
         city: '',
         is_active: '',
-        product_ids: [],
     },
     columns: [
         {
@@ -265,12 +256,6 @@ const form = ref({
             name: 'Registered At',
             key: 'customers.registered_at',
             sort: 'none',
-        },
-        {
-            name: 'Products',
-            key: 'customers.products_count',
-            sort: 'none',
-            component: ProductFilterComponent,
         },
         {
             name: 'Status',

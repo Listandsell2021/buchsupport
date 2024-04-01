@@ -43,6 +43,8 @@ class User extends Authenticatable
         'registered_at',
         'auto_invoice',
         'auto_invoice_date',
+        'document_name',
+        'document_path',
     ];
 
     /**
@@ -89,28 +91,16 @@ class User extends Authenticatable
     }
 
 
-    /**
-     * Relation with Products
-     *
-     * @return BelongsToMany
-     */
-    public function products(): BelongsToMany
-    {
-        return $this
-            ->belongsToMany(Product::class, 'user_products', 'user_id', 'product_id')
-            ->withPivot('id', 'form_id', 'note', 'price', 'quantity', 'condition', 'position', 'purchased_date', 'is_hidden', 'show_price', 'show_purchase_date', 'status')
-            ->orderBy('position');
-    }
 
 
     /**
-     * Relation with User Forms
+     * Relation with services
      *
      * @return HasMany
      */
-    public function forms(): HasMany
+    public function services(): HasMany
     {
-        return $this->hasMany(UserProduct::class, 'user_id');
+        return $this->hasMany(UserService::class, 'user_id');
     }
 
 
