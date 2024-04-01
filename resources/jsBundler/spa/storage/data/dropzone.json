@@ -1,0 +1,14 @@
+{
+  "options": {
+    "url": "https://httpbin.org/post",
+    "maxFilesize": 10000,
+    "autoProcessQueue": false,
+    "addRemoveLinks": true,
+    "headers": {},
+    "dictRemoveFile": "Entferne Bild",
+    "dictDefaultMessage": "Bilder zum Hochladen hier ablegen",
+    "params": {
+      "product_id": ""
+    }
+  }
+}

@@ -1,0 +1,119 @@
+[
+  {
+    "id": 82,
+    "user_id": 9585285517365166,
+    "text": "asdfa",
+    "approved": 1,
+    "created_at": "2023-09-24T10:09:35.000000Z",
+    "updated_at": "2023-09-24T10:09:43.000000Z",
+    "user_name": "Vishal Rana"
+  },
+  {
+    "id": 81,
+    "user_id": 9585285517365166,
+    "text": "testing is going on",
+    "approved": 1,
+    "created_at": "2023-09-24T10:07:43.000000Z",
+    "updated_at": "2023-09-24T10:09:44.000000Z",
+    "user_name": "Vishal Rana"
+  },
+  {
+    "id": 79,
+    "user_id": 9585285517365917,
+    "text": "Bin mit dem Service sehr zufrieden.",
+    "approved": 1,
+    "created_at": "2022-07-25T21:54:40.000000Z",
+    "updated_at": "2022-07-25T22:03:59.000000Z",
+    "user_name": "Beate Reichart-Elbe"
+  },
+  {
+    "id": 61,
+    "user_id": 9585285517365692,
+    "text": "\u00dcbersichtlich gestaltet.",
+    "approved": 1,
+    "created_at": "2022-03-24T20:57:11.000000Z",
+    "updated_at": "2022-03-29T13:01:23.000000Z",
+    "user_name": "Ursula Breitenstein"
+  },
+  {
+    "id": 50,
+    "user_id": 9585285517365004,
+    "text": "Sehr gute Beratung und wir sind mit einer guten Zusammenarbeit und Unterst\u00fctzung zuversichtlich.",
+    "approved": 1,
+    "created_at": "2021-10-28T12:37:31.000000Z",
+    "updated_at": "2021-12-07T18:08:05.000000Z",
+    "user_name": "Gerhard Kunze"
+  },
+  {
+    "id": 49,
+    "user_id": 9585285517365209,
+    "text": "Bis jetzt bin ich von der Schnelligkeit und Proffesionalit\u00e4t begeistert,nun bin ich gespannt wie der Verkauf von stattengeht und wie lange es dauern wird bis das Erste verkauft ist.",
+    "approved": 1,
+    "created_at": "2021-10-16T17:17:01.000000Z",
+    "updated_at": "2021-12-07T18:09:50.000000Z",
+    "user_name": "Barbara Ruth G\u00fcrgens"
+  },
+  {
+    "id": 43,
+    "user_id": 9585285517365083,
+    "text": "Service ist gut, ebenso wie die Bratung.",
+    "approved": 1,
+    "created_at": "2021-09-20T12:43:59.000000Z",
+    "updated_at": "2021-09-20T12:44:08.000000Z",
+    "user_name": "Michael Dietrich"
+  },
+  {
+    "id": 40,
+    "user_id": 9585285517365003,
+    "text": "- bin sehr zufrieden\n- ist so wie es erkl\u00e4rt wurde\n- sehr \u00fcbersichtlich",
+    "approved": 1,
+    "created_at": "2021-08-12T17:12:51.000000Z",
+    "updated_at": "2021-09-13T15:12:48.000000Z",
+    "user_name": "Ingo Seils"
+  },
+  {
+    "id": 39,
+    "user_id": 9585285517364987,
+    "text": "Bin mit dem Service zufrieden.",
+    "approved": 1,
+    "created_at": "2021-08-10T18:58:53.000000Z",
+    "updated_at": "2021-09-13T15:12:52.000000Z",
+    "user_name": "Birgit Beutel"
+  },
+  {
+    "id": 38,
+    "user_id": 9585285517364987,
+    "text": "Bin zufrieden mit der Seite",
+    "approved": 1,
+    "created_at": "2021-08-07T15:34:48.000000Z",
+    "updated_at": "2021-09-13T15:12:56.000000Z",
+    "user_name": "Birgit Beutel"
+  },
+  {
+    "id": 36,
+    "user_id": 6169148279396157,
+    "text": "Ich bin sehr zufrieden mit dem Service, Herr K. hat mich umfassend \u00fcber alles informiert und hat die Registrierung abgeschlossen ein.",
+    "approved": 1,
+    "created_at": "2021-03-22T22:49:55.000000Z",
+    "updated_at": "2021-03-22T22:50:17.000000Z",
+    "user_name": "Frank Gerlach"
+  },
+  {
+    "id": 34,
+    "user_id": 4890013158123015,
+    "text": "Buch-Kunstregister ist ein angenehmer und zuverl\u00e4ssiger\nPartner f\u00fcr Interessenten hochwertiger B\u00fcchersammlungen und wertvollen Faksimiles .Als Partner\nwird man ausf\u00fchrlich beraten und bekommt Hilfeleistung jeglicher Art. Die Mitarbeiter in der Zentrale in Berlin sowie im Au\u00dfendienst (Herr Caliskan)\nsind stets freundlich und hilfreich bei allen Fragen. \nIch freue mich \u00fcber eine gute Zusammenarbeit:\nRudolf Werner",
+    "approved": 1,
+    "created_at": "2021-03-03T20:40:29.000000Z",
+    "updated_at": "2021-03-03T22:42:43.000000Z",
+    "user_name": "Rudolf Werner"
+  },
+  {
+    "id": 5,
+    "user_id": 5449268027550048,
+    "text": "Sehr guter Service , alles i.O\n\nL. Falke",
+    "approved": 1,
+    "created_at": "2021-02-28T13:27:32.000000Z",
+    "updated_at": "2021-10-12T12:54:16.000000Z",
+    "user_name": "Lutz Willy Falke"
+  }
+]
