@@ -15,7 +15,7 @@
                             <template v-if="hasLeadDocument()">
                                 <a href="#" @click.prevent="downloadLeadDocument">
                                     <i class="fa fa-file"></i>
-                                    {{ leadContract.document_name }}
+                                    {{ leadContract.contract_document }}
                                 </a>
                             </template>
                             <template v-else>-</template>
@@ -26,42 +26,28 @@
             <div class="contract-item">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="contract-label">{{ $t('Membership') }}</div>
+                        <div class="contract-label">{{ $t('Services') }}</div>
                     </div>
                     <div class="col-md-8">
-                        <div class="contract-item-desc">
-                            {{ HelperUtils.ucfirst(leadContract.membership) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="contract-item">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="contract-label">{{ $t('Products') }}</div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="contract-item-desc" v-if="hasContractProducts()">
+                        <div class="contract-item-desc" v-if="hasContractServices()">
                             <div class="contract-product"
-                                 v-for="productItem in leadContract.product_items">
+                                 v-for="service in lead.services">
                                 <div>
                                     <label>{{ $t('Name') }}:</label>
-                                    <span>{{ productItem.product.name }}</span>
+                                    <span>{{ service.service.name }}</span>
                                 </div>
                                 <div>
-                                    <label>{{ $t('Quality') }}:</label>
-                                    <span>{{
-                                            HelperUtils.getProductCondition(productItem.condition)
-                                        }}</span>
+                                    <label>{{ $t('Note') }}:</label>
+                                    <span>{{ service.service.note }}</span>
                                 </div>
                                 <div>
                                     <label>{{ $t('Price') }}:</label>
                                     <span
-                                        v-html="HelperUtils.getCurrency(productItem.price)"></span>
+                                        v-html="HelperUtils.getCurrency(service.service.price)"></span>
                                 </div>
                                 <div>
                                     <label>{{ $t('Quantity') }}:</label>
-                                    <span>{{ productItem.quantity }}</span>
+                                    <span>{{ service.service.quantity }}</span>
                                 </div>
                             </div>
                         </div>
@@ -82,39 +68,38 @@ import HelperUtils from "@/libraries/utils/helpers/HelperUtils";
 import {useI18n} from "vue-i18n";
 
 const props = defineProps({
-    contract: {
+    lead: {
         required: true,
     }
 });
 
-const leadContract = ref(props.contract);
-
+const lead = ref(props.lead);
 const { t: $t } = useI18n();
 
 function hasLeadDocument() {
-    return leadContract.value.document_name !== "" && leadContract.value.document_name !== null;
+    return lead.value.contract_document !== "" && lead.value.contract_document !== null;
 }
 
 function downloadLeadDocument() {
     axios.postDownload(route('admin.leads.download_contract_doc'), {
-        contract_id: leadContract.value.id
+        lead_id: lead.value.id
     })
         .then((response) => {
             if (response.status === 200) {
-                HelperUtils.blobFileDownload(response, leadContract.value.document_name);
+                HelperUtils.blobFileDownload(response, lead.value.contract_document_name);
             }
         });
 }
 
-function hasContractProducts() {
-    return leadContract.value.product_items.length > 0;
+function hasContractServices() {
+    return lead.value.services.length > 0;
 }
 
 function getLeadContract() {
-    axios.post(route('admin.leads.get_contract'), {lead_id: props.contract.lead_id})
+    axios.post(route('admin.leads.get_contract'), {lead_id: props.lead.id})
         .then((response) => {
             if (response.status === 200) {
-                leadContract.value = response.data.data;
+                lead.value = response.data.data;
             }
         });
 }

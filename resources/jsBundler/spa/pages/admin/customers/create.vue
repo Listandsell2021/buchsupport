@@ -351,7 +351,7 @@ import { useMembershipStore } from "@/storage/store/memberships";
 import moment from "moment";
 import VisiblePasswordInput from "@/components/widgets/form/VisiblePasswordInput";
 import PasswordGenerator from "@/libraries/utils/helpers/PasswordGenerator";
-import { useProductStore } from "@/storage/store/products";
+import { useProductStore } from "@/storage/store/services";
 import {useI18n} from "vue-i18n";
 import {useRouter} from "vue-router";
 import {useMeta} from "vue-meta";

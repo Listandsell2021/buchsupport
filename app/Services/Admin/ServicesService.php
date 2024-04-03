@@ -91,9 +91,9 @@ class ServicesService
      *
      * @return Collection
      */
-    public function getAllProducts(): Collection
+    public function getAllServices(): Collection
     {
-        return Service::all();
+        return Service::active()->get();
     }
 
     /**

@@ -124,7 +124,7 @@ const axios = {
         if (loader) {
             this.setLoading();
         }
-        console.log(axiosInstance);
+
         return await axiosInstance
             .post(`${endpoint}`, data, config)
             .then((response) => response)

@@ -42,8 +42,6 @@ return new class extends Migration
             $table->unsignedBigInteger('converted_to')->nullable();
             $table->foreign('converted_to')->references('id')->on('users')->nullOnDelete();
             $table->foreignId('created_by')->nullable()->constrained('admins')->cascadeOnUpdate()->nullOnDelete();
-            $table->string('contract_document')->nullable();
-            $table->string('contract_document_path')->nullable();
             $table->timestamps();
         });
     }

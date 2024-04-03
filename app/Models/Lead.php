@@ -4,6 +4,7 @@ namespace App\Models;
 
 
 use App\Helpers\Trait\SortingEloquent;
+use App\Services\Admin\LeadService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -90,8 +91,9 @@ class Lead extends Model
         return $this->hasMany(LeadAppointment::class, 'lead_id');
     }
 
+
     /**
-     * Lead Contract
+     * Lead Services
      *
      * @return HasOne
      */

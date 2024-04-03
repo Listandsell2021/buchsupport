@@ -493,7 +493,7 @@ import PasswordGenerator from "@/libraries/utils/helpers/PasswordGenerator";
 import StatusSwitcher from "@/components/widgets/form/StatusSwitcher";
 import Genders from "@/storage/data/genders";
 import {useMembershipStore} from "@/storage/store/memberships";
-import {useProductStore} from "@/storage/store/products";
+import {useProductStore} from "@/storage/store/services";
 import VisiblePasswordInput from "@/components/widgets/form/VisiblePasswordInput";
 import HelperUtils from "@/libraries/utils/helpers/HelperUtils";
 import DateFormatter from "@/libraries/utils/helpers/DateFormatter";

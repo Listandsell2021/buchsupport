@@ -20,6 +20,7 @@ use App\Http\Requests\Admin\Service\UpdateServiceRequest;
 use App\Http\Requests\Admin\Service\UpdateProductsBulkActionRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Rosamarsky\CommandBus\CommandBus;
 
 
@@ -148,11 +149,11 @@ class ServiceController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function getAllProducts(Request $request): JsonResponse
+    public function getAllServices(Request $request): JsonResponse
     {
         $services = $this->commandBus->execute(new GetAllServices());
 
-        return $this->respondWithSuccess(__('Products fetched successfully'), $services);
+        return $this->respondWithSuccess(__('Services fetched successfully'), $services);
     }
 
     

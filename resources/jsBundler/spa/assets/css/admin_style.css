@@ -541,4 +541,6 @@ a.bg-secondary:hover, a.bg-secondary:focus {
 .timeline-table td {
     min-width: 300px;
 }
-
+.contract-add-table .col-service-note {
+    min-width: 280px;
+}

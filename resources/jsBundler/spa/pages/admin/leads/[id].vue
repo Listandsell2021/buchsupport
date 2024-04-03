@@ -131,7 +131,6 @@
                                             </template>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <LeadDetail :lead="lead"
@@ -139,18 +138,14 @@
                                             @reload="getLeadData"
                                 ></LeadDetail>
 
-                                <LeadContractDetail :contract="lead.contract"></LeadContractDetail>
-
+                                <LeadContractDetail :lead="lead"></LeadContractDetail>
                             </div>
 
                             <div class="col-md-4">
-
                                 <LeadNotes :lead="lead"></LeadNotes>
-
                             </div>
 
                             <div class="col-md-4">
-
                                 <LeadAppointments :lead-id="leadId"
                                                   :lead="lead"
                                 ></LeadAppointments>
@@ -162,9 +157,7 @@
                                 <LeadDocuments :lead-id="leadId"
                                                :lead="lead"
                                 ></LeadDocuments>
-
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -38,7 +38,7 @@
 import {ref} from "vue";
     import debounce from 'lodash/debounce';
     import { onClickOutside } from '@vueuse/core';
-    import { useProductStore } from '@/storage/store/products';
+    import { useProductStore } from '@/storage/store/services';
 
     const emit = defineEmits(['changed'])
 

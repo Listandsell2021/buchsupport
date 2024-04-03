@@ -140,11 +140,7 @@ class LeadService
             'lead_status.name as lead_status_name', 'lead_status.code as lead_status_code',
             DB::raw('CONCAT(customers.first_name, " ", customers.last_name) as customer'),
         )
-            ->with(['contract' => function($query) {
-                $query->with(['product_items' => function ($query) {
-                    $query->with('product');
-                }]);
-            }])
+            ->with(['services', 'services.'])
             ->leftJoin('lead_status', 'leads.lead_status_id', 'lead_status.id')
             ->leftJoin('admins as salespersons', 'leads.salesperson_id', 'salespersons.id')
             ->leftJoin('admins as customers', 'leads.converted_to', DB::raw('customers.id'))
@@ -313,9 +309,9 @@ class LeadService
      */
     public function getContractDetail(int $leadId): mixed
     {
-        return LeadContract::with(['product_items' => function ($query) {
-            $query->with('product');
-        }])->where('lead_id', $leadId)->first();
+        return LeadContract::with(['service'])
+            ->where('lead_id', $leadId)
+            ->first();
     }
 
 

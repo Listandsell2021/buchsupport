@@ -25,12 +25,20 @@ return new class extends Migration
             $table->unsignedSmallInteger('service_id')->nullable();
             $table->foreign('service_id')
                 ->references('id')
-                ->on('pipelines')
+                ->on('services')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
 
-            $table->integer('price');
-            $table->string('status');
+            $table->unsignedSmallInteger('pipeline_id')->nullable();
+            $table->foreign('pipeline_id')
+                ->references('id')
+                ->on('service_pipelines')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+
+            $table->float('price');
+            $table->integer('quantity');
+            $table->text('note');
             $table->dateTime('order_at');
         });
     }

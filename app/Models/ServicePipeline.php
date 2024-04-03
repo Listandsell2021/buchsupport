@@ -6,14 +6,14 @@ use App\Helpers\Trait\SortingEloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Libraries\EloquentHelpers\ProductHelper;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class Service extends Model
+class ServicePipeline extends Model
 {
     use HasFactory, SortingEloquent, ProductHelper;
 
 
-    protected $table = "services";
+    protected $table = "service_pipelines";
 
     /**
      * The attributes that are mass assignable.
@@ -21,22 +21,12 @@ class Service extends Model
      * @var array
      */
     protected $fillable = [
+        'service_id',
         'name',
-        'description',
-        'is_active',
+        'default',
+        'order_no'
     ];
 
-
-    /**
-     * Scope Active
-     *
-     * @param $query
-     * @return mixed
-     */
-    public function scopeActive($query): mixed
-    {
-        return $query->where('is_active', 1);
-    }
 
 
     /**
@@ -52,13 +42,13 @@ class Service extends Model
 
 
     /**
-     * Relation to Pipelines
+     * Service
      *
-     * @return HasMany
+     * @return HasOne
      */
-    public function pipelines(): HasMany
+    public function service(): HasOne
     {
-        return $this->hasMany(ServicePipeline::class, 'service_id');
+        return $this->hasOne(Service::class, 'service_id');
     }
 
 }

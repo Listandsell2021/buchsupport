@@ -67,7 +67,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::put('services/{id}',             [ServiceController::class, 'update'])->name('admin.services.update')->middleware('can:'.AdminPermission::UPDATE_SERVICE->name);
     Route::delete('services/{id}',          [ServiceController::class, 'destroy'])->name('admin.services.destroy')->middleware('can:'.AdminPermission::DELETE_SERVICE->name);
     Route::post('services/change-status',   [ServiceController::class, 'changeActiveStatus'])->name('admin.services.change_status')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);
-    Route::post('services/all',             [ServiceController::class, 'getAllProducts'])->name('admin.services.all')->middleware('can:'.AdminPermission::LIST_SERVICE->name);
+    Route::post('services/all',             [ServiceController::class, 'getAllServices'])->name('admin.services.all')->middleware('can:'.AdminPermission::LIST_SERVICE->name);
     Route::post('services/bulk-action',     [ServiceController::class, 'updateBulkAction'])->name('admin.services.bulk_action')->middleware('can:'.AdminPermission::UPDATE_SERVICE->name);
 
 

@@ -13,16 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lead_contract', function (Blueprint $table) {
-            $table->unsignedBigInteger('lead_id')->unique();
-            $table->foreign('lead_id')->references('id')->on('leads')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('document')->nullable();
-            $table->string('document_path')->nullable();
+        Schema::create('service_pipelines', function (Blueprint $table) {
             $table->unsignedBigInteger('service_id');
             $table->foreign('service_id')->references('id')->on('services')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->smallInteger('quantity');
-            $table->float('price');
-            $table->string('note');
+            $table->string('name')->unique();
+            $table->boolean('default')->default(0);
+            $table->smallInteger('order_no')->default(1);
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lead_contract');
+        Schema::dropIfExists('service_pipelines');
     }
 };

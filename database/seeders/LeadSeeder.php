@@ -5,7 +5,7 @@ namespace Database\Seeders;
 
 use App\DataHolders\Enum\Membership;
 use App\Models\Admin;
-use App\Models\ContractService;
+use App\Models\LeadContract;
 use App\Models\Lead;
 use App\Models\LeadContract;
 use App\Models\LeadStatus;
@@ -32,7 +32,7 @@ class LeadSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
 
         Lead::truncate();
-        ContractService::truncate();
+        LeadContract::truncate();
         SmartList::truncate();
         Notification::truncate();
 

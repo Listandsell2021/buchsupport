@@ -7,13 +7,12 @@ use App\Helpers\Trait\SortingEloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class ContractService extends Model
+class LeadContract extends Model
 {
     use HasFactory, SortingEloquent;
 
-    protected $table = "lead_contract_services";
+    protected $table = "lead_contract";
 
     /**
      * The attributes that are mass assignable.
@@ -26,9 +25,7 @@ class ContractService extends Model
         'quantity',
         'note',
         'price',
-        'order_no',
     ];
-
 
 
     /**
@@ -51,6 +48,17 @@ class ContractService extends Model
     public function lead(): BelongsTo
     {
         return $this->belongsTo(Lead::class, 'lead_id');
+    }
+
+
+    /**
+     * Relations to Service
+     *
+     * @return BelongsTo
+     */
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
 }
