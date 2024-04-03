@@ -5,6 +5,7 @@
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
+
                     <Form @submit="updateService" v-slot="{errors}">
                         <div class="row">
                             <div class="col-md-9">
@@ -21,6 +22,27 @@
                                     <ErrorMessage class="text-danger d-block" name="name"/>
                                 </div>
                                 <div class="form-group">
+                                    <label>{{ $t('Price') }}</label>
+                                    <Field class="form-control"
+                                           v-model="form.price"
+                                           type="number"
+                                           name="price"
+                                           rules="required"
+                                           :placeholder="$t('Enter price')"
+                                           :class="{'is-invalid': errors.price}"
+                                    />
+                                    <ErrorMessage class="text-danger d-block" name="name"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ $t('Note') }}</label>
+                                    <textarea class="form-control"
+                                              v-model="form.note"
+                                              name="note"
+                                              rows="4"
+                                              :placeholder="$t('Enter note')"
+                                    ></textarea>
+                                </div>
+                                <div class="form-group">
                                     <label>{{ $t('Status') }}</label>
                                     <StatusSwitcher :is_active="form.is_active"
                                                     @toggle="changeActiveStatus"
@@ -31,6 +53,9 @@
 
                         <button type="submit" class="btn btn-primary">{{ $t('Update') }}</button>
                     </Form>
+
+                    <ServiceStatusListing :service-id="serviceId"
+                    ></ServiceStatusListing>
 
                 </div>
             </div>
@@ -48,6 +73,7 @@ import {useI18n} from "vue-i18n";
 import {useRoute, useRouter} from "vue-router";
 import {useMeta} from "vue-meta";
 import StatusSwitcher from "@/components/widgets/form/StatusSwitcher.vue";
+import ServiceStatusListing from "@/components/admin/ServiceStatus/Listing.vue";
 
 const props = defineProps({
     data: {
@@ -64,9 +90,9 @@ useMeta({title: $t('Service Edit')});
 const serviceId = routes.params.id;
 
 let form = ref(null);
-let product = ref(null);
+let service = ref(null);
 
-product.value = props.data.value;
+service.value = props.data.value;
 mapUserIntoForm(props.data.value);
 
 function updateService() {
@@ -82,11 +108,14 @@ function changeActiveStatus(isActive) {
     form.value.is_active = isActive;
 }
 
-function mapUserIntoForm(product) {
+function mapUserIntoForm(service) {
+    console.log(service);
     form.value = {
-        id: product.id,
-        name: product.name,
-        is_active: product.is_active
+        id: service.id,
+        name: service.name,
+        price: service.price,
+        note: service.note,
+        is_active: service.is_active
     };
 }
 

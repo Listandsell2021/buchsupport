@@ -5,6 +5,7 @@ use App\Http\Controllers\API\Admin\LeadDocumentController;
 use App\Http\Controllers\API\Admin\LeadStatusController;
 use App\Http\Controllers\API\Admin\LeadTaskController;
 use App\Http\Controllers\API\Admin\PipelineController;
+use App\Http\Controllers\API\Admin\ServicePipelineController;
 use Illuminate\Support\Facades\Route;
 use \App\DataHolders\Enum\AdminPermission;
 use App\Http\Controllers\API\Admin\AdminController;
@@ -71,6 +72,15 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('services/bulk-action',     [ServiceController::class, 'updateBulkAction'])->name('admin.services.bulk_action')->middleware('can:'.AdminPermission::UPDATE_SERVICE->name);
 
 
+    // Service Pipelines
+    Route::get('service-pipelines/{service}',       [ServicePipelineController::class, 'index'])->name('admin.service_pipeline.index')->middleware('can:'.AdminPermission::LIST_SERVICE_PIPELINE->name);
+    Route::post('service-pipeline',                 [ServicePipelineController::class, 'store'])->name('admin.service_pipeline.store')->middleware('can:'.AdminPermission::CREATE_SERVICE_PIPELINE->name);
+    Route::get('service-pipeline/{id}',             [ServicePipelineController::class, 'show'])->name('admin.service_pipeline.show')->middleware('can:'.AdminPermission::SHOW_SERVICE_PIPELINE->name);
+    Route::put('service-pipeline/{id}',             [ServicePipelineController::class, 'update'])->name('admin.service_pipeline.update')->middleware('can:'.AdminPermission::UPDATE_SERVICE_PIPELINE->name);
+    Route::delete('service-pipeline/{id}',          [ServicePipelineController::class, 'destroy'])->name('admin.service_pipeline.destroy')->middleware('can:'.AdminPermission::DELETE_SERVICE_PIPELINE->name);
+    Route::post('service-pipeline/change-default',  [ServicePipelineController::class, 'changeDefault'])->name('admin.services.change_default')->middleware('can:'.AdminPermission::UPDATE_SERVICE_PIPELINE->name);
+
+
     // Customers
     Route::get('customers',                 [CustomerController::class, 'index'])->name('admin.customers.index')->middleware('can:'.AdminPermission::LIST_CUSTOMER->name);
     Route::post('customers',                [CustomerController::class, 'store'])->name('admin.customers.store')->middleware('can:'.AdminPermission::CREATE_CUSTOMER->name);
@@ -89,6 +99,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('customers/upload-contract-doc',    [CustomerController::class, 'uploadContractDocument'])->name('admin.customers.upload_contract_doc')->middleware('can:'.AdminPermission::UPDATE_LEAD->name);
     Route::post('customers/update-forms',           [CustomerController::class, 'updateCustomerForms'])->name('admin.customers.update_forms');
     Route::post('customers/update-invoice-setting', [CustomerController::class, 'updateInvoiceSetting'])->name('admin.customers.update_invoice_setting');
+
 
     Route::post('pipeline/list',            [PipelineController::class, 'list'])->name('admin.pipeline.list')->middleware('can:'.AdminPermission::LIST_PIPELINE->name);
     Route::post('pipeline/all',             [PipelineController::class, 'all'])->name('admin.pipeline.all')->middleware('can:'.AdminPermission::LIST_PIPELINE->name);

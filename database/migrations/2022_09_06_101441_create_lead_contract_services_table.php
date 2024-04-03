@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreign('lead_id')->references('id')->on('leads')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('document')->nullable();
             $table->string('document_path')->nullable();
-            $table->unsignedBigInteger('service_id');
+            $table->unsignedSmallInteger('service_id');
             $table->foreign('service_id')->references('id')->on('services')->cascadeOnUpdate()->cascadeOnDelete();
             $table->smallInteger('quantity');
             $table->float('price');

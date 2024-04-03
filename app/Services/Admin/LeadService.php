@@ -321,9 +321,9 @@ class LeadService
      * @param int $leadId
      * @param string $documentName
      * @param string $documentPath
-     * @return void
+     * @return mixed
      */
-    public function updateContractDocument(int $leadId, string $documentName, string $documentPath)
+    public function updateContractDocument(int $leadId, string $documentName, string $documentPath): mixed
     {
         return LeadContract::where('lead_id', $leadId)->update([
             'document_name' => $documentName,

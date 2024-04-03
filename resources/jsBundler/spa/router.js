@@ -3,11 +3,7 @@ import guestAdmin from "@/middleware/guest-admin";
 import authAdmin from "@/middleware/auth-admin";
 import ziggyRoute from "@/libraries/utils/ZiggyRoute";
 import ResourceFinder from "@/middleware/finder-resource";
-import guestCustomer from "@/middleware/guest-customer";
-import authCustomer from "@/middleware/auth-customer";
 import {useAuthStore} from "@/storage/store/auth";
-import {useLoadingStore} from "@/storage/store/loading";
-import {useApiFetch} from "@/composables/useApiFetch";
 
 const routes = [
 

@@ -3,17 +3,12 @@
 namespace Database\Seeders;
 
 
-use App\DataHolders\Enum\Membership;
 use App\Models\Admin;
 use App\Models\LeadContract;
 use App\Models\Lead;
-use App\Models\LeadContract;
-use App\Models\LeadStatus;
 use App\Models\Notification;
-use App\Models\SalesPerson;
 use App\Models\SmartList;
 use App\Models\User;
-use App\Models\UserContract;
 use Database\Factories\LeadFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
@@ -63,8 +58,6 @@ class LeadSeeder extends Seeder
             'converted_at'  => $customer->created_at,
             'converted_to'  => $customer->id,
             'salesperson_id' => $salesperson['id'],
-            'contract_document' => 'testing.pdf',
-            'contract_document_path' => 'testing.pdf',
         ]);
     }
 

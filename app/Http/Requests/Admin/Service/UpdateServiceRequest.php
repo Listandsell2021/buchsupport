@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Service;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateServiceRequest extends FormRequest
 {
@@ -22,8 +23,8 @@ class UpdateServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:services,id',
-            'name' => 'required',
+            'id' => ['required', 'exists:services,id'],
+            'name' => ['required', Rule::unique('services')->ignore($this->get('id'))],
         ];
     }
 

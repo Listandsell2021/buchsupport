@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <Form @submit="createService" v-slot="{errors}">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{ $t('Name') }}</label>
                                     <Field class="form-control"
@@ -20,6 +20,27 @@
                                            :class="{'is-invalid': errors.name}"
                                     />
                                     <ErrorMessage class="text-danger d-block" name="name"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ $t('Price') }}</label>
+                                    <Field class="form-control"
+                                           v-model="form.price"
+                                           type="number"
+                                           name="price"
+                                           rules="required"
+                                           :placeholder="$t('Enter price')"
+                                           :class="{'is-invalid': errors.price}"
+                                    />
+                                    <ErrorMessage class="text-danger d-block" name="name"/>
+                                </div>
+                                <div class="form-group">
+                                    <label>{{ $t('Note') }}</label>
+                                    <textarea class="form-control"
+                                              v-model="form.note"
+                                              name="note"
+                                              rows="4"
+                                              :placeholder="$t('Enter note')"
+                                    ></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>{{ $t('Status') }}</label>
@@ -58,6 +79,8 @@ useMeta({title: $t('Service Create')});
 
 const form = ref({
     name: '',
+    price: '',
+    note: '',
     is_active: 0,
 });
 
@@ -66,7 +89,6 @@ function changeActiveStatus(isActive) {
 }
 
 function createService() {
-
     axios.post(route('admin.services.store'), form.value).then((response) => {
         if (response.status == 201) {
             Notifier.toastSuccess(response.data.message);

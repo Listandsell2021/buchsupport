@@ -24,6 +24,7 @@ class ServicePipeline extends Model
         'service_id',
         'name',
         'default',
+        'has_tracking',
         'order_no'
     ];
 

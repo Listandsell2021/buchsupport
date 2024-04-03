@@ -46,6 +46,8 @@ class ServicesService
     {
         return Service::create([
             'name'          => $data['name'],
+            'price'         => (int) $data['price'],
+            'note'          => (string) $data['note'],
             'is_active'     => (int) ((bool) ($data['is_active'] ?? 1)),
         ]);
     }

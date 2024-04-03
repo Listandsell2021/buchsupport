@@ -73,6 +73,12 @@ class ServiceController extends Controller
     {
         $service = $this->commandBus->execute(new GetService((int) $serviceId));
 
+        if (!$service) {
+            return $this->respondError();
+        }
+
+        //dd($service->toArray());
+
         return $this->respondWithContentOnly($service);
     }
 
@@ -110,7 +116,7 @@ class ServiceController extends Controller
      * @param ChangeActiveStatusRequest $request
      * @return JsonResponse
      */
-    public function changeActiveStatus(ChangeActiveStatusRequest $request): JsonResponse
+    public function changeDefault(ChangeActiveStatusRequest $request): JsonResponse
     {
         $this->commandBus->execute(
             new UpdateServiceActiveStatus(

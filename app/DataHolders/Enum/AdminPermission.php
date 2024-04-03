@@ -28,6 +28,12 @@ enum AdminPermission: string
     case UPDATE_SERVICE = 'Edit Service';
     case DELETE_SERVICE = 'Delete Service';
 
+    case LIST_SERVICE_PIPELINE = 'List Service Pipeline';
+    case CREATE_SERVICE_PIPELINE = 'Create Service Pipeline';
+    case SHOW_SERVICE_PIPELINE = 'Show Service Pipeline';
+    case UPDATE_SERVICE_PIPELINE = 'Edit Service Pipeline';
+    case DELETE_SERVICE_PIPELINE = 'Delete Service Pipeline';
+
     case LIST_CUSTOMER = 'List Customer';
     case CREATE_CUSTOMER = 'Create Customer';
     case SHOW_CUSTOMER = 'Show Customer';

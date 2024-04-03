@@ -544,3 +544,9 @@ a.bg-secondary:hover, a.bg-secondary:focus {
 .contract-add-table .col-service-note {
     min-width: 280px;
 }
+.service-status-listing {
+    margin-top: 45px;
+    background-color: #eee;
+    padding: 20px;
+    border-radius: 6px;
+}
