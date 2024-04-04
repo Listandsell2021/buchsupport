@@ -12,7 +12,7 @@ use App\Http\Rules\Admin\IsLeadEligibleForNewCustomer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\File;
 
-class AddedNewCustomerRequest extends FormRequest
+class CreateLeadContractRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,19 +25,22 @@ class AddedNewCustomerRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array
      */
     public function rules(): array
     {
         return [
-            'contract_id'   => ['nullable', 'exists:lead_contracts,id'],
             'lead_id'       => ['required', new IsLeadEligibleForNewCustomer(),],
-            'document'      => ['required'],
+            'document'  => [
+                'required',
+                File::types(ContractDocConfig::fileExtensions())
+                    ->min(ContractDocConfig::minFileSize())
+                    ->max(ContractDocConfig::maxFileSize()),
+            ],
             'service_id'    => ['required', 'exists:services,id'],
             'quantity'      => ['required'],
             'price'         => ['required'],
             'note'          => ['required'],
-            //new HasConversionRequest()
         ];
     }
 
@@ -50,8 +53,17 @@ class AddedNewCustomerRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'lead_id.required' => trans('Lead is required'),
-            'lead_id.exists' => trans('Lead does not exists'),
+            'lead_id.required'  => trans('Lead is required'),
+            'lead_id.exists'    => trans('Lead does not exists'),
+            'service_id.required' => trans('Service is required'),
+            'service_id.exists' => trans('Service does not exists'),
+            'document.required' => trans('Document is required'),
+            'document.types'    => trans('Document must be PDF'),
+            'document.min'      => trans('Document must be between 50KB and 2MB'),
+            'document.max'      => trans('Document must be between 50KB and 2MB'),
+            'quantity.required' => 'Quantity is required',
+            'price.required'    => 'Price is required',
+            'note.required'     => 'Note is required',
         ];
     }
 }

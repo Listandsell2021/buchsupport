@@ -13,15 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_services', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+        Schema::create('user_contract', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('document');
+            $table->string('document_path');
             $table->unsignedSmallInteger('service_id');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
             $table->tinyInteger('quantity');
             $table->float('price');
             $table->string('note')->nullable();
-            $table->smallInteger('order_no')->default(0);
         });
     }
 
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_services');
+        Schema::dropIfExists('user_contract');
     }
 };

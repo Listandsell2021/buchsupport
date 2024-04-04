@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             SettingSeeder::class,
             MailSeeder::class,
+            ServiceSeeder::class,
             CustomerSeeder::class,
             LeadStatusSeeder::class,
         ]);

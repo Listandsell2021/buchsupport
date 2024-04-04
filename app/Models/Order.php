@@ -13,6 +13,8 @@ class Order extends Model
 
     protected $table = "orders";
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *

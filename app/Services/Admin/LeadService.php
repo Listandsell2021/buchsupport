@@ -16,8 +16,10 @@ use App\Models\LeadActivity;
 use App\Models\LeadContract;
 use App\Models\LeadNote;
 use App\Models\LeadStatus;
+use App\Models\Order;
 use App\Models\Service;
 use App\Models\ProductCategory;
+use App\Models\ServicePipeline;
 use App\Models\User;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Arr;
@@ -140,7 +142,7 @@ class LeadService
             'lead_status.name as lead_status_name', 'lead_status.code as lead_status_code',
             DB::raw('CONCAT(customers.first_name, " ", customers.last_name) as customer'),
         )
-            ->with(['services', 'services.'])
+            ->with(['contract', 'contract.service'])
             ->leftJoin('lead_status', 'leads.lead_status_id', 'lead_status.id')
             ->leftJoin('admins as salespersons', 'leads.salesperson_id', 'salespersons.id')
             ->leftJoin('admins as customers', 'leads.converted_to', DB::raw('customers.id'))
@@ -426,7 +428,7 @@ class LeadService
      */
     public function convertLeadToNewCustomer(int $leadId): mixed
     {
-        $lead = Lead::with(['contract.product_items', 'added_products'])->where('id', $leadId)->first();
+        $lead = Lead::with(['contract'])->where('id', $leadId)->first();
 
         $password = Str::random(10);
 
@@ -450,54 +452,23 @@ class LeadService
             "registered_at" => getCurrentDateTime()
         ]);
 
-        $userProducts = [];
-        $formId = Str::orderedUuid();
-        $position = 1;
-        foreach ($lead->contract->product_items as $productItem) {
-            $userProducts[] = [
-                'form_id' => $formId,
-                'user_id' => $customer->id,
-                'product_id' => $productItem->product_id,
-                'price' => $productItem->price,
-                'quantity' => $productItem->quantity,
-                'condition' => $productItem->condition,
-                'note' => '',
-                'position' => $position++,
-                'form_order_no' => 1,
-                'show_price' => 1,
-                'show_purchase_date' => 1,
-                'purchased_date' => date('Y-m-d'),
-                'status' => 1,
-            ];
-        }
-
-        if (count($userProducts) > 0) {
-            DB::table('user_products')->insert($userProducts);
-        }
-
         Lead::where('id', $leadId)->update([
             'is_converted' => 1,
             'converted_to' => $customer->id,
             'converted_at' => getCurrentDateTime(),
         ]);
 
-        $productIds = [];
-        $categoryIds = [];
-        foreach ($lead->added_products as $addedProduct) {
-            if ($addedProduct->type == 'product') {
-                $productIds[] = $addedProduct->related_id;
-            }
-            if ($addedProduct->type == 'category') {
-                $categoryIds[] = $addedProduct->related_id;
-            }
-        }
+        $pipeline = ServicePipeline::where('service_id', $lead->contract->service_id)->orderBy('default', 'desc')->first();
 
-        if (count($productIds) > 0) {
-            Service::whereIn('id', $productIds)->update(['is_archived' => 0]);
-        }
-        if (count($categoryIds) > 0) {
-            ProductCategory::whereIn('id', $categoryIds)->update(['is_archived' => 0]);
-        }
+        Order::create([
+            'user_id' => $customer->id,
+            'service_id' => $lead->contract->service_id,
+            'pipeline_id' => $pipeline->id,
+            'price' => (float) $lead->contract->price,
+            'quantity' => (int) $lead->contract->quantity,
+            'note' => $lead->contract->note,
+            'order_at' => getCurrentDateTime()
+        ]);
 
         return $customer;
     }
@@ -542,5 +513,29 @@ class LeadService
         return (bool) Admin::where('id', $adminId)->update(['lead_columns' => $columns]);
     }
 
+    /**
+     * Create Lead Contract
+     *
+     * @param int $leadId
+     * @param int $serviceId
+     * @param int $quantity
+     * @param float $price
+     * @param string $note
+     * @param string $documentName
+     * @param string $documentPath
+     * @return mixed
+     */
+    public function createLeadContract(int $leadId, int $serviceId, int $quantity, float $price, string $note, string $documentName, string $documentPath): mixed
+    {
+        return LeadContract::create([
+            'lead_id' => $leadId,
+            'service_id' => $serviceId,
+            'quantity' => $quantity,
+            'price' => $price,
+            'note' => $note,
+            'document' => $documentName,
+            'document_path' => $documentPath
+        ]);
+    }
 
 }

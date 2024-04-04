@@ -21,6 +21,8 @@ class LeadContract extends Model
      */
     protected $fillable = [
         'lead_id',
+        'document',
+        'document_path',
         'service_id',
         'quantity',
         'note',

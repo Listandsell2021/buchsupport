@@ -1,12 +1,11 @@
 <template>
-
     <div class="contract-detail">
         <div class="contract-title">
             <h4>{{ $t('Contract Detail') }}</h4>
         </div>
         <div class="contract-body">
             <div class="contract-item">
-                <div class="row">
+                <div class="row m-b-10 m-t-10">
                     <div class="col-md-4">
                         <div class="contract-label">{{ $t('Document') }}</div>
                     </div>
@@ -15,43 +14,36 @@
                             <template v-if="hasLeadDocument()">
                                 <a href="#" @click.prevent="downloadLeadDocument">
                                     <i class="fa fa-file"></i>
-                                    {{ leadContract.contract_document }}
+                                    {{ leadContract.document }}
                                 </a>
                             </template>
                             <template v-else>-</template>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="contract-item">
                 <div class="row">
                     <div class="col-md-4">
-                        <div class="contract-label">{{ $t('Services') }}</div>
+                        <div class="contract-label">{{ $t('Service') }}</div>
                     </div>
                     <div class="col-md-8">
-                        <div class="contract-item-desc" v-if="hasContractServices()">
-                            <div class="contract-product"
-                                 v-for="service in lead.services">
-                                <div>
-                                    <label>{{ $t('Name') }}:</label>
-                                    <span>{{ service.service.name }}</span>
-                                </div>
-                                <div>
-                                    <label>{{ $t('Note') }}:</label>
-                                    <span>{{ service.service.note }}</span>
-                                </div>
-                                <div>
-                                    <label>{{ $t('Price') }}:</label>
-                                    <span
-                                        v-html="HelperUtils.getCurrency(service.service.price)"></span>
-                                </div>
-                                <div>
-                                    <label>{{ $t('Quantity') }}:</label>
-                                    <span>{{ service.service.quantity }}</span>
-                                </div>
+                        <div class="contract-item-desc">
+                            <div>
+                                <label>{{ $t('Name') }}:</label>
+                                <span>{{ leadContract.service.name }}</span>
+                            </div>
+                            <div>
+                                <label>{{ $t('Price') }}:</label>
+                                <span v-html="HelperUtils.getCurrency(leadContract.price)"></span>
+                            </div>
+                            <div>
+                                <label>{{ $t('Quantity') }}:</label>
+                                <span>{{ leadContract.quantity }}</span>
+                            </div>
+                            <div>
+                                <label>{{ $t('Note') }}:</label>
+                                <span>{{ leadContract.note }}</span>
                             </div>
                         </div>
-                        <template v-else>-</template>
                     </div>
                 </div>
             </div>
@@ -73,33 +65,33 @@ const props = defineProps({
     }
 });
 
-const lead = ref(props.lead);
+const leadContract = ref(props.lead);
 const { t: $t } = useI18n();
 
 function hasLeadDocument() {
-    return lead.value.contract_document !== "" && lead.value.contract_document !== null;
+    return leadContract.value.document !== "" && leadContract.value.document !== null;
 }
 
 function downloadLeadDocument() {
     axios.postDownload(route('admin.leads.download_contract_doc'), {
-        lead_id: lead.value.id
+        lead_id: leadContract.value.lead_id
     })
         .then((response) => {
             if (response.status === 200) {
-                HelperUtils.blobFileDownload(response, lead.value.contract_document_name);
+                HelperUtils.blobFileDownload(response, leadContract.value.document_name);
             }
         });
 }
 
 function hasContractServices() {
-    return lead.value.services.length > 0;
+    return leadContract.value.services.length > 0;
 }
 
 function getLeadContract() {
     axios.post(route('admin.leads.get_contract'), {lead_id: props.lead.id})
         .then((response) => {
             if (response.status === 200) {
-                lead.value = response.data.data;
+                leadContract.value = response.data.data;
             }
         });
 }

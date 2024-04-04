@@ -49,41 +49,6 @@ class IsLeadEligibleForNewCustomer implements ValidationRule
         if (!$pass) {
             $fail($this->message());
         }
-
-        $leadContract = LeadContract::withCount('product_items')->where('lead_id', $leadId)->first();
-
-        if (!in_array($leadContract->membership, Membership::onlyNames())) {
-            if (!in_array(request()->input('membership'), Membership::onlyNames())) {
-                $this->addMessageList('Membership is required');
-                $pass = false;
-            }
-        }
-
-        if (!$pass) {
-            $fail($this->message());
-        }
-
-        if (empty($leadContract->document_name)) {
-            if (!$this->isValidMembershipContractFile()) {
-                $pass = false;
-            }
-        }
-
-        if (!$pass) {
-            $fail($this->message());
-        }
-
-        if ((int) $leadContract->product_items_count == 0) {
-            $contractProduct = new CheckContractProductsPattern();
-            if (!($contractProduct->passes('', (array) request()->input('products')))) {
-                $this->message .= $contractProduct->getOnlyMessage();
-                $pass = false;
-            }
-        }
-
-        if (!$pass) {
-            $fail($this->message());
-        }
     }
 
 

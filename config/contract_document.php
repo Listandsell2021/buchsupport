@@ -2,7 +2,7 @@
 
 return [
 
-    'min_size' => 40, // KB
+    'min_size' => 50, // KB
     'max_size' => 2 * 1024, // KB
     'extensions' => ['pdf'],
     'lead_contract_folder' => 'lead_contracts',

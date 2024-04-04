@@ -1,5 +1,4 @@
 <template>
-
     <div>
         <div class="top-smart-list contract-box">
             <div class="ts-list-header">
@@ -31,81 +30,59 @@
                     </div>
                 </div>
 
-                <div class="m-t-20 m-b-20">
-                    <table class="table contract-add-table">
-                        <thead>
-                        <tr>
-                            <th>{{ $t('Product Name') }}</th>
-                            <th>{{ $t('Quantity') }}</th>
-                            <th>{{ $t('Price') }}</th>
-                            <th>{{ $t('Note') }}</th>
-                            <th>{{ $t('Action') }}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr :key="service.service_id" v-for="(service, serviceIndex) in form.services">
-                            <td class="col-service-name">
-                                <BsSelect
-                                    class="contract-fs"
-                                    v-model="service.service_id"
-                                    :options="useServiceStore().services"
-                                    label="name"
-                                    :reduce="service => service.id"
-                                    :clearable="false"
-                                    :placeholder="$t('Select Service')"
-                                ></BsSelect>
-                            </td>
-                            <td class="col-service-quantity">
-                                <input class="form-control"
-                                       v-model="service.quantity"
-                                       type="number"
-                                       min="1"
-                                       :placeholder="$t('Enter Quantity')"
-                                />
-                            </td>
-                            <td class="col-service-price">
-                                <input class="form-control"
-                                       v-model="service.price"
-                                       type="number"
-                                       min="1"
-                                       :placeholder="$t('Enter Price')"
-                                />
-                            </td>
-                            <td class="col-service-note">
-                                <textarea class="form-control"
-                                          v-model="service.note"
-                                          type="number"
-                                          :placeholder="$t('Enter Note')"
-                                ></textarea>
-                            </td>
-                            <td class="col-service-action">
-                                <a href="#"
-                                   class="btn btn-xs btn-danger"
-                                   @click.prevent="deleteProduct(serviceIndex)"
-                                >
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="6">
-                                <div class="clearfix">
-                                    <a href="#"
-                                       @click.prevent="addService"
-                                       class="btn btn-primary btn-xs pull-right"
-                                    >
-                                        <i class="fa fa-plus"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>{{ $t('Service') }}</label>
+                            <BsSelect
+                                class=""
+                                v-model="form.service_id"
+                                :options="useServiceStore().services"
+                                label="name"
+                                :reduce="service => service.id"
+                                :clearable="false"
+                                :placeholder="$t('Select Service')"
+                            ></BsSelect>
+                        </div>
+                    </div>
+                    <div class="col-md-5 offset-md-1">
+                        <div class="form-group">
+                            <label>{{ $t('Price') }}</label>
+                            <input class="form-control"
+                                   v-model="form.price"
+                                   type="number"
+                                   min="1"
+                                   :placeholder="$t('Enter Quantity')"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>{{ $t('Quantity') }}</label>
+                            <input class="form-control"
+                                   v-model="form.quantity"
+                                   type="number"
+                                   min="1"
+                                   :placeholder="$t('Enter Quantity')"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-md-5 offset-md-1">
+                        <div class="form-group">
+                            <label>{{ $t('Note') }}</label>
+                            <textarea class="form-control"
+                                      v-model="form.note"
+                                      rows="2"
+                                      :placeholder="$t('Enter Note')"
+                            ></textarea>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="clearfix">
-                    <button v-if="false" @click.prevent="updateContract" class="btn btn-primary m-t-30">{{ $t('Update') }}</button>
-                    <button @click.prevent="requestForNewCustomer" class="btn btn-primary pull-right m-t-30">
+                    <button @click.prevent="requestForNewCustomer" class="btn btn-primary pull-left">
                         {{ $t('Request New Customer') }}
                     </button>
                 </div>
@@ -145,38 +122,25 @@ const form = ref({
     lead_id: props.leadId,
     document: "",
     document_name: "",
-    services: [],
+    service_id: null,
+    quantity: 0,
+    price: 0,
+    note: "",
 });
 
 onClickOutside(modalDialog, () => {
     closeModal();
 })
 
-function updateContract() {
-    axios.post(route('admin.leads.update_contract_products'), {
-        lead_id: form.value.lead_id,
-        services: form.value.services
-    })
-        .then((response) => {
-            if (response.status === 200) {
-                Notifier.toastSuccess(response.data.message);
-            }
-        });
-}
-
 function requestForNewCustomer() {
 
     let formData = new FormData();
     formData.append('lead_id', props.leadId);
     formData.append('document', form.value.document);
-
-    let serviceIndex = 0;
-    for (const service of form.value.services) {
-        Object.entries(service).forEach(([key, value]) => {
-            formData.append('services['+serviceIndex+']['+key+']', value);
-        });
-        ++serviceIndex;
-    }
+    formData.append('service_id', form.value.service_id);
+    formData.append('price', form.value.price);
+    formData.append('quantity', form.value.quantity);
+    formData.append('note', form.value.note);
 
     axios.post(route('admin.leads.request_new_customer'), formData)
         .then((response) => {

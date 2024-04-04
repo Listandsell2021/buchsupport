@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <Breadcrumbs :menu-items="breadcrumbConfig.leads.edit(leadId)" :title="$t('Lead Management')"/>
 
         <Transition>
@@ -138,7 +137,7 @@
                                             @reload="getLeadData"
                                 ></LeadDetail>
 
-                                <LeadContractDetail :lead="lead"></LeadContractDetail>
+                                <LeadContractDetail :lead="lead.contract" v-if="lead.contract"></LeadContractDetail>
                             </div>
 
                             <div class="col-md-4">

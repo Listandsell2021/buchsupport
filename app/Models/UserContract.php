@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class UserService extends Model
+class UserContract extends Model
 {
     use HasFactory;
 
-    protected $table = 'user_services';
+    protected $table = 'user_contract';
+
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -20,10 +22,11 @@ class UserService extends Model
     protected $fillable = [
         'user_id',
         'service_id',
+        'document',
+        'document_path',
         'note',
         'price',
         'quantity',
-        'order_no'
     ];
 
 

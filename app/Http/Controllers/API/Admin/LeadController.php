@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\CommandProcess\Admin\Lead\AddLeadNote;
 use App\CommandProcess\Admin\Lead\ConvertLeadToNewCustomer;
+use App\CommandProcess\Admin\Lead\CreateLeadContract;
 use App\CommandProcess\Admin\Lead\CreateLeadProductCategory;
 use App\CommandProcess\Admin\Lead\DeleteAddedProduct;
 use App\CommandProcess\Admin\Lead\DeleteLead;
@@ -40,6 +41,7 @@ use App\Http\Requests\Admin\Lead\AddedNewCustomerRequest;
 use App\Http\Requests\Admin\Lead\AddLeadNoteRequest;
 use App\Http\Requests\Admin\Lead\ApproveNewCustomerRequest;
 use App\Http\Requests\Admin\Lead\ChangeStatusRequest;
+use App\Http\Requests\Admin\Lead\CreateLeadContractRequest;
 use App\Http\Requests\Admin\Lead\CreateLeadRequest;
 use App\Http\Requests\Admin\Lead\DeleteAddedProductRequest;
 use App\Http\Requests\Admin\Lead\DeleteLeadNoteRequest;
@@ -422,37 +424,32 @@ class LeadController extends Controller
     /**
      * Request For New Customer
      *
-     * @param AddedNewCustomerRequest $request
+     * @param CreateLeadContractRequest $request
      * @return JsonResponse
      */
-    public function requestNewCustomer(AddedNewCustomerRequest $request): JsonResponse
+    public function requestNewCustomer(CreateLeadContractRequest $request): JsonResponse
     {
-        if ($request->hasFile('document')) {
+        DB::beginTransaction();
+
+        try {
             $this->commandBus->execute(
-                new UploadContractDocument(
+                new CreateLeadContract(
                     (int) $request->get('lead_id'),
-                    $request->file('document')
+                    $request->file('document'),
+                    $request->get('service_id'),
+                    $request->get('quantity'),
+                    $request->get('price'),
+                    $request->get('note'),
                 )
             );
+
+            $this->commandBus->execute(new ConvertLeadToNewCustomer($request->get('lead_id')));
+
+            DB::commit();
+        } catch (\Exception $e) {
+            dd($e);
+            DB::rollback();
         }
-
-        if (in_array($request->get('membership'), Membership::onlyNames())) {
-            $this->commandBus->execute(
-                new UpdateContractMembership(
-                    (int) $request->get('lead_id'),
-                    (string) $request->get('membership')
-                )
-            );
-        }
-
-        $this->commandBus->execute(
-            new UpdateContractProducts(
-                (int) $request->get('contract_id'),
-                (array) $request->get('products')
-            )
-        );
-
-        $this->commandBus->execute( new RequestForNewCustomer((int) $request->get('lead_id')) );
 
         return $this->respondWithSuccess(__('New Customer Request sent successfully'));
     }
@@ -464,12 +461,12 @@ class LeadController extends Controller
      * @param ApproveNewCustomerRequest $request
      * @return JsonResponse
      */
-    public function approveLeadNewCustomer(ApproveNewCustomerRequest $request): JsonResponse
+    /*public function approveLeadNewCustomer(ApproveNewCustomerRequest $request): JsonResponse
     {
         $this->commandBus->execute(new ConvertLeadToNewCustomer($request->get('lead_id')));
 
         return $this->respondWithSuccess(__('New user created successfully'));
-    }
+    }*/
 
     /**
      * Update Leads Salesperson
