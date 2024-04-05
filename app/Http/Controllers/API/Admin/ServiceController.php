@@ -13,14 +13,11 @@ use App\CommandProcess\Admin\Service\UpdateServiceActiveStatus;
 use App\Helpers\Trait\ApiResponseHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Administrator\ChangeActiveStatusRequest;
-use App\Http\Requests\Admin\Service\AddProductImageRequest;
 use App\Http\Requests\Admin\Service\CreateServiceRequest;
-use App\Http\Requests\Admin\Service\RemoveProductImageRequest;
 use App\Http\Requests\Admin\Service\UpdateServiceRequest;
-use App\Http\Requests\Admin\Service\UpdateProductsBulkActionRequest;
+use App\Models\ServicePipeline;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Rosamarsky\CommandBus\CommandBus;
 
 
@@ -130,26 +127,6 @@ class ServiceController extends Controller
 
 
     /**
-     * Update Bulk Action
-     *
-     * @param UpdateProductsBulkActionRequest $request
-     * @return JsonResponse
-     */
-    public function updateBulkAction(UpdateProductsBulkActionRequest $request): JsonResponse
-    {
-        $message = $this->commandBus->execute(
-            new UpdateProductsBulkAction(
-                (array) $request->get('data_ids'),
-                (string) $request->get('action')
-            )
-        );
-
-        return $this->respondWithSuccess($message);
-    }
-
-
-
-    /**
      * Get All Products
      *
      * @param Request $request
@@ -162,62 +139,21 @@ class ServiceController extends Controller
         return $this->respondWithSuccess(__('Services fetched successfully'), $services);
     }
 
-    
 
     /**
-     * Add Product Image
-     *
-     * @param AddProductImageRequest $request
-     * @return JsonResponse
-     */
-    public function addProductImage(AddProductImageRequest $request): JsonResponse
-    {
-        $this->commandBus->execute(
-            new AddProductImage((int) $request->get('product_id'), $request->file('image'))
-        );
-
-        return $this->respondWithSuccess(__('Image added successfully'));
-    }
-
-
-    /**
-     * Add Product Image
-     *
-     * @param RemoveProductImageRequest $request
-     * @return JsonResponse
-     */
-    public function removeProductImage(RemoveProductImageRequest $request): JsonResponse
-    {
-        $this->commandBus->execute(new DeleteProductImage((int) $request->get('image_id')));
-
-        return $this->respondWithSuccess(__('Image removed successfully'));
-    }
-
-
-    /**
-     * Get Product Images
+     * Get Service Pipeline In Kanvan
      *
      * @param Request $request
+     * @param $serviceId
      * @return JsonResponse
      */
-    public function getProductImages(Request $request): JsonResponse
+    public function getServicePipelineInKanvan(Request $request, $serviceId): JsonResponse
     {
-        $images = $this->commandBus->execute(new GetProductImages((int) $request->get('product_id')));
+        $pipelines = ServicePipeline::with(['orders', 'orders.user'])
+            ->where('service_id', $serviceId)->orderBy('order_no')
+            ->get();
 
-        return $this->respondWithSuccess(__('Product images fetched successfully'), $images);
-    }
-
-    /**
-     * Sort Product Images
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function sortProductImages(Request $request): JsonResponse
-    {
-        $this->commandBus->execute(new SortProductImages((array) $request->get('image_ids')));
-
-        return $this->respondWithSuccess(__('Images sorted successfully'));
+        return $this->respondWithContentOnly($pipelines);
     }
 
 }

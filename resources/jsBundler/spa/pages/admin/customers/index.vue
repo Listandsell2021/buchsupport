@@ -98,40 +98,6 @@
                                                     </button>
                                                 </td>
                                             </tr>
-                                            <Transition>
-                                                <tr v-if="selectedCustomerId === customer.id && customerProducts.length > 0">
-                                                    <td colspan="11">
-                                                        <div class="row">
-                                                            <div class="col-md-8">
-                                                                <ul class="list-group">
-                                                                    <VueDraggableNext
-                                                                        v-model="customerProducts"
-                                                                        group="people"
-                                                                        @change="sortProducts(customer.id, customerProducts)"
-                                                                    >
-                                                                        <li class="list-group-item draggable-item"
-                                                                            :key="product.product_id"
-                                                                            v-for="(product, index) in customerProducts"
-                                                                        >
-                                                                            <div class="clearfix">
-                                                                        <span class="pull-left">
-                                                                            <span class="product-id-text ">
-                                                                                #{{ product.product_id }}
-                                                                            </span>
-                                                                            {{ product.name }}
-                                                                        </span>
-                                                                                <span class="pull-right">
-                                                                            &euro; {{ product.price }}
-                                                                        </span>
-                                                                            </div>
-                                                                        </li>
-                                                                    </VueDraggableNext>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </Transition>
                                         </template>
                                     </template>
                                     <template v-else>
@@ -178,8 +144,6 @@ import StreetFilter from "@/components/admin/Customer/Filters/StreetFilter";
 import PostalCodeFilter from "@/components/admin/Customer/Filters/PostalCodeFilter";
 import CityFilter from "@/components/admin/Customer/Filters/CityFilter";
 import IsActiveFilter from "@/components/admin/Customer/Filters/IsActiveFilter";
-import ProductFilter from "@/components/admin/Customer/Filters/ProductFilter";
-import { VueDraggableNext } from 'vue-draggable-next';
 import {useRouter} from "vue-router";
 import {useI18n} from "vue-i18n";
 import __Has from "lodash/has";
@@ -196,7 +160,6 @@ const StreetFilterComponent = shallowRef(StreetFilter);
 const PostalCodeFilterComponent = shallowRef(PostalCodeFilter);
 const CityFilterComponent = shallowRef(CityFilter);
 const IsActiveFilterComponent = shallowRef(IsActiveFilter);
-const ProductFilterComponent = shallowRef(ProductFilter);
 
 const form = ref({
     page: 1,
@@ -267,8 +230,6 @@ const form = ref({
 });
 
 const customers = ref({});
-let selectedCustomerId = ref(0);
-let customerProducts = ref([]);
 
 const getCustomerList = async (page = 1, per_page = 0) => {
 
@@ -281,53 +242,6 @@ const getCustomerList = async (page = 1, per_page = 0) => {
 
 function hasCustomers() {
     return __Has(customers.value, 'data') ? (customers.value.data.length > 0) : customers.value;
-}
-
-function hasProducts(totalProduct)
-{
-    return totalProduct > 0;
-}
-
-function toggleShowProduct(customerId) {
-
-    if (selectedCustomerId.value === customerId) {
-        selectedCustomerId.value = 0;
-        return;
-    }
-
-    selectedCustomerId.value = customerId;
-
-    getProductsByCustomer(customerId);
-}
-
-function getProductsByCustomer(customerId)
-{
-    axios.post(route('admin.customers.products'), {
-        user_id: customerId,
-    })
-        .then(response => {
-            if (response.status === 200) {
-                customerProducts.value = response.data.data;
-            }
-        });
-}
-
-function sortProducts(customerId, products) {
-    axios.post(route('admin.customers.sort_products'), {
-        user_id: customerId,
-        user_product_ids: getUserProductIds(products),
-    })
-        .then((response) => {
-            if (response.status === 200) {
-                Notifier.toastSuccess(response.data.message);
-            }
-        });
-}
-
-function getUserProductIds(products) {
-    return products.map((product) => {
-        return product.user_product_id;
-    });
 }
 
 function goToEditCustomer(adminId) {

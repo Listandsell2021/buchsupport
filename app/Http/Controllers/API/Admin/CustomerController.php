@@ -19,7 +19,7 @@ use App\CommandProcess\Admin\Customer\UpdateCustomerForms;
 use App\CommandProcess\Admin\Customer\UpdateCustomerInvoiceSetting;
 use App\CommandProcess\Admin\Customer\UpdateCustomersBulkAction;
 use App\Http\Requests\Admin\Customer\ChangeActiveStatusRequest;
-use App\Http\Requests\Admin\Customer\CreatePipelineRequest;
+use App\Http\Requests\Admin\Customer\CreateCustomerRequest;
 use App\Http\Requests\Admin\Customer\CustomerDocumentRequest;
 use App\Http\Requests\Admin\Customer\DownloadContractDocumentRequest;
 use App\Http\Requests\Admin\Customer\UpdateCustomerRequest;
@@ -50,7 +50,7 @@ class CustomerController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $customers = $this->commandBus->execute(new GetFilteredCustomers($request->all()));
 
@@ -60,13 +60,13 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param CreatePipelineRequest $request
+     * @param CreateCustomerRequest $request
      * @return JsonResponse
      */
-    public function store(CreatePipelineRequest $request)
+    public function store(CreateCustomerRequest $request): JsonResponse
     {
         $customer = $this->commandBus->execute(
-            new StoreCustomer($request->only(User::fillableProps()), $request->get('forms'))
+            new StoreCustomer($request->only(User::fillableProps()))
         );
 
         return $this->respondCreated(__('Customer created successfully'), $customer);
@@ -78,7 +78,7 @@ class CustomerController extends Controller
      * @param $customerId
      * @return JsonResponse
      */
-    public function show($customerId)
+    public function show($customerId): JsonResponse
     {
         $customer = $this->commandBus->execute(new GetCustomer((int) $customerId));
 

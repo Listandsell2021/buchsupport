@@ -19,6 +19,6 @@ class GetFilteredServicePipelinesHandler implements Handler
 
     public function handle(Command $command)
     {
-        return $this->dbService->searchAndPaginate($command->data);
+        return $this->dbService->searchAndPaginate($command->serviceId, $command->data);
     }
 }

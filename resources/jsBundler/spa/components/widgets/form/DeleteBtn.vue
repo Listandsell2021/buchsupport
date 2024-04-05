@@ -2,7 +2,7 @@
     <button class="btn btn-danger btn-xs ms-1"
             :class="props.class"
             @click.prevent="executeDelete"
-            v-tooltip="$t('Delete Service')"
+            v-tooltip="$t('Delete '+props.name)"
     >
         <i class="fa fa-trash"></i>
     </button>

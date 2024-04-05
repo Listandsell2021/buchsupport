@@ -6,6 +6,7 @@ use App\CommandProcess\Admin\Service\GetAllServices;
 use App\CommandProcess\Admin\ServicePipeline\ChangeDefaultServicePipeline;
 use App\CommandProcess\Admin\ServicePipeline\DeleteServicePipeline;
 use App\CommandProcess\Admin\ServicePipeline\GetFilteredServicePipelines;
+use App\CommandProcess\Admin\ServicePipeline\GetPipelinesByService;
 use App\CommandProcess\Admin\ServicePipeline\GetServicePipeline;
 use App\CommandProcess\Admin\ServicePipeline\StoreServicePipeline;
 use App\CommandProcess\Admin\ServicePipeline\UpdateServicePipeline;
@@ -36,6 +37,7 @@ class ServicePipelineController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
+     * @param $serviceId
      * @return JsonResponse
      */
     public function index(Request $request, $serviceId): JsonResponse
@@ -119,30 +121,16 @@ class ServicePipelineController extends Controller
 
 
     /**
-     * Get All Products
+     * Get Pipelines by Service
      *
      * @param Request $request
      * @return JsonResponse
      */
-    public function getAllServices(Request $request): JsonResponse
+    public function getPipelinesByService(Request $request): JsonResponse
     {
-        $services = $this->commandBus->execute(new GetAllServices());
+        $pipelines = $this->commandBus->execute(new GetPipelinesByService($request->get('service_id')));
 
-        return $this->respondWithSuccess(__('Services fetched successfully'), $services);
-    }
-
-
-    /**
-     * Sort Product Images
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function sortProductImages(Request $request): JsonResponse
-    {
-        $this->commandBus->execute(new SortProductImages((array) $request->get('image_ids')));
-
-        return $this->respondWithSuccess(__('Images sorted successfully'));
+        return $this->respondWithSuccess(__('Service status fetched successfully'), $pipelines);
     }
 
 }

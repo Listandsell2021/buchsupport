@@ -108,6 +108,12 @@ enum AdminPermission: string
     case UPDATE_PIPELINE = 'Edit Pipeline';
     case DELETE_PIPELINE = 'Delete Pipeline';
 
+    case LIST_ORDER = 'List Order';
+    case CREATE_ORDER = 'Create Order';
+    case SHOW_ORDER = 'Show Order';
+    case UPDATE_ORDER = 'Edit Order';
+    case DELETE_ORDER = 'Delete Order';
+
     public static function all(): array
     {
         $permissions = [];

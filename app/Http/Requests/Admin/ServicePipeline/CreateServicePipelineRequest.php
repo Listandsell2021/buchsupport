@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\ServicePipeline;
 
 use App\Http\Rules\Admin\CheckProductImages;
+use App\Models\ServicePipeline;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateServicePipelineRequest extends FormRequest
@@ -23,7 +24,18 @@ class CreateServicePipelineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => ['required', 'unique:service_pipelines'],
+            'name'          => [
+                'required',
+                function (string $attribute, mixed $value, \Closure $fail) {
+                    $pipeline = ServicePipeline::where('service_id', $this->get('service_id'))
+                        ->where('name', '=', $value)
+                        ->exists();
+
+                    if ($pipeline) {
+                        $fail(trans('Status name ":name" already exists', ['name' => $value]));
+                    }
+                },
+            ],
             'service_id'    => ['required', 'exists:services,id'],
             'has_tracking'  => 'required',
             'default'       => 'required',

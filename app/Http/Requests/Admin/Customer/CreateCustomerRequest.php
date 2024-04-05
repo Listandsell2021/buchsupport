@@ -20,7 +20,7 @@ class CreateCustomerRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array
      */
     public function rules(): array
     {
@@ -29,15 +29,13 @@ class CreateCustomerRequest extends FormRequest
             'last_name' => 'required',
             'email' => 'nullable|email|unique:users,email',
             'password' => 'required|min:8',
-            'dob' => 'required|date|date_format:'.getLocaleDateFormat().'|before:today',
+            'dob' => 'required|date|before:today',//date_format:'.getLocaleDateFormat()
             'phone_no' => 'nullable',
             'gender' => 'required|in:'.implode(',', Gender::onlyNames()),
             'street' => 'nullable',
             'postal_code' => 'nullable|numeric',
             'city' => 'nullable',
             'country' => 'required',
-            'membership' => ['required', 'in:'.implode(',', Membership::onlyNames())],
-            'forms' => ['array', new CheckUserFormPattern()],
         ];
     }
 

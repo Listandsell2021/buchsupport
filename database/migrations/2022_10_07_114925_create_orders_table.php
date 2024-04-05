@@ -36,6 +36,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->text('note');
             $table->dateTime('order_at');
+            $table->smallInteger('order_no')->default(1);
         });
 
 

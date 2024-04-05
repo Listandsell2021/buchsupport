@@ -7,11 +7,9 @@ use Rosamarsky\CommandBus\Command;
 class StoreCustomer implements Command
 {
     public array $data;
-    public array $forms;
 
-    public function __construct(array $data, array $forms)
+    public function __construct(array $data)
     {
         $this->data = $data;
-        $this->forms = $forms;
     }
 }

@@ -75,6 +75,7 @@ const leadStatus = await useLeadStatusStore().getLeadStatusByRefresh();
 
 const form = ref({
     id: props.pipeline.id,
+    service_id: props.pipeline.service_id,
     name: props.pipeline.name,
     default: props.pipeline.default,
     has_tracking: props.pipeline.has_tracking,

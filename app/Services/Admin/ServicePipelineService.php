@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 class ServicePipelineService
 {
 
-    public function searchAndPaginate($data)
+    public function searchAndPaginate(int $serviceId, array $data)
     {
         $filters = $data['filters'] ?? [];
 
@@ -18,6 +18,7 @@ class ServicePipelineService
                 $query->where('service_pipelines.name', 'LIKE', '%' . $filters['name'] . '%');
             }
         })
+            ->where('service_id', $serviceId)
             ->sorting(['service_pipelines.name'], 'service_pipelines.id')
             ->paginate(getPerPageTotal());
     }
@@ -123,6 +124,17 @@ class ServicePipelineService
         if ($default) {
             ServicePipeline::where('id', '!=', $pipelineId)->update(['default' => 0]);
         }
+    }
+
+    /**
+     * Get Pipelines by Service
+     *
+     * @param int $serviceId
+     * @return mixed
+     */
+    public function getPipelinesByService(int $serviceId): mixed
+    {
+        return ServicePipeline::where('service_id', $serviceId)->orderBy('order_no')->get();
     }
 
 

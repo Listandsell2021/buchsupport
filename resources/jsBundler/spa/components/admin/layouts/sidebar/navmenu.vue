@@ -25,9 +25,7 @@
                         <h6 class="lan-1">{{ $t(menuItem.headTitle1) }}</h6>
                     </div>
                     <div v-if="menuItem.type == 'breakline'" class="nav-breakline"></div>
-                    <label :class="'badge badge-' + menuItem.badgeType" v-if="menuItem.badgeType">
-                        {{ (menuItem.badgeValue) }}
-                    </label>
+
                     <a href="javascript:void(0)" class="sidebar-link sidebar-title"
                        :class="{ 'active': menuItem.active }"
                        v-if="menuItem.type == 'sub'" @click="setNavActive(menuItem, index)"
@@ -60,100 +58,16 @@
                         <i class="fa fa-angle-right pull-right" v-if="menuItem.children"></i>
                     </a>
 
-                    <a :href="menuItem.path" target="_blank" class="sidebar-link sidebar-title"
-                       v-if="menuItem.type == 'extTabLink'"
-                       @click="setNavActive(menuItem, index)">
-
-                        <i :class="`${menuItem.icon}`"></i>
-                        <span>{{ $t(menuItem.title) }}</span>
-                        <i class="fa fa-angle-right pull-right" v-if="menuItem.children"></i>
-                    </a>
-
-
                     <ul class="sidebar-submenu" v-if="menuItem.children" :class="{ 'menu-open': menuItem.active }"
                         :style="{ display: menuItem.active ? '' : 'none' }">
                         <li v-for="(childrenItem, index) in menuItem.children" :key="index">
-                            <a class="lan-4" :class="{ 'active': childrenItem.active }" href="javascript:void(0)"
-                               v-if="childrenItem.type == 'sub'" @click="setNavActive(childrenItem, index)">
-                                {{ $t(childrenItem.title) }}
-                                <label :class="'badge badge-' + childrenItem.badgeType + ' pull-right'"
-                                       v-if="childrenItem.badgeType">
-                                    {{ childrenItem.badgeValue }}
-                                </label>
-                                <i class="fa pull-right mt-1"
-                                   v-bind:class="[childrenItem.active ? 'fa fa-angle-down' : 'fa fa-angle-right']"
-                                   v-if="childrenItem.children"></i>
-                            </a>
-
                             <router-link class="lan-4" :class="{ 'active': childrenItem.active }"
                                          :to="childrenItem.path"
-                                         v-if="childrenItem.type == 'link'" @click="setNavActive(childrenItem, index)"
-                                         v-on:click="hidesecondmenu()">
+                                         @click="setNavActive(childrenItem, index)"
+                                         v-on:click="hidesecondmenu()"
+                            >
                                 {{ $t(childrenItem.title) }}
-                                <label :class="'badge badge-' + childrenItem.badgeType + ' pull-right'"
-                                       v-if="childrenItem.badgeType">
-                                    {{ (childrenItem.badgeValue) }}
-                                </label>
-                                <i class="fa fa-angle-right pull-right mt-1" v-if="childrenItem.children"></i>
                             </router-link>
-
-                            <a :href="childrenItem.path" v-if="childrenItem.type == 'extLink'" class="submenu-title">
-                                {{ $t(childrenItem.title) }}
-                                <label :class="'badge badge-' + childrenItem.badgeType + ' pull-right'"
-                                       v-if="childrenItem.badgeType">
-                                    {{ $t(childrenItem.badgeValue) }}
-                                </label>
-                                <i class="fa fa-angle-right pull-right mt-1" v-if="childrenItem.children"></i>
-                            </a>
-
-                            <a class="submenu-title" :href="childrenItem.path" target="_blank"
-                               v-if="childrenItem.type == 'extTabLink'">
-                                {{ $t(childrenItem.title) }}
-                                <label :class="'badge badge-' + childrenItem.badgeType + ' pull-right'"
-                                       v-if="childrenItem.badgeType">
-                                    {{ (childrenItem.badgeValue) }}
-                                </label>
-                                <i class="fa fa-angle-right pull-right mt-1" v-if="childrenItem.children"></i>
-                            </a>
-
-                            <ul class="nav-sub-childmenu submenu-content" v-if="childrenItem.children"
-                                :class="{ 'opensubchild': childrenItem.active }">
-                                <li v-for="(childrenSubItem, index) in childrenItem.children" :key="index">
-
-                                    <router-link :class="{ 'active': childrenSubItem.active }"
-                                                 :to="childrenSubItem.path"
-                                                 v-if="childrenSubItem.type == 'link'" router-link-exact-active exact
-                                                 v-on:click="hidesecondmenu()"
-                                                 @click="setNavActive(childrenSubItem, index)">
-                                        {{ $t(childrenSubItem.title) }}
-                                        <label :class="'badge badge-' + childrenSubItem.badgeType + ' pull-right'"
-                                               v-if="childrenSubItem.badgeType">{{
-                                                (childrenSubItem.badgeValue)
-                                            }}</label>
-                                        <i class="fa fa-angle-right pull-right" v-if="childrenSubItem.children"></i>
-                                    </router-link>
-
-                                    <router-link :to="childrenSubItem.path" v-if="childrenSubItem.type == 'extLink'"
-                                                 router-link-exact-active>
-                                        {{ $t(childrenSubItem.title) }}
-                                        <label :class="'badge badge-' + childrenSubItem.badgeType + ' pull-right'"
-                                               v-if="childrenSubItem.badgeType">{{
-                                                (childrenSubItem.badgeValue)
-                                            }}</label>
-                                        <i class="fa fa-angle-right pull-right" v-if="childrenSubItem.children"></i>
-                                    </router-link>
-
-                                    <router-link :to="childrenSubItem.path" v-if="childrenSubItem.type == 'extLink'"
-                                                 router-link-exact-active>
-                                        {{ $t(childrenSubItem.title) }}
-                                        <label :class="'badge badge-' + childrenSubItem.badgeType + ' pull-right'"
-                                               v-if="childrenSubItem.badgeType">{{
-                                                (childrenSubItem.badgeValue)
-                                            }}</label>
-                                        <i class="fa fa-angle-right pull-right" v-if="childrenSubItem.children"></i>
-                                    </router-link>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                 </template>

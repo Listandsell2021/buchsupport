@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin\ServicePipeline;
 
+use App\Models\ServicePipeline;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class UpdateServicePipelineRequest extends FormRequest
@@ -23,8 +25,20 @@ class UpdateServicePipelineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id'            => ['required', 'exists:service_pipelines,id'],
-            'name'          => ['required', Rule::unique('service_pipelines')->ignore($this->get('id'))],
+            'id'            => ['required', Rule::exists((new ServicePipeline())->getTable())],
+            'service_id'    => ['required'],
+            'name'          => ['required',
+                function (string $attribute, mixed $value, \Closure $fail) {
+                    $pipeline = ServicePipeline::where('service_id', $this->get('service_id'))
+                        ->where('id', '<>', $this->get('id'))
+                        ->where('name', '=', $value)
+                        ->exists();
+
+                    if ($pipeline) {
+                        $fail(trans('Status name already exists'));
+                    }
+                },
+            ],
             'has_tracking'  => 'required',
             'default'       => 'required',
         ];
@@ -39,9 +53,9 @@ class UpdateServicePipelineRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'id.required'           => trans('Service status does not exist'),
-            'name.required'         => trans('Service status name is required'),
-            'name.unique'           => trans('Service status name already exists'),
+            'id.required'           => trans('Status does not exist'),
+            'name.required'         => trans('Status name is required'),
+            'name.unique'           => trans('Status name already exists'),
             'has_tracking.required' => trans('Tracking field is required'),
             'default.required'      => trans('Default field is required'),
         ];

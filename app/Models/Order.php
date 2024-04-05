@@ -10,7 +10,6 @@ class Order extends Model
 {
     use HasFactory;
 
-
     protected $table = "orders";
 
     public $timestamps = false;
@@ -20,7 +19,7 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'service_id', 'pipeline_id', 'price', 'quantity', 'note', 'order_at'];
+    protected $fillable = ['user_id', 'service_id', 'pipeline_id', 'price', 'quantity', 'note', 'order_at', 'order_no'];
 
 
     /**

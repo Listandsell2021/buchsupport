@@ -19,6 +19,7 @@
                                      @filter="updateFilters"
                             >
                                 <template v-slot:sorting_bottom>
+                                    <th>Kanvan</th>
                                     <th class="fixed-t-right">{{ $t('Action') }}</th>
                                 </template>
                             </Sorting>
@@ -28,13 +29,25 @@
                                 <tr v-for="(service) in services.data"
                                     :key="service.id"
                                 >
-                                    <td>{{ service.name }}</td>
+                                    <td>
+                                        <a href="#" @click.prevent="() => router.push('services/' + service.id)">
+                                            {{ service.name }}
+                                        </a>
+                                    </td>
                                     <td>
                                         <AdvanceStatusSwitcher :is_active="service.is_active"
                                                                :url="route('admin.services.change_status')"
                                                                :model_id="service.id"
                                                                @changed="getServicesList"
                                         ></AdvanceStatusSwitcher>
+                                    </td>
+                                    <td>
+                                        <a href="#"
+                                           class="btn btn-info btn-xs"
+                                           @click.prevent="() => router.push('services/'+service.id+'/pipeline')"
+                                        >
+                                            <i class="fa fa-eye"></i>
+                                        </a>
                                     </td>
                                     <td>
                                         <button class="btn btn-success btn-xs"

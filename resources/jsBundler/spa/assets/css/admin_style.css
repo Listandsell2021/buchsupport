@@ -527,9 +527,38 @@ a.bg-secondary:hover, a.bg-secondary:focus {
     padding-bottom: 30px;
 }
 .pipeline-card {
-    min-height: 100px;
     margin-right: 25px;
     min-width: 300px;
+    height: fit-content;
+    padding: 10px;
+    border-radius: 6px;
+    transition: height 0.5s ease;
+    border: 1px solid #e0e0e0;
+}
+.pipeline-group {
+    min-height: 400px;
+}
+.pipeline-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 8px;
+    cursor: pointer;
+    user-select: none;
+    background-color: white;
+    border: 1px solid transparent;
+    border-left: 5px solid #e0e0e0;
+    border-radius: 4px;
+    transition: border-color 0.2s linear;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.pipeline-item-title {
+    font-size: 15px;
+    font-weight: 500;
+}
+.pipeline-table {
+    font-size: 12px;
 }
 .pipeline-title {
     margin-bottom: 15px;

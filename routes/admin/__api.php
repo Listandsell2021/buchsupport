@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Admin\Auth\OrderController;
 use App\Http\Controllers\API\Admin\LeadAppointmentController;
 use App\Http\Controllers\API\Admin\LeadDocumentController;
 use App\Http\Controllers\API\Admin\LeadStatusController;
@@ -70,7 +71,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('services/change-status',   [ServiceController::class, 'changeActiveStatus'])->name('admin.services.change_status')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);
     Route::post('services/all',             [ServiceController::class, 'getAllServices'])->name('admin.services.all')->middleware('can:'.AdminPermission::LIST_SERVICE->name);
     Route::post('services/bulk-action',     [ServiceController::class, 'updateBulkAction'])->name('admin.services.bulk_action')->middleware('can:'.AdminPermission::UPDATE_SERVICE->name);
-
+    Route::get('services/{id}/pipeline',    [ServiceController::class, 'getServicePipelineInKanvan'])->name('admin.services.pipeline')->middleware('can:'.AdminPermission::SHOW_SERVICE->name);
 
     // Service Pipelines
     Route::get('service-pipelines/{service}',       [ServicePipelineController::class, 'index'])->name('admin.service_pipeline.index')->middleware('can:'.AdminPermission::LIST_SERVICE_PIPELINE->name);
@@ -79,6 +80,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::put('service-pipeline/{id}',             [ServicePipelineController::class, 'update'])->name('admin.service_pipeline.update')->middleware('can:'.AdminPermission::UPDATE_SERVICE_PIPELINE->name);
     Route::delete('service-pipeline/{id}',          [ServicePipelineController::class, 'destroy'])->name('admin.service_pipeline.destroy')->middleware('can:'.AdminPermission::DELETE_SERVICE_PIPELINE->name);
     Route::post('service-pipeline/change-default',  [ServicePipelineController::class, 'changeDefault'])->name('admin.services.change_default')->middleware('can:'.AdminPermission::UPDATE_SERVICE_PIPELINE->name);
+    Route::post('service-pipelines/by-service',     [ServicePipelineController::class, 'getPipelinesByService'])->name('admin.service_pipeline.by_service')->middleware('can:'.AdminPermission::LIST_SERVICE_PIPELINE->name);
 
 
     // Customers
@@ -108,6 +110,15 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('pipeline/move',            [PipelineController::class, 'move'])->name('admin.pipeline.move')->middleware('can:'.AdminPermission::UPDATE_PIPELINE->name);
     Route::post('pipeline/sort',            [PipelineController::class, 'sort'])->name('admin.pipeline.sort')->middleware('can:'.AdminPermission::UPDATE_PIPELINE->name);
     Route::post('pipeline/add-customer',    [PipelineController::class, 'addCustomer'])->name('admin.pipeline.add_customer')->middleware('can:'.AdminPermission::UPDATE_PIPELINE->name);
+
+
+    Route::get('orders/list',               [OrderController::class, 'list'])->name('admin.orders.list')->middleware('can:'.AdminPermission::LIST_ORDER->name);
+    Route::post('orders/all',               [OrderController::class, 'all'])->name('admin.orders.all')->middleware('can:'.AdminPermission::LIST_ORDER->name);
+    Route::post('orders/store',             [OrderController::class, 'store'])->name('admin.orders.store')->middleware('can:'.AdminPermission::CREATE_ORDER->name);
+    Route::get('orders/show',               [OrderController::class, 'show'])->name('admin.orders.show')->middleware('can:'.AdminPermission::SHOW_ORDER->name);
+    Route::post('orders/delete',            [OrderController::class, 'delete'])->name('admin.orders.delete')->middleware('can:'.AdminPermission::DELETE_ORDER->name);
+    Route::post('orders/change-pipeline',   [OrderController::class, 'changePipeline'])->name('admin.orders.change_pipeline')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
+    Route::post('orders/sort',              [OrderController::class, 'sortOrders'])->name('admin.orders.sort')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
 
 
     // Leads

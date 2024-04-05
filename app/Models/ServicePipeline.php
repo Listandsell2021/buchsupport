@@ -6,6 +6,7 @@ use App\Helpers\Trait\SortingEloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Libraries\EloquentHelpers\ProductHelper;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ServicePipeline extends Model
@@ -51,5 +52,17 @@ class ServicePipeline extends Model
     {
         return $this->hasOne(Service::class, 'service_id');
     }
+
+
+    /**
+     * Orders
+     *
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'pipeline_id')->orderBy('order_no');
+    }
+
 
 }

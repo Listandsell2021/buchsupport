@@ -86,25 +86,41 @@ export default {
         {
             "title": "Customers",
             "icon": "fa fa-user-plus",
-            "type": "link",
+            "type": "sub",
             "path": "/admin/customers",
             "active": false,
             "permission": Permissions.LIST_CUSTOMER,
             "skip_permission": false,
+            "children": [
+                {
+                    title: "List",
+                    path: "/admin/customers",
+                    active: false,
+                },
+                {
+                    title: "Birthday Calendar",
+                    path: "/admin/customers/birthday-calendar",
+                    active: false,
+                }
+            ],
             "related": [
                 "/admin/customers/create",
                 "/admin/customers/*",
-                //"/admin/birthday-calendar"
+                "/admin/customers/birthday-calendar"
             ]
         },
         {
-            "title": "Birthday Calendar",
-            "icon": "fa fa-birthday-cake",
+            "title": "Orders",
+            "icon": "fa fa-database",
             "type": "link",
-            "path": "/admin/birthday-calendar",
+            "path": "/admin/orders",
             "active": false,
-            "permission": Permissions.LIST_BIRTHDAY_CALENDAR,
-            "skip_permission": false
+            "permission": Permissions.LIST_ORDER,
+            "skip_permission": false,
+            "related": [
+                "/admin/orders/create",
+                "/admin/orders/*"
+            ]
         },
         {
             "type": "breakline",

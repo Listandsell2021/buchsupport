@@ -5,7 +5,6 @@ namespace App\Http\Requests\Admin\Customer;
 use App\DataHolders\Enum\Gender;
 use App\DataHolders\Enum\Membership;
 use App\Http\Rules\Admin\CheckUserFormPattern;
-use App\Rules\Admin\Customer\CheckFormularPattern;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCustomerRequest extends FormRequest
@@ -21,7 +20,7 @@ class UpdateCustomerRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array
      */
     public function rules(): array
     {
@@ -31,15 +30,13 @@ class UpdateCustomerRequest extends FormRequest
             'last_name' => 'required',
             'email' => 'nullable|email|unique:users,email,'.$this->get('id'),
             'password' => 'required|min:8',
-            'dob' => 'required|date|date_format:'.getLocaleDateFormat().'|before:today',
+            'dob' => 'required|date|before:today', //date_format:'.getLocaleDateFormat().'
             'phone_no' => 'nullable',
             'gender' => 'required|in:'.implode(',', Gender::onlyNames()),
             'street' => 'nullable',
             'postal_code' => 'nullable|numeric',
             'city' => 'nullable',
             'country' => 'required',
-            'membership' => ['required', 'in:'.implode(',', Membership::onlyNames())],
-            'forms' => ['array', new CheckUserFormPattern()],
         ];
     }
 
@@ -64,8 +61,6 @@ class UpdateCustomerRequest extends FormRequest
             'dob.date'      => trans('Date of birth is invalid'),
             'dob.date_format' => trans('Date of birth must be in format YYYY-MM-DD'),
             'phone_no.required' => trans('Phone no is required'),
-            //'gender.required' => trans('Gender is required'),
-            //'city.required' => trans('City is required'),
             'country.required' => trans('Country is required'),
             'role_id.required' => trans('AdminRole is required'),
             'role_id.exists' => trans('AdminRole does not exists'),

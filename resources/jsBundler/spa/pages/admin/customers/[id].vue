@@ -38,15 +38,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"
-                               :class="{ 'show active': showTab === 'forms' }"
-                               href="#"
-                               @click.prevent="changeTab('forms')"
-                            >
-                                <i class="fa fa-wpforms"></i> {{ $t('Forms') }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link"
                                :class="{ 'show active': showTab === 'document' }"
                                href="#"
                                @click.prevent="changeTab('document')"
@@ -232,19 +223,6 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>{{ $t('Membership') }}</label>
-                                            <BsSelect
-                                                v-model="profileForm.membership"
-                                                :options="memberships"
-                                                label="name"
-                                                :reduce="membership => membership.id"
-                                                :clearable="false"
-                                                :placeholder="$t('Select Membership')"
-                                            ></BsSelect>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group">
                                             <label>{{ $t('Secondary First name') }}</label>
                                             <Field class="form-control"
                                                    v-model="profileForm.secondary_first_name"
@@ -269,142 +247,6 @@
 
                                 <button type="submit" class="btn btn-primary m-t-30">{{ $t('Update') }}</button>
                             </Form>
-                        </div>
-
-                        <div class="tab-pane fade show active" v-if="showTab === 'forms'">
-
-                            <Form @submit="updateCustomerForms" v-slot="{errors}">
-
-                                <div class="clearfix">
-                                    <button class="btn pull-right btn-primary" @click.prevent="addForm">
-                                        <i class="m-r-5 fa fa-plus"></i> {{ $t('Add Form') }}
-                                    </button>
-                                </div>
-
-                                <div class="product-addition-container">
-                                    <div class="p-addition-item" v-for="(form, formIndex) in userForms"
-                                         :key="profileForm.id">
-
-                                        <div class="p-addition-item-controller">
-                                            <div class="row">
-                                                <div class="col-md-8 offset-md-2">
-                                                    <div class="row">
-                                                        <div class="col">
-                                                            <label>{{ $t('Purchased Date') }}</label>
-                                                            <div class="vue-google-datepicker-wrapper">
-                                                                <BsDatePicker v-model:value="form.purchase_date"
-                                                                                value-type="format"
-                                                                                format="DD.MM.YYYY"
-                                                                                placeholder="DD.MM.YYYY"
-                                                                ></BsDatePicker>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <label>{{ $t('Status') }}</label>
-                                                            <StatusSwitcher :is_active="form.status"
-                                                                            @toggle="changeFormStatus(form, $event)"
-                                                            ></StatusSwitcher>
-                                                        </div>
-                                                        <div class="col">
-                                                            <button @click.prevent="removeForm(formIndex)"
-                                                                    class="btn btn-pasi-form-remove btn-danger btn-sm">
-                                                                <i class="m-r-5 fa fa-trash"></i>
-                                                                {{ $t('Remove Form') }}
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-3 mt-3">
-                                            <button class="btn btn-primary btn-sm"
-                                                    @click.prevent="addProductToForm(formIndex)">
-                                                <i class="m-r-5 fa fa-plus"></i>
-                                                {{ $t('Add Product') }}
-                                            </button>
-                                        </div>
-
-                                        <div class="p-addition-sub-item"
-                                             v-for="(product, productIndex) in form.products" :key="product.id">
-                                            <button @click.prevent="removeProduct(form.products, productIndex)"
-                                                    class="btn btn-pasi-remove btn-danger btn-sm">
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <label>{{ $t('Product') }}</label>
-                                                    <BsSelect :options="products"
-                                                               v-model="product.product_id"
-                                                               :reduce="product => product.id"
-                                                               label="name"
-                                                               :placeholder="$t('Select Product')">
-                                                        <div slot="no-options">{{
-                                                                $t('Sorry no matching result')
-                                                            }}
-                                                        </div>
-                                                    </BsSelect>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label>{{ $t('Price') }}</label>
-                                                    <Field class="form-control"
-                                                           v-model="product.price"
-                                                           type="number"
-                                                           :name="'product_price_'+formIndex+'_'+productIndex"
-                                                           min="1"
-                                                           :placeholder="$t('Enter Price')"
-                                                    />
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <label>{{ $t('Quantity') }}</label>
-                                                    <Field class="form-control"
-                                                           v-model="product.quantity"
-                                                           type="number"
-                                                           :name="'product_quantity_'+formIndex+'_'+productIndex"
-                                                           min="1"
-                                                           :placeholder="$t('Enter Quantity')"
-                                                    />
-                                                </div>
-                                                <div class="col-md-1">
-                                                    <label>{{ $t('Condition') }}</label>
-                                                    <div>
-                                                        <i v-for="number in product.condition"
-                                                           class="product-form-star fa fa-star"
-                                                        ></i>
-                                                    </div>
-                                                    <div>
-                                                        <div class="btn-group product-form-condition-action">
-                                                            <button class="btn btn-primary btn-xs"
-                                                                    @click.prevent="decreaseProductCondition(product)">
-                                                                <i class="fa fa-minus"></i>
-                                                            </button>
-                                                            <button class="btn btn-primary btn-xs"
-                                                                    @click.prevent="increaseProductCondition(product)">
-                                                                <i class="fa fa-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="form-group">
-                                                        <label>{{ $t('Note') }}</label>
-                                                        <textarea class="form-control"
-                                                                  rows="3"
-                                                                  :placeholder="$t('Enter Note')"
-                                                                  v-model="product.note"
-                                                        ></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary m-t-30">{{ $t('Update') }}</button>
-
-                            </Form>
-
                         </div>
 
                         <div class="tab-pane fade show active" v-if="showTab === 'document'">
@@ -489,11 +331,9 @@ import {countryList as countries} from "@/storage/data/countrylist";
 import axios from "@/libraries/utils/clientapi/axios";
 import route from '@/libraries/utils/ZiggyRoute';
 import Notifier from "@/libraries/utils/Notifier";
-import PasswordGenerator from "@/libraries/utils/helpers/PasswordGenerator";
 import StatusSwitcher from "@/components/widgets/form/StatusSwitcher";
 import Genders from "@/storage/data/genders";
 import {useMembershipStore} from "@/storage/store/memberships";
-import {useProductStore} from "@/storage/store/services";
 import VisiblePasswordInput from "@/components/widgets/form/VisiblePasswordInput";
 import HelperUtils from "@/libraries/utils/helpers/HelperUtils";
 import DateFormatter from "@/libraries/utils/helpers/DateFormatter";
@@ -547,7 +387,6 @@ const invoiceForms = ref({
 mapUserIntoForm(props.data.value);
 
 const memberships = await useMembershipStore().getMembershipsByRefresh();
-const products = await useProductStore().getProductsByRefresh();
 
 function changeTab(tab) {
     showTab.value = tab;
@@ -571,55 +410,6 @@ function changeIsSpecial(isSpecial) {
     profileForm.value.is_special = isSpecial;
 }
 
-function changeFormStatus(form, isActive) {
-    form.value.status = isActive;
-}
-
-function addForm() {
-    userForms.value.push({
-        id: 'new_form_' + PasswordGenerator.generate(15),
-        purchase_date: new Date(),
-        status: 1,
-        products: [],
-    });
-}
-
-function addProductToForm(formIndex) {
-    userForms.value[formIndex].products.push({
-        id: 'new_product_' + PasswordGenerator.getString(15),
-        product_id: '',
-        price: 10,
-        quantity: 1,
-        condition: 5,
-        position: 0,
-        note: '',
-        is_hidden: 0,
-        show_price: 0,
-        show_purchase_date: 0,
-    });
-}
-
-function decreaseProductCondition(product) {
-    if (product.condition === 1) {
-        return;
-    }
-    --product.condition;
-}
-
-function increaseProductCondition(product) {
-    if (product.condition === 5) {
-        return;
-    }
-    ++product.condition;
-}
-
-function removeForm(formIndex) {
-    userForms.value.splice(formIndex, 1);
-}
-
-function removeProduct(products, index) {
-    products.splice(index, 1);
-}
 
 function mapUserIntoForm(user) {
     profileForm.value.id = user.id;
@@ -714,27 +504,6 @@ function updateCustomerProfile() {
         if (response.status === 200) {
             Notifier.toastSuccess(response.data.message);
             await getCustomer();
-        }
-    });
-}
-
-function updateCustomerForms() {
-    axios.post(route('admin.customers.update_forms'), {...{forms: userForms.value}, ...{user_id: customerId}})
-        .then(async (response) => {
-            if (response.status === 200) {
-                Notifier.toastSuccess(response.data.message);
-                await getCustomer();
-            }
-        });
-}
-
-function updateCustomerDocument() {
-    axios.put(route('admin.customers.upload_contract_doc', {
-        id: customerId
-    }), profileForm.value).then((response) => {
-        if (response.status === 200) {
-            Notifier.toastSuccess(response.data.message);
-
         }
     });
 }

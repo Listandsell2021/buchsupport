@@ -261,6 +261,76 @@ export default {
             ];
         }
     },
+
+    order: {
+        list() {
+            return [
+                {
+                    "url": "/admin/orders",
+                    "name": "Orders",
+                    "active": 0
+                },
+                {
+                    "url": "",
+                    "name": "List",
+                    "active": 1
+                }
+            ];
+        },
+        create() {
+            return [
+                {
+                    "url": "/admin/orders",
+                    "name": "Orders",
+                    "active": 0
+                },
+                {
+                    "url": "",
+                    "name": "Create",
+                    "active": 1
+                }
+            ];
+        },
+        edit: (id) => {
+            return [
+                {
+                    "url": "/admin/orders",
+                    "name": "Orders",
+                    "active": 0
+                },
+                {
+                    "url": "/admin/orders/" + id,
+                    "name": "Edit",
+                    "active": 0
+                },
+                {
+                    "url": "",
+                    "name": id,
+                    "active": 1
+                }
+            ];
+        },
+        view: (id) => {
+            return [
+                {
+                    "url": "/admin/orders",
+                    "name": "Orders",
+                    "active": 0
+                },
+                {
+                    "url": "/admin/orders/" + id,
+                    "name": "View",
+                    "active": 0
+                },
+                {
+                    "url": "",
+                    "name": id,
+                    "active": 1
+                }
+            ];
+        }
+    },
+
     leads: {
         list() {
             return [

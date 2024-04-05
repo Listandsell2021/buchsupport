@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Customer;
+namespace App\Http\Requests\Admin\Pipeline;
 
 use App\DataHolders\Enum\Gender;
 use App\DataHolders\Enum\Membership;
 use App\Http\Rules\Admin\CheckUserFormPattern;
-use App\Rules\Admin\Customer\CheckFormularPattern;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCustomerRequest extends FormRequest

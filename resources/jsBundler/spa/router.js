@@ -128,11 +128,42 @@ const routes = [
                 component: () => import('./pages/admin/customers/pipeline.vue'),
             },
 
+            {
+                path: 'orders',
+                name: 'admin_orders',
+                component: () => import('./pages/admin/orders/index.vue'),
+            },
+            {
+                path: 'orders/create',
+                name: 'admin_order_create',
+                component: () => import('./pages/admin/orders/create.vue'),
+            },
+            {
+                path: 'orders/:id',
+                name: 'admin_order_edit',
+                props: route => ({ data: route.meta.data }),
+                beforeEnter: (route) => ResourceFinder(ziggyRoute('admin.orders.show', {id: route.params.id}), route),
+                component: () => import('./pages/admin/orders/[id].vue'),
+            },
 
             {
-                path: 'birthday-calendar',
+                path: 'services/:id/pipeline',
+                name: 'admin_pipeline_edit',
+                props: route => ({ data: route.meta.data }),
+                beforeEnter: (route) => ResourceFinder(ziggyRoute('admin.services.pipeline', {id: route.params.id}), route),
+                component: () => import('./pages/admin/services/pipeline.vue'),
+            },
+            {
+                path: 'orders/testing',
+                name: 'admin_order_create2',
+                component: () => import('./pages/admin/services/pipeline2.vue'),
+            },
+
+
+            {
+                path: 'customers/birthday-calendar',
                 name: 'admin_birthday_calendar',
-                component: () => import('./pages/admin/birthday-calendar/index.vue'),
+                component: () => import('./pages/admin/customers/birthday_calendar.vue'),
             },
 
             {
