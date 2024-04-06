@@ -113,7 +113,7 @@ class ServiceController extends Controller
      * @param ChangeActiveStatusRequest $request
      * @return JsonResponse
      */
-    public function changeDefault(ChangeActiveStatusRequest $request): JsonResponse
+    public function changeActiveStatus(ChangeActiveStatusRequest $request): JsonResponse
     {
         $this->commandBus->execute(
             new UpdateServiceActiveStatus(
@@ -122,7 +122,7 @@ class ServiceController extends Controller
             )
         );
 
-        return $this->respondWithSuccess(__('Admin Active Status Updated'));
+        return $this->respondWithSuccess(__('Service Active Status Updated'));
     }
 
 

@@ -1,6 +1,5 @@
 export default {
     "Login": "Fenster",
-    "Logged out successfully": "Erfolgreich abgemeldet",
     "Administrator Create": "Administrator erstellen",
     "Sign in to account": "Anmelden",
     "Login to admin area": "Anmelden im Admin-Bereich",
@@ -455,7 +454,6 @@ export default {
     "Subtotal": "Zwischensumme",
     "Login to customer area": "Anmeldung zum Kundenbereich",
     "Enter registration no": "Registrierungsnummer eingeben",
-    "silver": "Silber",
     "Your comments": "Ihre Kommentare",
     "Select conditions": "Bedingungen auswählen",
     "Select categories": "Kategorien auswählen",
@@ -494,4 +492,12 @@ export default {
     "Unselect All": "Alle abwählen",
     "Update Status": "Status aktualisieren",
     "Update Salesperson": "Verkäufer aktualisieren",
+    "Order Date": "Auftragsdatum",
+    "Service Status": "Service Status",
+    "Is Default": "Ist Standard",
+    "Has tracking": "Verfolgung",
+    "Add Service Status": "Dienststatus hinzufügen",
+    "Edit Status": "Status bearbeiten",
+    "Select Service": "Wählen Sie Dienst",
+    "Create customer and order": "Kunde und Auftrag anlegen",
 }

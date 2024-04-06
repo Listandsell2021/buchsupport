@@ -1,12 +1,13 @@
 import ProductConditions from "@/storage/data/ProductConditions";
 import __Has from 'lodash/has';
+import __isString from 'lodash/isString';
 import moment from "moment/moment";
 import Notifier from "@/libraries/utils/Notifier";
 
 export default {
 
     truncate(text, stop = 30, clamp = '...') {
-        return text.slice(0, stop) + (stop < text.length ? clamp : '')
+        return __isString(text) ? text.slice(0, stop) + (stop < text.length ? clamp : '') : '';
     },
 
     copyText(text) {

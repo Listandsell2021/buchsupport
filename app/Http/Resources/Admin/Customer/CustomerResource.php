@@ -40,7 +40,7 @@ class CustomerResource extends JsonResource
 	        'created_at' => $this->created_at,
 	        'updated_at' => $this->updated_at,
             'forms' => $this->forms,
-            'document' => $this->document ?? null,
+            'contract' => $this->contract ?? null,
             'salesperson' => $this->salesperson ?? null,
 	    ];
     }

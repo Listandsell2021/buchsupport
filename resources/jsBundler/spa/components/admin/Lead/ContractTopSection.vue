@@ -83,7 +83,7 @@
 
                 <div class="clearfix">
                     <button @click.prevent="requestForNewCustomer" class="btn btn-primary pull-left">
-                        {{ $t('Request New Customer') }}
+                        {{ $t('Create customer and order') }}
                     </button>
                 </div>
             </div>

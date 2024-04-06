@@ -30,7 +30,7 @@ class ConvertLeadToNewCustomerHandler implements Handler
     protected function userContractUpdate($customerId, $leadId): void
     {
         $leadContract = LeadContract::where('lead_id', $leadId)->first();
-        $customerDocumentPath = ContractDocConfig::getCustomerContractRelativePath($customerId.'/'.$leadContract->document_name);
+        $customerDocumentPath = ContractDocConfig::getCustomerContractRelativePath($customerId.'/'.$leadContract->document);
         Storage::disk(ContractDocConfig::storageDisk())->copy($leadContract->document_path, $customerDocumentPath);
 
         UserContract::create([

@@ -30,7 +30,9 @@
                                     :key="service.id"
                                 >
                                     <td>
-                                        <a href="#" @click.prevent="() => router.push('services/' + service.id)">
+                                        <a href="#"
+                                           class="text-dark"
+                                           @click.prevent="() => router.push('services/' + service.id)">
                                             {{ service.name }}
                                         </a>
                                     </td>
@@ -43,7 +45,7 @@
                                     </td>
                                     <td>
                                         <a href="#"
-                                           class="btn btn-info btn-xs"
+                                           class="btn btn-primary btn-xs"
                                            @click.prevent="() => router.push('services/'+service.id+'/pipeline')"
                                         >
                                             <i class="fa fa-eye"></i>

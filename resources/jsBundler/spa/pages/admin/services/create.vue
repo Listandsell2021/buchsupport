@@ -27,11 +27,9 @@
                                            v-model="form.price"
                                            type="number"
                                            name="price"
-                                           rules="required"
                                            :placeholder="$t('Enter price')"
                                            :class="{'is-invalid': errors.price}"
                                     />
-                                    <ErrorMessage class="text-danger d-block" name="name"/>
                                 </div>
                                 <div class="form-group">
                                     <label>{{ $t('Note') }}</label>

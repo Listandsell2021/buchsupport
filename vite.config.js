@@ -9,8 +9,6 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/jsBundler/spa/app.js',
-                'resources/jsBundler/frontend/showroom.js',
-                'resources/jsBundler/frontend/libraries.js',
             ],
             refresh: ['resources/jsBundler/**'],
         }),

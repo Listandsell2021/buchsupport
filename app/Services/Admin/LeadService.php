@@ -160,11 +160,6 @@ class LeadService
     {
         $lead = Lead::create(Arr::only($data, Lead::fillableProps()));
 
-        LeadContract::create([
-            'lead_id' => $lead->id,
-            'membership' => Membership::bronze->name
-        ]);
-
         event(new NewLeadsCreated([$lead->id]));
 
         return $lead;

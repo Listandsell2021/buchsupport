@@ -23,18 +23,17 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->enum('gender', \App\DataHolders\Enum\Gender::onlyNames())->default(\App\DataHolders\Enum\Gender::male->name);
             $table->string('phone_no')->nullable();
-            $table->string('street');
-            $table->integer('postal_code');
-            $table->string('city');
-            $table->string('country');
-            $table->string('map_longitude');
-            $table->string('map_latitude');
+            $table->string('street')->nullable();
+            $table->integer('postal_code')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
+            $table->string('map_longitude')->nullable();
+            $table->string('map_latitude')->nullable();
             $table->foreignId('lead_status_id')
                 ->nullable()
                 ->constrained('lead_status')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            //$table->enum('status', \App\DataHolders\Enum\LeadStatus::onlyNames())->default(\App\DataHolders\Enum\LeadStatus::processing->name);
             $table->text('objection')->nullable();
             $table->boolean('has_conversion_request')->default(0);
             $table->boolean('is_converted')->default(0);

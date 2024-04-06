@@ -178,7 +178,9 @@
                                     />
                                 </td>
                                 <td v-if="form.columns.lead_name.show">
-                                    <a href="#" @click.prevent="goToEditLead(lead.id)">
+                                    <a href="#"
+                                       class="text-dark"
+                                       @click.prevent="goToEditLead(lead.id)">
                                         {{ lead.first_name }} {{ lead.last_name }}
                                     </a>
                                 </td>

@@ -74,10 +74,8 @@
                                            type="text"
                                            name="phone_no"
                                            :placeholder="$t('Enter phone no')"
-                                           rules="required"
                                            :class="{'is-invalid': errors.phone_no}"
                                     />
-                                    <ErrorMessage class="text-danger d-block" name="phone_no"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -88,10 +86,8 @@
                                            type="text"
                                            name="city"
                                            :placeholder="$t('Enter city')"
-                                           rules="required"
                                            :class="{'is-invalid': errors.city}"
                                     />
-                                    <ErrorMessage class="text-danger d-block" name="city"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -102,10 +98,8 @@
                                            type="text"
                                            name="street"
                                            :placeholder="$t('Enter street')"
-                                           rules="required"
                                            :class="{'is-invalid': errors.street}"
                                     />
-                                    <ErrorMessage class="text-danger d-block" name="street"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -116,10 +110,8 @@
                                            type="number"
                                            name="postal_code"
                                            :placeholder="$t('Enter postal code')"
-                                           rules="required"
                                            :class="{'is-invalid': errors.postal_code}"
                                     />
-                                    <ErrorMessage class="text-danger d-block" name="postal_code"/>
                                 </div>
                             </div>
                             <div class="col-md-6">

@@ -255,9 +255,9 @@
                                     <td>{{ $t('Contract Document') }} :</td>
                                     <td>
                                         <template v-if="hasContractDocument()">
-                                            <a href="#" @click.prevent="downloadContractDocument(customer.id, customer.document.document_name)">
+                                            <a href="#" @click.prevent="downloadContractDocument(customer.id, customer.contract.document)">
                                                 <i class="fa fa-file"></i>
-                                                {{ customer.document.document_name }}
+                                                {{ customer.contract.document }}
                                             </a>
                                         </template>
                                         <template v-else>
@@ -271,10 +271,7 @@
                                         <template v-if="hasSalesperson()">
                                             <a href="#"
                                                @click.prevent="openSalesperson(customer.salesperson.id)"
-                                            >
-                                                {{
-                                                    customer.salesperson.first_name + ' ' + customer.salesperson.last_name
-                                                }}
+                                            >{{ customer.salesperson.first_name + ' ' + customer.salesperson.last_name }}
                                             </a>
                                         </template>
                                         <template v-else>
@@ -448,7 +445,7 @@ function openCustomerDocument() {
 }
 
 function hasContractDocument() {
-    return customer.value.document;
+    return customer.value.contract;
 }
 
 function downloadContractDocument(customerId, documentName) {

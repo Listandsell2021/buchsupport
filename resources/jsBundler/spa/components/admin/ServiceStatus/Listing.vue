@@ -14,7 +14,7 @@
         ></EditPipeline>
 
         <div class="clearfix mb-3">
-            <h5 class="pull-left">{{ $t("Pipelines") }}</h5>
+            <h5 class="pull-left">{{ $t("Service Status") }}</h5>
             <a href="#"
                @click.prevent="openAddPipeline"
                class="btn btn-primary btn-xs pull-right"

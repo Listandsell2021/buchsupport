@@ -18,7 +18,7 @@ class GetDashboardCardsHandler implements Handler
         $customersCount = User::count();
         $adminsCount = Admin::admin()->count();
         $salespersonsCount = Admin::salesperson()->count();
-        $dailyVisitors = Visitor::where('date', date('Y-m-d'))->count();
+        //$dailyVisitors = Visitor::where('date', date('Y-m-d'))->count();
 
         return [
             [
@@ -57,7 +57,7 @@ class GetDashboardCardsHandler implements Handler
                 "status"        => "",
                 "svgIcon"       => "customers"
             ],
-            [
+            /*[
                 "cardClass"     => "card-body secondary",
                 "title"         => trans("Daily Visitors"),
                 "dataInNumber"  => $dailyVisitors,
@@ -65,7 +65,7 @@ class GetDashboardCardsHandler implements Handler
                 "iconClass"     => "",
                 "status"        => "",
                 "svgIcon"       => ""
-            ],
+            ],*/
         ];
     }
 

@@ -60,11 +60,11 @@ class CustomerService
      * Get specific record by id.
      *
      * @param int $id
-     * @return User
+     * @return mixed
      */
-    public function getById($id)
+    public function getById(int $id): mixed
     {
-        return User::find($id);
+        return User::with('contract')->where('id', $id)->first();
     }
 
     /**
@@ -207,19 +207,6 @@ class CustomerService
     }
 
 
-    /**
-     * Sort Customer Products
-     *
-     * @param $userProductIds
-     * @return void
-     */
-    public function sortProducts($userProductIds): void
-    {
-        $i = 1;
-        foreach ($userProductIds as $userProductId) {
-            UserService::where('id', $userProductId)->update(['position' => $i++]);
-        }
-    }
 
 
     /**

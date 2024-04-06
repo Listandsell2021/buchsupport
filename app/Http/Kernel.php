@@ -67,6 +67,6 @@ class Kernel extends HttpKernel
         'admin_permission_session' => GenerateAdminPermissionSession::class,
         'cors' => \App\Http\Middleware\Cors::class,
         'cookie-consent' => \Spatie\CookieConsent\CookieConsentMiddleware::class,
-        'visitor' => \App\Http\Middleware\VisitorCounter::class,
+        //'visitor' => \App\Http\Middleware\VisitorCounter::class,
     ];
 }

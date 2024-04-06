@@ -439,7 +439,7 @@ class LeadController extends Controller
                     $request->get('service_id'),
                     $request->get('quantity'),
                     $request->get('price'),
-                    $request->get('note'),
+                    (string) $request->get('note'),
                 )
             );
 

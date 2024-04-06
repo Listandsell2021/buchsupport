@@ -40,7 +40,7 @@ class CreateLeadContractRequest extends FormRequest
             'service_id'    => ['required', 'exists:services,id'],
             'quantity'      => ['required'],
             'price'         => ['required'],
-            'note'          => ['required'],
+            //'note'          => ['required'],
         ];
     }
 

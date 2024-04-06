@@ -34,7 +34,7 @@ return new class extends Migration
 
             $table->float('price');
             $table->integer('quantity');
-            $table->text('note');
+            $table->text('note')->nullable();
             $table->dateTime('order_at');
             $table->smallInteger('order_no')->default(1);
         });

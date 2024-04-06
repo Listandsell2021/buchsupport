@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreign('service_id')->references('id')->on('services')->cascadeOnUpdate()->cascadeOnDelete();
             $table->smallInteger('quantity');
             $table->float('price');
-            $table->string('note');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }
