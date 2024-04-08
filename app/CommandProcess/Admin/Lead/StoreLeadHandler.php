@@ -20,6 +20,10 @@ class StoreLeadHandler implements Handler
 
     public function handle(Command $command)
     {
+        if (isAuthSalesperson()) {
+            $command->data['salesperson_id'] = getAdminId();
+        }
+
         return $this->dbService->save(array_merge($command->data, ['created_by' => getAdminId()]));
     }
 }

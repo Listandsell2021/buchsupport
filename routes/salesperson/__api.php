@@ -29,16 +29,8 @@ Route::prefix('salesperson')->middleware(['auth:sanctum'])->group( function () {
     Route::post('leads/locations',                  [LeadController::class, 'getLeadsMapLocation'])->name('salesperson.leads.locations');
 
     Route::post('leads/get-contract',               [LeadController::class, 'getContractDetail'])->name('salesperson.leads.get_contract');
-    Route::post('leads/download-contract-doc',      [LeadController::class, 'downloadContractDocument'])->name('salesperson.leads.download_contract_doc');
-    Route::post('leads/upload-contract-doc',        [LeadController::class, 'uploadContractDocument'])->name('salesperson.leads.upload_contract_doc');
-    Route::post('leads/update-contract-membership', [LeadController::class, 'updateContractMembership'])->name('salesperson.leads.update_contract_membership');
-    Route::post('leads/update-contract-products',   [LeadController::class, 'updateContractProducts'])->name('salesperson.leads.update_contract_products');
     Route::post('leads/request-new-customer',       [LeadController::class, 'requestNewCustomer'])->name('salesperson.leads.request_new_customer');
-    Route::post('contract/products',                [ServiceController::class, 'getAllProducts'])->name('salesperson.contract.products');
-    Route::post('contract/product-categories',      [ProductCategoryController::class, 'getActiveCategories'])->name('salesperson.contract.product_categories');
-    Route::post('contract/memberships',             [CustomerController::class, 'getMemberships'])->name('salesperson.contract.memberships');
-    Route::post('contract/create-product-category', [LeadController::class, 'createLeadProductCategory'])->name('salesperson.contract.create_product_category');
-    Route::post('contract/create-product',          [LeadController::class, 'createLeadProduct'])->name('salesperson.contract.create_product');
+    Route::post('leads/get-services',               [ServiceController::class, 'getAllServices'])->name('salesperson.leads.get_contract');
 
 
     // Lead Notes

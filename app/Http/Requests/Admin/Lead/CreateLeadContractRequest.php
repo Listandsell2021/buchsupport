@@ -8,6 +8,7 @@ use App\DataHolders\Enum\Membership;
 use App\Helpers\Config\ContractDocConfig;
 use App\Http\Rules\Admin\CheckContractProductsPattern;
 use App\Http\Rules\Admin\HasConversionRequest;
+use App\Http\Rules\Admin\IfSalespersonAuthorizedForLead;
 use App\Http\Rules\Admin\IsLeadEligibleForNewCustomer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\File;
@@ -30,7 +31,7 @@ class CreateLeadContractRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lead_id'       => ['required', new IsLeadEligibleForNewCustomer(),],
+            'lead_id'       => ['required', new IsLeadEligibleForNewCustomer(), new IfSalespersonAuthorizedForLead()],
             'document'  => [
                 'required',
                 File::types(ContractDocConfig::fileExtensions())
@@ -38,9 +39,9 @@ class CreateLeadContractRequest extends FormRequest
                     ->max(ContractDocConfig::maxFileSize()),
             ],
             'service_id'    => ['required', 'exists:services,id'],
-            'quantity'      => ['required'],
-            'price'         => ['required'],
-            //'note'          => ['required'],
+            'quantity'      => ['required', 'numeric'],
+            'price'         => ['required', 'numeric'],
+            'note'          => ['nullable'],
         ];
     }
 

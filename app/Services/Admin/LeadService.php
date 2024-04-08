@@ -176,7 +176,7 @@ class LeadService
     {
         $lead = Lead::find($leadId);
 
-        Lead::where('id', $leadId)->update($data);
+        Lead::where('id', $leadId)->update(Arr::only($data, Lead::fillableProps()));
 
         if (isset($data['lead_status_id']) && $lead->lead_status_id != $data['lead_status_id']) {
             $leadStatus = LeadStatus::find($data['lead_status_id']);

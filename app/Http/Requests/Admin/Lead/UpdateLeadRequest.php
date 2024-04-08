@@ -30,13 +30,13 @@ class UpdateLeadRequest extends FormRequest
             'last_name' => 'required',
             'email' => ['required', 'email', Rule::unique('leads')->ignore($this->get('id'))],
             'gender' => 'required|in:'.implode(',', Gender::onlyNames()),
-            'phone_no' => 'required',
+            'phone_no' => 'nullable',
             'street' => 'nullable',
-            'postal_code' => 'required|numeric',
+            'postal_code' => 'nullable',
             'city' => 'nullable',
             'country' => 'required',
-            'map_longitude' => 'required',
-            'map_latitude' => 'required',
+            'map_longitude' => 'nullable',
+            'map_latitude' => 'nullable',
             'lead_status_id' => ['required', 'exists:lead_status,id'],
         ];
     }

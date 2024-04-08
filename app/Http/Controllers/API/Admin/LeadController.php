@@ -102,7 +102,7 @@ class LeadController extends Controller
      * @param CreateLeadRequest $request
      * @return JsonResponse
      */
-    public function store(CreateLeadRequest $request)
+    public function store(CreateLeadRequest $request): JsonResponse
     {
         $lead = $this->commandBus->execute(new StoreLead($request->all()));
 

@@ -3,13 +3,9 @@
 namespace App\Http\Rules\Admin;
 
 
-use App\DataHolders\Enum\Membership;
-use App\Helpers\Config\ContractDocConfig;
 use App\Models\Lead;
-use App\Models\LeadContract;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Validation\Rules\File;
 
 class IsLeadEligibleForNewCustomer implements ValidationRule
 {
@@ -27,28 +23,20 @@ class IsLeadEligibleForNewCustomer implements ValidationRule
 
     public function validate(string $attribute, mixed $leadId, Closure $fail): void
     {
-        $pass = true;
-
         $lead = Lead::find($leadId);
 
         if (!$lead) {
-            $this->addMessageList('Lead does not exists');
-            $fail($this->message());
+            $fail(trans('Lead does not exists'));
         }
 
         if ($lead->is_converted) {
-            $this->addMessageList('Customer already exists');
-            $pass = false;
+            $fail(trans('Customer already exists'));
         }
 
         if (!$lead->salesperson_id) {
-            $this->addMessageList('Salesperson does not exists');
-            $pass = false;
+            $fail(trans('Salesperson does not exists'));
         }
 
-        if (!$pass) {
-            $fail($this->message());
-        }
     }
 
 
@@ -65,42 +53,6 @@ class IsLeadEligibleForNewCustomer implements ValidationRule
     public function message(): string
     {
         return "<ul>".$this->message."</ul>";
-    }
-
-
-    /**
-     * Validate Contract file
-     *
-     * @return bool
-     */
-    protected function isValidMembershipContractFile(): bool
-    {
-        $document = request()->file('document');
-
-        if (!$document) {
-            $this->addMessageList('Document is required');
-            return false;
-        }
-
-        if (!in_array($document->getClientOriginalExtension(), ContractDocConfig::fileExtensions())) {
-            $this->addMessageList('Document must be of type: '.implode(',', ContractDocConfig::fileExtensions()));
-            return false;
-        }
-
-
-        $fileSize = getFileSizeInKb((int) $document->getSize());
-
-        if ($fileSize < ContractDocConfig::minFileSize()) {
-            $this->addMessageList('Document must be of minimum '.ContractDocConfig::minFileSize().' kb');
-            return false;
-        }
-
-        if ($fileSize > ContractDocConfig::maxFileSize()) {
-            $this->addMessageList('Document must be of maximum '.ContractDocConfig::maxFileSize().' kb');
-            return false;
-        }
-
-        return true;
     }
 
 }

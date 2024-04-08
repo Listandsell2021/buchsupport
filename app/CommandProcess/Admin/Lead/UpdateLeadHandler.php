@@ -19,6 +19,10 @@ class UpdateLeadHandler implements Handler
 
     public function handle(Command $command)
     {
+        if (isAuthSalesperson()) {
+            unset($command->data['salesperson_id']);
+        }
+
         $this->dbService->update($command->leadId, $command->data);
     }
 }

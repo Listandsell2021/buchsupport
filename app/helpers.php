@@ -10,9 +10,10 @@ if (!function_exists('isInProduction')) {
 }
 
 if (!function_exists('getAuthAdmin')) {
-    function getAuthAdmin()
+    function getAuthAdmin(): ?\Illuminate\Contracts\Auth\Authenticatable
     {
-        return auth('admin')->user() ?? null;
+        $auth = auth('admin')->user() ?? request()->user();
+        return $auth ?? null;
     }
 }
 

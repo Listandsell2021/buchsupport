@@ -4,6 +4,8 @@ namespace App\Http\Requests\Admin\Lead;
 
 
 use App\Http\Rules\Admin\HasSameLeadStatus;
+use App\Http\Rules\Admin\IfSalespersonAuthorizedForLead;
+use App\Http\Rules\Admin\IsAuthorizedForLead;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChangeStatusRequest extends FormRequest
@@ -19,12 +21,12 @@ class ChangeStatusRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array
      */
     public function rules(): array
     {
         return [
-            'lead_id'           => 'required',
+            'lead_id'           => ['required', new IfSalespersonAuthorizedForLead()],
             'lead_status_id'    => [
                 'required',
                 'exists:lead_status,id',

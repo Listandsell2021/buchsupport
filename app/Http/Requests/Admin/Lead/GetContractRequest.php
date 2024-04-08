@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Lead;
 
 use App\DataHolders\Enum\LeadStatus;
+use App\Http\Rules\Admin\IfSalespersonAuthorizedForLead;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GetContractRequest extends FormRequest
@@ -23,7 +24,7 @@ class GetContractRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lead_id' => 'required|exists:leads,id',
+            'lead_id' => ['required', 'exists:leads,id', new IfSalespersonAuthorizedForLead()]
         ];
     }
 
