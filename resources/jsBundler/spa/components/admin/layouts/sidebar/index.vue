@@ -11,7 +11,7 @@
     </div>
     <div class="logo-icon-wrapper">
       <router-link to="/admin/dashboard">
-        <img class="img-fluid" src="/assets/admin/images/logo.png" alt="" />
+        <img class="img-fluid" src="/assets/admin/images/logo.svg" alt="" />
       </router-link>
     </div>
     <Nav />

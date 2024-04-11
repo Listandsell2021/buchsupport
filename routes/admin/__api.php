@@ -141,6 +141,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('leads/update-contract-membership', [LeadController::class, 'updateContractMembership'])->name('admin.leads.update_contract_membership')->middleware('can:'.AdminPermission::UPDATE_LEAD->name);
     Route::post('leads/update-contract-products',   [LeadController::class, 'updateContractProducts'])->name('admin.leads.update_contract_products')->middleware('can:'.AdminPermission::UPDATE_LEAD->name);
     Route::post('leads/request-new-customer',   [LeadController::class, 'requestNewCustomer'])->name('admin.leads.request_new_customer')->middleware('can:'.AdminPermission::UPDATE_LEAD->name);
+    Route::post('leads/create-order',           [LeadController::class, 'createLeadOrder'])->name('admin.leads.create_order')->middleware('can:'.AdminPermission::UPDATE_LEAD->name);
     Route::post('leads/approve-new-customer',   [LeadController::class, 'approveLeadNewCustomer'])->name('admin.leads.approve_new_customer')->middleware('can:'.AdminPermission::UPDATE_LEAD->name);
     Route::post('leads/bulk-update-salesperson', [LeadController::class, 'updateBulkLeadSalespersons'])->name('admin.leads.update_bulk_salesperson')->middleware('can:'.AdminPermission::UPDATE_LEAD->name);
     Route::post('leads/bulk-update-status',     [LeadController::class, 'updateBulkLeadStatus'])->name('admin.leads.update_bulk_status')->middleware('can:'.AdminPermission::UPDATE_LEAD->name);

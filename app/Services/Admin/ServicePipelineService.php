@@ -19,7 +19,7 @@ class ServicePipelineService
             }
         })
             ->where('service_id', $serviceId)
-            ->sorting(['service_pipelines.name'], 'service_pipelines.id')
+            ->sorting(['service_pipelines.name', 'service_pipelines.default'], 'service_pipelines.order_no', 'asc')
             ->paginate(getPerPageTotal());
     }
 

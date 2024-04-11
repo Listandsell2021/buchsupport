@@ -22,7 +22,7 @@ class CustomerResource extends JsonResource
             'fullname' => $this->first_name.' '. $this->last_name,
 	        'email' => $this->email,
 	        'dob' => $this->dob ? getDateByLocale($this->dob) : null,
-            'password' => $this->password,
+            //'password' => $this->password,
             'password_text' => $this->password_text,
             'gender' => $this->gender,
 	        'phone_no' => $this->phone_no,
@@ -39,7 +39,6 @@ class CustomerResource extends JsonResource
             'auto_invoice_date' => (int) $this->auto_invoice_date,
 	        'created_at' => $this->created_at,
 	        'updated_at' => $this->updated_at,
-            'forms' => $this->forms,
             'contract' => $this->contract ?? null,
             'salesperson' => $this->salesperson ?? null,
 	    ];

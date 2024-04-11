@@ -123,6 +123,19 @@ export default {
             ]
         },
         {
+            "title": "Pipeline",
+            "icon": "fa fa-database",
+            "type": "link",
+            "path": "/admin/pipeline",
+            "active": false,
+            "permission": Permissions.LIST_ORDER,
+            "skip_permission": false,
+            "related": [
+                "/admin/orders/create",
+                "/admin/orders/*"
+            ]
+        },
+        {
             "type": "breakline",
             "skip_permission": true
         },

@@ -27,6 +27,7 @@
                             <tr v-for="(order) in orders.data"
                                 :key="order.id"
                             >
+                                <td>{{ order.id  }}</td>
                                 <td>{{ order.user.first_name+" "+order.user.last_name  }}</td>
                                 <td>{{ order.pipeline.name }}</td>
                                 <td>{{ HelperUtils.getReadableDate(order.order_at) }}</td>
@@ -107,6 +108,11 @@ const form = ref({
         is_active: '',
     },
     columns: [
+        {
+            name: 'Order ID',
+            key: 'orders.id',
+            sort: 'none',
+        },
         {
             name: 'Customer',
             key: 'orders.user_id',

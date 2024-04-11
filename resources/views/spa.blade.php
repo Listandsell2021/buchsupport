@@ -4,7 +4,7 @@
     <meta charset=utf-8>
     <meta http-equiv=X-UA-Compatible content="IE=edge">
     <meta name=viewport content="width=device-width,initial-scale=1">
-    <link rel="icon" type="image/webp" href="{{ asset('assets/frontend/images/favicon.webp') }}">
+    <link rel="icon" type="image/webp" href="{{ asset('assets/frontend/images/favicon.png') }}">
 
     @if(str_contains(url()->full(), 'login'))
         <title>Buch Kunst Register | Jetzt in Ihren Kundenbereich einloggen</title>

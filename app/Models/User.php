@@ -102,4 +102,15 @@ class User extends Authenticatable
         return $this->hasOne(UserContract::class, 'user_id');
     }
 
+
+    /**
+     * Relation with Orders
+     *
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
+
 }

@@ -4,7 +4,7 @@
             :style="[layoutobject.split(' ').includes('horizontal-wrapper') ? layout.settings.layout_type == 'rtl' ? { 'margin-right': margin + 'px' } : { 'margin-left': margin + 'px' } : { margin: '0px' }]">
             <li class="back-btn">
                 <router-link to="/">
-                    <img class="img-fluid" src="/assets/admin/images/logo-sm.png" alt=""/>
+                    <img class="img-fluid" src="/assets/admin/images/logo-sm.svg" alt=""/>
                 </router-link>
                 <div class="mobile-back text-end">
                     <span>Back</span><i class="fa fa-angle-right ps-2" aria-hidden="true"></i>

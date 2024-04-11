@@ -26,22 +26,58 @@ class ServiceSeeder extends Seeder
             [
                 'name' => 'Mitgliedschaft',
                 'status' => [
-                    'Vertrag', 'Vertrag angenommen', 'Kunde angelegt', 'Unterlagen verschickt',
-                    'bezahlt', 'rettungsversuch', 'widerrufen'
+                    [
+                        "name" => "Vertrag",
+                    ],
+                    [
+                        "name" => "Vertrag angenommen",
+                    ],
+                    [
+                        "name" => "Kunde angelegt",
+                        'has_conversion' => 1,
+                    ],
+                    [
+                        "name" => "Unterlagen verschickt",
+                        "has_tracking" => 1,
+                    ],
+                    [
+                        "name" => "Erledigt",
+                        "has_option" => 1
+                    ],
                 ]
             ],
             [
                 'name' => 'Showroom',
                 'status' => [
-                    'Vertrag', 'Vertrag angenommen', 'showroom angelegt',
-                    'bezahlt', 'rettungsversuch', 'widerrufen'
+                    [
+                        "name" => "Vertrag"
+                    ],
+                    [
+                        "name" => "Vertrag angenommen",
+                    ],
+                    [
+                        "name" => "Showroom angelegt",
+                    ],
+                    [
+                        "name" => "Erledigt"
+                    ]
                 ]
             ],
             [
                 'name' => 'Buch',
                 'status' => [
-                    'Vertrag', 'Vertrag angenommen', 'werk verschickt',
-                    'bezahlt', 'rettungsversuch', 'widerrufen'
+                    [
+                        "name" => "Vertrag"
+                    ],
+                    [
+                        "name" => "Vertrag angenommen"
+                    ],
+                    [
+                        "name" => "Werk verschickt"
+                    ],
+                    [
+                        "name" => "Erledigt"
+                    ]
                 ]
             ],
         ];
@@ -50,12 +86,11 @@ class ServiceSeeder extends Seeder
             $createdService = Service::create(['name' => $service['name'], 'price' => 0, 'is_active' => 1]);
             $i = 1;
             foreach ($service['status'] as $status) {
-                ServicePipeline::create([
+                ServicePipeline::create(array_merge([
                     'service_id' => $createdService->id,
-                    'name' => $status,
                     'default' => $i == 1,
                     'order_no' => $i
-                ]);
+                ], $status));
                 ++$i;
             }
         }

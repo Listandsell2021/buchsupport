@@ -16,12 +16,19 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+                ->nullOnDelete();
+
+            $table->unsignedBigInteger('lead_id')->nullable();
+            $table->foreign('lead_id')
+                ->references('id')
+                ->on('leads')
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
 
             $table->unsignedSmallInteger('service_id');
             $table->foreign('service_id')
@@ -34,7 +41,15 @@ return new class extends Migration
 
             $table->float('price');
             $table->integer('quantity');
+            $table->float('subtotal');
+            $table->float('tax');
+            $table->float('tax_price');
+            $table->float('total');
+            $table->string('shipment_no')->nullable();
+            $table->string('document');
+            $table->string('document_path');
             $table->text('note')->nullable();
+            $table->boolean('is_converted')->default(0);
             $table->dateTime('order_at');
             $table->smallInteger('order_no')->default(1);
         });

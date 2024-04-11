@@ -5,8 +5,8 @@
                 <div class="media">
                     <div class="media-body">
                         <div class="greeting-user">
-                            <h4 class="f-w-600 m-b-20">Welcome to Buch Admin</h4>
-                            <p>Here whats happing in your account today</p>
+                            <h4 class="f-w-600 m-b-20">{{ $t('Hello') }}</h4>
+                            <p>{{ $t('Here whats happening in your account today') }}</p>
                             <br/><br/><br/>
                         </div>
                     </div>

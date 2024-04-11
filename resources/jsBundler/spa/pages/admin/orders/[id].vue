@@ -33,8 +33,8 @@
                             <td>{{ order.note  }}</td>
                         </tr>
                         <tr>
-                            <td>{{ $t("Order At") }}</td>
-                            <td>{{ HelperUtils.getReadableDate(order.order_at) }}</td>
+                            <td>{{ $t("Order Date") }}</td>
+                            <td>{{ order.order_at }}</td>
                         </tr>
                         </tbody>
                     </table>

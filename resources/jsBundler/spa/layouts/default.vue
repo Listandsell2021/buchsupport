@@ -46,7 +46,7 @@
                     <div class="brand">
                         <div class="logo">
                             <a :href="PageUrl.frontend.home">
-                                <img src="/frontend/images/logo.png" alt="Logo">
+                                <img src="/assets/admin/images/logo.svg" alt="Logo">
                             </a>
                         </div>
                     </div>

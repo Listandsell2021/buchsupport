@@ -19,7 +19,7 @@
                                      @filter="updateFilters"
                             >
                                 <template v-slot:sorting_bottom>
-                                    <th>Kanvan</th>
+                                    <th>{{ $t("Kanban") }}</th>
                                     <th class="fixed-t-right">{{ $t('Action') }}</th>
                                 </template>
                             </Sorting>

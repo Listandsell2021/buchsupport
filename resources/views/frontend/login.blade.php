@@ -35,8 +35,8 @@
         <a href="tel:+4930520045118"><i class="fa fa-phone"></i></a>
       </div>
       <div class="logo-wrapper">
-                    <a href="https://buch-kunstregister.shop-template.de">
-                        <img src="https://buch-kunstregister.shop-template.de/images/logo-sm.png" alt="logo" class="logo-img">
+                    <a href="/admin">
+                        <img src="/assets/admin/images/logo-sm.svg" alt="logo" class="logo-img">
                     </a>
                 </div>
 		    <h2 class="text-center">Los geht’s</h2>

@@ -23,7 +23,7 @@ class GetDashboardCardsHandler implements Handler
         return [
             [
                 "cardClass"     => "card-body primary",
-                "title"         => trans("Products"),
+                "title"         => trans("Services"),
                 "dataInNumber"  => $productsCount,
                 "spanClass"     => "font-primary",
                 "iconClass"     => "icon-arrow-up",
@@ -31,28 +31,28 @@ class GetDashboardCardsHandler implements Handler
                 "svgIcon"       => "new-order"
             ],
             [
-                "cardClass"     => "card-body warning",
+                "cardClass"     => "card-body primary",
                 "title"         => trans("Customers"),
                 "dataInNumber"  => $customersCount,
-                "spanClass"     => "font-warning",
+                "spanClass"     => "font-primary",
                 "iconClass"     => "icon-arrow-up",
                 "status"        => "+5%",
                 "svgIcon"       => "customers"
             ],
             [
-                "cardClass"     => "card-body warning",
+                "cardClass"     => "card-body primary",
                 "title"         => trans("Staffs"),
                 "dataInNumber"  => $adminsCount,
-                "spanClass"     => "font-warning",
+                "spanClass"     => "font-primary",
                 "iconClass"     => "",
                 "status"        => "",
                 "svgIcon"       => "customers"
             ],
             [
-                "cardClass"     => "card-body warning",
+                "cardClass"     => "card-body primary",
                 "title"         => trans("Salespersons"),
                 "dataInNumber"  => $salespersonsCount,
-                "spanClass"     => "font-warning",
+                "spanClass"     => "font-primary",
                 "iconClass"     => "",
                 "status"        => "",
                 "svgIcon"       => "customers"

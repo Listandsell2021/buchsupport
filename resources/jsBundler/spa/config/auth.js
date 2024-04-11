@@ -1,4 +1,3 @@
-
 const adminUrl = "/admin";
 const customerUrl = "/customer";
 const salesPersonUrl = "/salesperson";

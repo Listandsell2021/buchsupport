@@ -64,7 +64,7 @@ Route::prefix('salesperson')->middleware(['auth:sanctum'])->group( function () {
 
     // Lead Status
     Route::post('lead-status/create',           [LeadController::class, 'addLeadStatus'])->name('salesperson.lead_status.add');
-
+    Route::post('lead/pipelines',               [LeadController::class, 'getLeadCustomerOrder'])->name('salesperson.lead_status.add');
 });
 
 

@@ -46,7 +46,7 @@
                     <div class="invoice__Header">
                         <div class="clearfix">
                             <div class="pull-right">
-                                <img src="/assets/admin/images/logo.png" alt="logo">
+                                <img src="/assets/admin/images/logo.svg" alt="logo">
                             </div>
                         </div>
 

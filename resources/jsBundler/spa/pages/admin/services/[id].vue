@@ -28,7 +28,7 @@
                                            type="number"
                                            name="price"
                                            rules="required"
-                                           :placeholder="$t('Enter price')"
+                                           :placeholder="$t('Enter Price')"
                                            :class="{'is-invalid': errors.price}"
                                     />
                                     <ErrorMessage class="text-danger d-block" name="name"/>
@@ -39,7 +39,7 @@
                                               v-model="form.note"
                                               name="note"
                                               rows="4"
-                                              :placeholder="$t('Enter note')"
+                                              :placeholder="$t('Enter Note')"
                                     ></textarea>
                                 </div>
                                 <div class="form-group">

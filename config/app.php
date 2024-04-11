@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'E+K Buch-Kunstregister GmbH'),
+    'name' => env('APP_NAME', 'Lead Kompass'),
 
     /*
     |--------------------------------------------------------------------------

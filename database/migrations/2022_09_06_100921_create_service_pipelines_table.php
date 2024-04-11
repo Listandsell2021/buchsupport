@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreign('service_id')->references('id')->on('services')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name');
             $table->boolean('has_tracking')->default(0);
+            $table->boolean('has_conversion')->default(0);
+            $table->boolean('has_option')->default(0);
             $table->boolean('default')->default(0);
             $table->smallInteger('order_no')->default(1);
             $table->unique(['service_id', 'name']);

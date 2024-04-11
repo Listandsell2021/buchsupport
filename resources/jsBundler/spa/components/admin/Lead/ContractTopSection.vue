@@ -52,7 +52,7 @@
                                    v-model="form.price"
                                    type="number"
                                    min="1"
-                                   :placeholder="$t('Enter Quantity')"
+                                   :placeholder="$t('Enter Price')"
                             />
                         </div>
                     </div>
@@ -82,8 +82,8 @@
                 </div>
 
                 <div class="clearfix">
-                    <button @click.prevent="requestForNewCustomer" class="btn btn-primary pull-left">
-                        {{ $t('Create customer and order') }}
+                    <button @click.prevent="createOrder" class="btn btn-primary pull-left">
+                        {{ $t('Create order') }}
                     </button>
                 </div>
             </div>
@@ -132,7 +132,7 @@ onClickOutside(modalDialog, () => {
     closeModal();
 })
 
-function requestForNewCustomer() {
+function createOrder() {
 
     let formData = new FormData();
     formData.append('lead_id', props.leadId);
@@ -142,7 +142,7 @@ function requestForNewCustomer() {
     formData.append('quantity', form.value.quantity);
     formData.append('note', form.value.note);
 
-    axios.post(route('admin.leads.request_new_customer'), formData)
+    axios.post(route('admin.leads.create_order'), formData)
         .then((response) => {
             if (response.status === 200) {
                 Notifier.toastSuccess(response.data.message);

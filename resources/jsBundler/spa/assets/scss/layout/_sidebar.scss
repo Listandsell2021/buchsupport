@@ -2018,10 +2018,10 @@
                   &.active, &.router-link-exact-active {
                     transition: all 0.5s ease;
                     position: relative;
-                    background-color: lighten($primary-color, 27%);
+                    background-color: $primary-color;
 
                     &.fa {
-                      background-color: lighten($primary-color, 27%);
+                      background-color: $primary-color;
                     }
 
                     &::after {
@@ -2043,7 +2043,7 @@
                     }
 
                     span {
-                      color: var(--theme-deafult);
+                      color: #fff;
                       transition: all 0.3s ease;
                     }
                   }

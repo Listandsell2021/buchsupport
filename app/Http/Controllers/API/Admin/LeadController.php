@@ -15,6 +15,7 @@ use App\CommandProcess\Admin\Lead\GetFilteredLeads;
 use App\CommandProcess\Admin\Lead\GetLead;
 use App\CommandProcess\Admin\Lead\GetLeadAddedProducts;
 use App\CommandProcess\Admin\Lead\GetLeadContract;
+use App\CommandProcess\Admin\Lead\GetLeadCustomerOrders;
 use App\CommandProcess\Admin\Lead\GetLeadNotes;
 use App\CommandProcess\Admin\Lead\GetLeadsMapLocation;
 use App\CommandProcess\Admin\Lead\GetLeadStatus;
@@ -42,12 +43,14 @@ use App\Http\Requests\Admin\Lead\AddLeadNoteRequest;
 use App\Http\Requests\Admin\Lead\ApproveNewCustomerRequest;
 use App\Http\Requests\Admin\Lead\ChangeStatusRequest;
 use App\Http\Requests\Admin\Lead\CreateLeadContractRequest;
+use App\Http\Requests\Admin\Lead\CreateLeadOrderRequest;
 use App\Http\Requests\Admin\Lead\CreateLeadRequest;
 use App\Http\Requests\Admin\Lead\DeleteAddedProductRequest;
 use App\Http\Requests\Admin\Lead\DeleteLeadNoteRequest;
 use App\Http\Requests\Admin\Lead\DeleteLeadRequest;
 use App\Http\Requests\Admin\Lead\DownloadContractDocumentRequest;
 use App\Http\Requests\Admin\Lead\GetContractRequest;
+use App\Http\Requests\Admin\Lead\GetLeadCustomerOrdersRequest;
 use App\Http\Requests\Admin\Lead\ImportLeadRequest;
 use App\Http\Requests\Admin\Lead\RemoveLeadObjectionRequest;
 use App\Http\Requests\Admin\Lead\UpdateBulkLeadSalespersonRequest;
@@ -284,6 +287,20 @@ class LeadController extends Controller
 
 
     /**
+     * Get Lead Customer Pipeline
+     *
+     * @param GetLeadCustomerOrdersRequest $request
+     * @return JsonResponse
+     */
+    public function getLeadCustomerOrder(GetLeadCustomerOrdersRequest $request): JsonResponse
+    {
+        $orders = $this->commandBus->execute(new GetLeadCustomerOrders($request->get('lead_id')));
+
+        return $this->respondWithSuccess(__('Pipelines created successfully'), $orders);
+    }
+
+
+    /**
      * Get Lead Notes
      *
      * @param Request $request
@@ -447,7 +464,39 @@ class LeadController extends Controller
 
             DB::commit();
         } catch (\Exception $e) {
-            dd($e);
+            DB::rollback();
+        }
+
+        return $this->respondWithSuccess(__('New Customer Request sent successfully'));
+    }
+
+
+    /**
+     * Create Lead Order
+     *
+     * @param CreateLeadOrderRequest $request
+     * @return JsonResponse
+     */
+    public function createLeadOrder(CreateLeadOrderRequest $request): JsonResponse
+    {
+        DB::beginTransaction();
+
+        try {
+            $this->commandBus->execute(
+                new CreateLeadContract(
+                    (int) $request->get('lead_id'),
+                    $request->file('document'),
+                    $request->get('service_id'),
+                    $request->get('quantity'),
+                    $request->get('price'),
+                    (string) $request->get('note'),
+                )
+            );
+
+            $this->commandBus->execute(new ConvertLeadToNewCustomer($request->get('lead_id')));
+
+            DB::commit();
+        } catch (\Exception $e) {
             DB::rollback();
         }
 

@@ -75,7 +75,7 @@
                                                 <td>{{ HelperUtils.truncate(customer.street, 25, '..') }}</td>
                                                 <td>{{ customer.postal_code }}</td>
                                                 <td>{{ customer.city }}</td>
-                                                <td>{{ customer.dob }}</td>
+                                                <td>{{ HelperUtils.getDateInGerman(customer.dob) }}</td>
                                                 <td>{{ customer.registered_at }}</td>
                                                 <td class="switcher-col">
                                                     <StatusSwitcher :is_active="customer.is_active"

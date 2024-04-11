@@ -1,3 +1,6 @@
+.login-logo-img {
+    max-height: 80px;
+}
 .product-image-item {
     background-color: #eee;
     border-radius: 4px;
@@ -48,7 +51,7 @@
 }
 
 .smart-lead-o:hover, .smart-lead-o:focus, .smart-lead-o:active, .smart-lead-o:visited {
-    background-color: #ecdca8;
+    background-color: --theme-light-default;
 }
 .top-smart-list {
     display: block;
@@ -481,7 +484,7 @@
     bottom: 20px;
     right: 20px;
     padding: 7px 10px;
-    background-color: #d4af37;
+    background: var(--theme-deafult);
     color: #fff;
     border-radius: 4px;
     z-index: 10000;

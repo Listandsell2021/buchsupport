@@ -81,8 +81,6 @@ axiosInstance.interceptors.response.use(function (response) {
     return Promise.reject(error)
 });
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
-
 const axios = {
 
     loading()  {

@@ -11,7 +11,7 @@
                         <div>
                             <div>
                                 <a class="logo">
-                                    <img class="img-fluid" src="/assets/admin/images/logo.png" alt="looginpage" />
+                                    <img class="login-logo-img" src="/assets/admin/images/logo.svg" alt="looginpage" />
                                 </a>
                             </div>
                             <div class="login-main">

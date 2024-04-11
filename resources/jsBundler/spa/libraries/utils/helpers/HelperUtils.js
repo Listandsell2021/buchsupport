@@ -143,6 +143,10 @@ export default {
         );
     },
 
+    getDateInGerman(date) {
+        return moment(date).format('DD.MM.YYYY');
+    },
+
     getDateTimeInGerman(date) {
         return moment(date).format('DD.MM.YYYY HH:mm');
     },
