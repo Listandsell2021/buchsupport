@@ -38,12 +38,6 @@
                             >
                                 {{ $t('Convert') }}
                             </button>
-                            <button v-else
-                                    class="btn btn-primary m-r-20"
-                                    @click.prevent="convertToCustomer"
-                            >
-                                {{ $t('Add to New Customer') }}
-                            </button>
                         </template>
                         <template v-else>
                             <button class="btn btn-light m-r-20"
@@ -321,7 +315,7 @@ function goToCustomer() {
 }
 
 function hasConversionRequest() {
-    return lead.value.has_conversion_request;
+    return lead.value.has_conversion_request || lead.value.has_order;
 }
 
 

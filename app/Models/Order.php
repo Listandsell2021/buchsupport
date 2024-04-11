@@ -19,7 +19,11 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'service_id', 'pipeline_id', 'price', 'quantity', 'note', 'order_at', 'order_no'];
+    protected $fillable = [
+        'user_id', 'lead_id', 'service_id', 'pipeline_id', 'price', 'quantity', 'note',
+        'subtotal', 'tax', 'tax_price', 'total', 'shipment_no', 'document', 'document_path',
+        'is_converted', 'converted_at', 'order_at', 'order_no'
+    ];
 
 
     /**
@@ -64,6 +68,17 @@ class Order extends Model
     public function pipeline(): BelongsTo
     {
         return $this->belongsTo(ServicePipeline::class, 'pipeline_id');
+    }
+
+
+    /**
+     * Relation to Lead
+     *
+     * @return BelongsTo
+     */
+    public function lead(): BelongsTo
+    {
+        return $this->belongsTo(Lead::class, 'lead_id');
     }
 
 

@@ -10,6 +10,8 @@ use App\Events\Admin\LeadNoteAdded;
 use App\Events\Admin\LeadStatusUpdated;
 use App\Events\Admin\NewLeadsCreated;
 use App\Helpers\Config\AuthConfig;
+use App\Helpers\Config\ContractDocConfig;
+use App\Libraries\Settings\Setting;
 use App\Models\Admin;
 use App\Models\Lead;
 use App\Models\LeadActivity;
@@ -24,6 +26,7 @@ use App\Models\User;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class LeadService
@@ -453,20 +456,42 @@ class LeadService
             'converted_at' => getCurrentDateTime(),
         ]);
 
-        $pipeline = ServicePipeline::where('service_id', $lead->contract->service_id)->orderBy('default', 'desc')->first();
-
-        Order::create([
-            'user_id' => $customer->id,
-            'service_id' => $lead->contract->service_id,
-            'pipeline_id' => $pipeline->id,
-            'price' => (float) $lead->contract->price,
-            'quantity' => (int) $lead->contract->quantity,
-            'note' => $lead->contract->note,
-            'order_at' => getCurrentDateTime()
-        ]);
-
         return $customer;
     }
+
+    /**
+     * Create Order By Lead
+     *
+     * @param int $leadId
+     * @return mixed
+     */
+    public function createOrderByLead(int $leadId): mixed
+    {
+        $leadContract = LeadContract::where('lead_id', $leadId)->first();
+        $pipeline = ServicePipeline::where('service_id', $leadContract->service_id)->orderBy('default', 'desc')->first();
+
+        $price = (float) $leadContract->price;
+        $quantity = (int) $leadContract->quantity;
+        $total = $price * $quantity;
+        $tax = Setting::getVatPercentage();
+        $subtotal = ($total * 100 / (100 + $tax));
+
+        return Order::create([
+            'lead_id' => $leadId,
+            'service_id' => $leadContract->service_id,
+            'pipeline_id' => $pipeline->id,
+            'price' => $price,
+            'quantity' => $quantity,
+            'subtotal' => $subtotal,
+            'tax' => Setting::getVatPercentage(),
+            'tax_price' => $total - $subtotal,
+            'total' => $total,
+            'note' => $leadContract->note,
+            'order_at' => getCurrentDateTime(),
+            'order_no' => 1,
+        ]);
+    }
+
 
     /**
      * Update Bulk Lead Salesperson

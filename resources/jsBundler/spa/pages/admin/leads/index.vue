@@ -194,15 +194,6 @@
                                 <td v-if="form.columns.lead_postal_code.show">{{ lead.postal_code }}</td>
                                 <td v-if="form.columns.lead_status.show">
                                     <template v-if="lead.lead_status_id">{{ lead.lead_status_name }}</template>
-                                    <button v-if="lead.has_conversion_request && !lead.is_converted"
-                                            class="btn btn-primary btn-xs"
-                                            @click.prevent="convertToCustomer(lead.id)"
-                                    >
-                                        {{ $t('Add to New Customer') }}
-                                    </button>
-                                    <div v-if="lead.is_converted">
-                                        <button class="btn btn-success btn-xs">{{ $t('Converted') }}</button>
-                                    </div>
                                 </td>
                                 <td>
                                     <button class="btn btn-success btn-xs"

@@ -24,7 +24,7 @@ class ConvertLeadToNewCustomerHandler implements Handler
     {
         $customer = $this->leadService->convertLeadToNewCustomer($command->leadId);
 
-        $this->userContractUpdate($customer->id, $command->leadId);
+        //$this->userContractUpdate($customer->id, $command->leadId);
     }
 
     protected function userContractUpdate($customerId, $leadId): void
@@ -32,15 +32,5 @@ class ConvertLeadToNewCustomerHandler implements Handler
         $leadContract = LeadContract::where('lead_id', $leadId)->first();
         $customerDocumentPath = ContractDocConfig::getCustomerContractRelativePath($customerId.'/'.$leadContract->document);
         Storage::disk(ContractDocConfig::storageDisk())->copy($leadContract->document_path, $customerDocumentPath);
-
-        UserContract::create([
-            'user_id'       => $customerId,
-            'service_id'    => $leadContract->service_id,
-            'note'          => $leadContract->note,
-            'price'         => $leadContract->price,
-            'quantity'      => $leadContract->quantity,
-            'document'      => $leadContract->document,
-            'document_path' => $customerDocumentPath,
-        ]);
     }
 }

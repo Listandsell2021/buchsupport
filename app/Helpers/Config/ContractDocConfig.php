@@ -77,9 +77,9 @@ class ContractDocConfig
      * @param string $imagePath
      * @return string
      */
-    public static function getCustomerContractRelativePath(string $imagePath = ''): string
+    public static function getOrderContractRelativePath(string $imagePath = ''): string
     {
-        return config('contract_document.user_contract_folder').($imagePath != '' ? DIRECTORY_SEPARATOR.$imagePath : '');
+        return config('contract_document.order_contract_folder').($imagePath != '' ? DIRECTORY_SEPARATOR.$imagePath : '');
     }
 
 
@@ -89,7 +89,7 @@ class ContractDocConfig
      * @param string $imagePath
      * @return string
      */
-    public static function getCustomerContractAbsolutePath(string $imagePath = ''): string
+    public static function getOrderContractAbsolutePath(string $imagePath = ''): string
     {
         return Storage::disk(self::storageDisk())->path(self::getLeadContractRelativePath($imagePath));
     }

@@ -46,10 +46,11 @@ return new class extends Migration
             $table->float('tax_price');
             $table->float('total');
             $table->string('shipment_no')->nullable();
-            $table->string('document');
-            $table->string('document_path');
+            $table->string('document')->nullable();
+            $table->string('document_path')->nullable();
             $table->text('note')->nullable();
             $table->boolean('is_converted')->default(0);
+            $table->dateTime('converted_at')->nullable();
             $table->dateTime('order_at');
             $table->smallInteger('order_no')->default(1);
         });

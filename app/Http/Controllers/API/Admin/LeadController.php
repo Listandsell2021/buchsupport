@@ -7,6 +7,7 @@ use App\CommandProcess\Admin\Lead\AddLeadNote;
 use App\CommandProcess\Admin\Lead\ConvertLeadToNewCustomer;
 use App\CommandProcess\Admin\Lead\CreateLeadContract;
 use App\CommandProcess\Admin\Lead\CreateLeadProductCategory;
+use App\CommandProcess\Admin\Lead\CreateOrderFromLead;
 use App\CommandProcess\Admin\Lead\DeleteAddedProduct;
 use App\CommandProcess\Admin\Lead\DeleteLead;
 use App\CommandProcess\Admin\Lead\DeleteLeadNote;
@@ -493,14 +494,14 @@ class LeadController extends Controller
                 )
             );
 
-            $this->commandBus->execute(new ConvertLeadToNewCustomer($request->get('lead_id')));
+            $this->commandBus->execute(new CreateOrderFromLead($request->get('lead_id')));
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
         }
 
-        return $this->respondWithSuccess(__('New Customer Request sent successfully'));
+        return $this->respondWithSuccess(__('Order created successfully'));
     }
 
 

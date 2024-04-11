@@ -46,6 +46,9 @@ class CleanStorageFolders extends Command
         File::cleanDirectory(storage_path('app/customer_contracts'));
         $this->info('Customer contract storage cleared');
 
+        File::cleanDirectory(storage_path('app/order_contracts'));
+        $this->info('Order contract storage cleared');
+
         File::cleanDirectory(storage_path('app/customer_invoices'));
         $this->info('Customer invoice storage cleared');
 
