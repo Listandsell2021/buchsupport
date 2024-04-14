@@ -52,6 +52,7 @@ import { vOnClickOutside } from '@vueuse/components'
 import moment from "moment";
 import {useI18n} from "vue-i18n";
 import {useRouter} from "vue-router";
+import HelperUtils from "@/libraries/utils/helpers/HelperUtils";
 
 const emit = defineEmits(['close', 'reload']);
 const props = defineProps({
@@ -72,21 +73,11 @@ const form = ref({
 
 const onClickOutsideHandler = [
     (ev) => {
-        if (hasSomeParentTheClass(ev.target, 'mx-datepicker-main') ) return;
+        if (HelperUtils.hasSomeParentTheClass(ev.target, 'mx-datepicker-main') ) return;
 
         closeModal();
-    },
-    { ignore: [] }
-]
-
-function hasSomeParentTheClass(element, classname) {
-    if (typeof(element.className) != "undefined") {
-        if (element.className.split(' ').indexOf(classname)>=0) {
-            return true
-        }
-    }
-    return element.parentNode && hasSomeParentTheClass(element.parentNode, classname);
-}
+    }, { ignore: [] }
+];
 
 function addLeadAppointment() {
     axios.post(route('admin.lead.appointment.store'), form.value)

@@ -140,20 +140,5 @@ class ServiceController extends Controller
     }
 
 
-    /**
-     * Get Service Pipeline In Kanvan
-     *
-     * @param Request $request
-     * @param $serviceId
-     * @return JsonResponse
-     */
-    public function getServicePipelineInKanvan(Request $request, $serviceId): JsonResponse
-    {
-        $pipelines = ServicePipeline::with(['orders', 'orders.user'])
-            ->where('service_id', $serviceId)->orderBy('order_no')
-            ->get();
-
-        return $this->respondWithContentOnly($pipelines);
-    }
 
 }

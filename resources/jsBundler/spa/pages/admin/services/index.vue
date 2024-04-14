@@ -46,7 +46,7 @@
                                     <td>
                                         <a href="#"
                                            class="btn btn-primary btn-xs"
-                                           @click.prevent="() => router.push('services/'+service.id+'/pipeline')"
+                                           @click.prevent="() => router.push('orders/pipeline/'+service.id)"
                                         >
                                             <i class="fa fa-eye"></i>
                                         </a>

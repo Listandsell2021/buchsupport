@@ -7,7 +7,7 @@
             <div class="legal__wrapper row flex-column text-center">
                 <h1>Impressum</h1>
                 <p>
-                    E+K Buch-Kunstregister GmbH <br />Gf Erkan Kirikci und Kadir Elevit
+                    Lead Kompass <br />Gf Erkan Kirikci und Kadir Elevit
                     <br />
                     Friedrichstraße 171<br />10117 Berlin<br />Deutschland
                 </p>

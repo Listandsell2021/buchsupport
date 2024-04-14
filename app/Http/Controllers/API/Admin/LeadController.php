@@ -625,6 +625,6 @@ class LeadController extends Controller
      */
     public function downloadContractDocument(DownloadContractDocumentRequest $request): BinaryFileResponse
     {
-        return $this->commandBus->execute(new DownloadContractDocument((int) $request->get('contract_id')));
+        return $this->commandBus->execute(new DownloadContractDocument((int) $request->get('lead_id')));
     }
 }

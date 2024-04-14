@@ -155,7 +155,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', 'berlin-webdesign-agentur.de'),
+    'domain' => env('SESSION_DOMAIN', 'leadkompass.de'),
 
     /*
     |--------------------------------------------------------------------------

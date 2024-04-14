@@ -3,7 +3,11 @@
 namespace App\Services\Admin;
 
 
+use App\Libraries\Settings\Setting;
+use App\Models\LeadContract;
 use App\Models\Order;
+use App\Models\OrderStage;
+use App\Models\ServicePipeline;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Arr;
 
@@ -15,7 +19,7 @@ class OrderService
     {
         $filters = $data['filters'] ?? [];
 
-        return Order::with(['service', 'user', 'pipeline'])
+        return Order::with(['service', 'user', 'pipeline', 'lead'])
             ->where(function($query) use ($filters) {
                 if (hasInput($filters['name'] ?? '')) {
                     $query->where('services.name', 'LIKE', '%' . $filters['name'] . '%');
@@ -33,7 +37,7 @@ class OrderService
      */
     public function getById(int $orderId): mixed
     {
-        return Order::with(['service', 'user', 'pipeline'])->where('id', $orderId)->first();
+        return Order::with(['service', 'user', 'pipeline', 'stages', 'stages.pipeline', 'lead', 'lead.salesperson'])->where('id', $orderId)->first();
     }
 
     /**
@@ -44,9 +48,50 @@ class OrderService
     */
     public function save(array $data): mixed
     {
-        $savingData = Arr::only($data, Order::fillableProps());
-        return Order::create(array_merge($savingData, ['order_at' => now()->toDateTime()]));
+        $pipeline = ServicePipeline::where('service_id', $data['service_id'])->orderBy('default', 'desc')->first();
+
+        $price = (float) $data['price'];
+        $quantity = (int) $data['quantity'];
+        $total = $price * $quantity;
+        $tax = Setting::getVatPercentage();
+        $subtotal = ($total * 100 / (100 + $tax));
+
+        $order = Order::create([
+            'user_id' => $data['user_id'],
+            'service_id' => $data['service_id'],
+            'pipeline_id' => $pipeline->id,
+            'price' => $price,
+            'quantity' => $quantity,
+            'subtotal' => $subtotal,
+            'tax' => Setting::getVatPercentage(),
+            'tax_price' => $total - $subtotal,
+            'total' => $total,
+            'note' => $data['note'],
+            'order_at' => getCurrentDateTime(),
+            'order_no' => 1,
+        ]);
+
+        $this->updateOrderStage((int) $order->id, (int) $pipeline->id);
+
+        return $order;
     }
+
+    /**
+     * Update Order Stage
+     *
+     * @param int $orderId
+     * @param int $pipelineId
+     * @return mixed
+     */
+    public function updateOrderStage(int $orderId, int $pipelineId): mixed
+    {
+        return OrderStage::create([
+            'order_id' => $orderId,
+            'pipeline_id' => $pipelineId,
+            'created_at' => getCurrentDateTime(),
+        ]);
+    }
+
 
     /**
      * Update specific record to database.

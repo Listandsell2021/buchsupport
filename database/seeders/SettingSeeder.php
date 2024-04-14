@@ -20,7 +20,7 @@ class SettingSeeder extends Seeder
                 'name' => 'Company Name',
                 'group' => 'company_info',
                 'key' => 'company_name',
-                'value' => 'E+K Buch-Kunstregister GmbH',
+                'value' => 'Lead Kompass',
                 'type' => SettingType::string->name,
             ],
             [
@@ -55,7 +55,7 @@ class SettingSeeder extends Seeder
                 'name' => 'Email',
                 'group' => 'company_info',
                 'key' => 'company_email',
-                'value' => 'info@buch-kunstregister.de',
+                'value' => 'info@buch-leadkompass.de',
                 'type' => SettingType::string->name,
             ],
             [
@@ -69,7 +69,7 @@ class SettingSeeder extends Seeder
                 'name' => 'Website',
                 'group' => 'company_info',
                 'key' => 'company_website',
-                'value' => 'http://buch-kunstregister.de',
+                'value' => 'https://leadkompass.de',
                 'type' => SettingType::string->name,
             ],
             [

@@ -76,7 +76,7 @@
                                                 <td>{{ customer.postal_code }}</td>
                                                 <td>{{ customer.city }}</td>
                                                 <td>{{ HelperUtils.getDateInGerman(customer.dob) }}</td>
-                                                <td>{{ customer.registered_at }}</td>
+                                                <td>{{ HelperUtils.getDateInGerman(customer.registered_at) }}</td>
                                                 <td class="switcher-col">
                                                     <StatusSwitcher :is_active="customer.is_active"
                                                                     @toggle="changeActiveStatus(customer.id, $event)"

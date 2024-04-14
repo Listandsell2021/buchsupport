@@ -12,13 +12,6 @@
                     >
                         <i class="fa fa-copy"></i>
                     </a>
-                    <a href="#"
-                       class="btn btn-xs btn-primary m-r-20"
-                       v-tooltip="$t('Customer Document')"
-                       @click.prevent="openCustomerDocument()"
-                    >
-                        <i class="fa fa-file"></i> {{ $t('Document') }}
-                    </a>
                 </div>
             </template>
         </Breadcrumbs>
@@ -42,7 +35,7 @@
                                href="#"
                                @click.prevent="changeTab('document')"
                             >
-                                <i class="fa fa-file"></i> {{ $t('Document') }}
+                                <i class="fa fa-file"></i> {{ $t('Other') }}
                             </a>
                         </li>
                         <li class="nav-item" v-if="false">
@@ -252,20 +245,6 @@
                         <div class="tab-pane fade show active" v-if="showTab === 'document'">
                             <table class="table-sm">
                                 <tr>
-                                    <td>{{ $t('Contract Document') }} :</td>
-                                    <td>
-                                        <template v-if="hasContractDocument()">
-                                            <a href="#" @click.prevent="downloadContractDocument(customer.id, customer.contract.document)">
-                                                <i class="fa fa-file"></i>
-                                                {{ customer.contract.document }}
-                                            </a>
-                                        </template>
-                                        <template v-else>
-                                            {{ 'Not Available' }}
-                                        </template>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td>{{ $t('Salesperson') }} :</td>
                                     <td>
                                         <template v-if="hasSalesperson()">
@@ -435,14 +414,6 @@ function mapUserIntoForm(user) {
     };
 }
 
-function openCustomerDocument() {
-    axios.postDownload(route('admin.customers.download_document_pdf'), {user_id: customerId})
-        .then((response) => {
-            if (response.status === 200) {
-                HelperUtils.blobFileDownload(response, 'Dokumente__' + customerId + '.pdf')
-            }
-        });
-}
 
 function hasContractDocument() {
     return customer.value.contract;

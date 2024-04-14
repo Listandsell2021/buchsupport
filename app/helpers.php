@@ -556,3 +556,11 @@ if (!function_exists('getFileSizeInKb')) {
     }
 }
 
+
+if (!function_exists('getAppName')) {
+    function getAppName(): string
+    {
+        return (string) config('app.name');
+    }
+}
+

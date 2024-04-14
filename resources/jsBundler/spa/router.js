@@ -139,25 +139,24 @@ const routes = [
                 component: () => import('./pages/admin/orders/create.vue'),
             },
             {
-                path: 'orders/:id',
-                name: 'admin_order_edit',
+                path: 'orders/detail/:id',
+                name: 'admin_order_detail',
                 props: route => ({ data: route.meta.data }),
                 beforeEnter: (route) => ResourceFinder(ziggyRoute('admin.orders.show', {id: route.params.id}), route),
                 component: () => import('./pages/admin/orders/[id].vue'),
             },
-
             {
-                path: 'services/:id/pipeline',
+                path: 'orders/pipeline/:id',
                 name: 'admin_pipeline_edit',
                 props: route => ({ data: route.meta.data }),
-                beforeEnter: (route) => ResourceFinder(ziggyRoute('admin.services.pipeline', {id: route.params.id}), route),
-                component: () => import('./pages/admin/services/pipeline.vue'),
+                beforeEnter: (route) => ResourceFinder(ziggyRoute('admin.orders.pipeline', {id: route.params.id}), route),
+                component: () => import('./pages/admin/orders/kanban.vue'),
             },
-            {
+            /*{
                 path: 'orders/testing',
                 name: 'admin_order_create2',
                 component: () => import('./pages/admin/services/pipeline2.vue'),
-            },
+            },*/
 
 
             {

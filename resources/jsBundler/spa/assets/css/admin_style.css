@@ -582,3 +582,77 @@ a.bg-secondary:hover, a.bg-secondary:focus {
     padding: 20px;
     border-radius: 6px;
 }
+
+.wizard-nav  {
+    padding-left: 0;
+    justify-content: space-between;
+    list-style: none;
+    position: relative;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 30px;
+}
+.step-wizard-item {
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+.step-wizard-item .stepTitle {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+}
+.step-wizard-item.active .stepTitle {
+    color: var(--theme-deafult);
+}
+.step-wizard-item .step {
+    position: relative;
+}
+.step-wizard-item .step:after {
+    position: absolute;
+    content: '';
+    border: 1px solid #ccc;
+    width: 100%;
+    right: 50%;
+    top: 50%;
+}
+.step-wizard-item:first-child .step:after {
+    content: none;
+}
+.step-wizard-item.active .step:after {
+    border-color: var(--theme-deafult);
+}
+.step-wizard-item .step-no {
+    display: inline-block;
+    height: 25px;
+    width: 27px;
+    border-radius: 50%;
+    color: #fff;
+    line-height: 25px;
+    background-color: #A2A2A2;
+    position: relative;
+    z-index: 1;
+}
+.step-wizard-item .step-no i {
+    font-style: normal;
+}
+.step-wizard-item.active .step-no {
+    background-color: var(--theme-deafult);
+}
+.step-wizard-item .stage-date {
+    margin-top: 10px;
+    font-size: 12px;
+}
+.pipeline-item-title > a {
+    color: #333;
+    font-size: 14px;
+}
+.pipeline-item-title > a:hover, .pipeline-item-title > a:focus {
+    color: var(--theme-deafult);
+}
+.pipeline-user {
+    color: var(--bs-body-color);
+}
+.draggable-item {
+
+}

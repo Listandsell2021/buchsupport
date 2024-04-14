@@ -141,7 +141,7 @@
                     <div class="flex-box-comp">
                         <div class="section-title"><h4>Bekannt <span class="forbowncolor">aus:</span></h4></div>
                         <div class="desc-logo">
-                            <div class="section-description">Zu den Gastbeiträgen von E+K Buch-Kunstregister GmbH für
+                            <div class="section-description">Zu den Gastbeiträgen von Lead Kompass für
                                 BUNTE.DE
                             </div>
                             <a class="Bekannt-link" href="https://unternehmen.bunte.de/faksimile-verkaufen.html"
@@ -475,7 +475,7 @@
                 <div class="col-md-6">
                     <div class="container">
                         <h3 class="app-title">Sammlung ganz einfach <span>offline verwalten</span></h3>
-                        <p class="app-txt">Mit der Buch-Kunstregister App können Sie Ihre Buch- und Kunstsammlungen ganz
+                        <p class="app-txt">Mit der Lead Kompass App können Sie Ihre Buch- und Kunstsammlungen ganz
                             bequem vom Smartphone aus verwalten.</p>
                         <ul class="applist">
                             <li><span class="listbold">1 Verwaltung:</span> Schaffen Sie Überblick und Ordnung</li>
@@ -838,7 +838,7 @@
     <!-- ProvenExpert ProSeal Widget -->
     <noscript>
         <a href="https://www.provenexpert.com/de-de/ek-...mpaign=...;" target=" _blank" title="Kundenbewertungen &
-        Erfahrungen zu E+K Buch-Kunstregister GmbH. " class="pe-pro-seal-more-infos">Mehr Infos</a>
+        Erfahrungen zu Lead Kompass. " class="pe-pro-seal-more-infos">Mehr Infos</a>
     </noscript>
     <script src="https://s.provenexpert.net/seals/proseal.js" ;></script>
     <script id="proSeal">

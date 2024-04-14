@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Admin\Order;
 
+use App\Helpers\Config\ContractDocConfig;
 use App\Http\Rules\Admin\CheckProductImages;
 use App\Models\ServicePipeline;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\File;
 
 class CreateOrderRequest extends FormRequest
 {
@@ -26,20 +28,15 @@ class CreateOrderRequest extends FormRequest
         return [
             'user_id'       => ['required', 'exists:users,id'],
             'service_id'    => ['required', 'exists:services,id'],
-            'pipeline_id'   => [
-                'required',
-                function (string $attribute, mixed $value, \Closure $fail) {
-                    $pipeline = ServicePipeline::where('service_id', $this->get('service_id'))
-                        ->where('id', $this->get('pipeline_id'))
-                        ->exists();
-                    if (!$pipeline) {
-                        $fail(trans("Service status does not exists"));
-                    }
-                },
-            ],
             'price'         => ['required', 'numeric'],
             'quantity'      => ['required', 'numeric'],
             'note'          => ['required', 'max:500'],
+            'document'  => [
+                'required',
+                File::types(ContractDocConfig::fileExtensions())
+                    ->min(ContractDocConfig::minFileSize())
+                    ->max(ContractDocConfig::maxFileSize()),
+            ],
         ];
     }
 

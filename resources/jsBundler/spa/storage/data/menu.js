@@ -1,4 +1,15 @@
 import Permissions from "./AdminPermissions";
+import {useServiceStore} from "@/storage/store/services";
+
+const services = useServiceStore().services
+    .filter((service) => service.is_active)
+    .map((service) => {
+        return {
+            title: service.name,
+            path: "/admin/orders/pipeline/" + service.id,
+            active: false,
+        }
+    });
 
 export default {
     "data": [
@@ -112,24 +123,18 @@ export default {
         {
             "title": "Orders",
             "icon": "fa fa-database",
-            "type": "link",
+            "type": "sub",
             "path": "/admin/orders",
             "active": false,
             "permission": Permissions.LIST_ORDER,
             "skip_permission": false,
-            "related": [
-                "/admin/orders/create",
-                "/admin/orders/*"
-            ]
-        },
-        {
-            "title": "Pipeline",
-            "icon": "fa fa-database",
-            "type": "link",
-            "path": "/admin/pipeline",
-            "active": false,
-            "permission": Permissions.LIST_ORDER,
-            "skip_permission": false,
+            "children": [...[
+                {
+                    title: "List",
+                    path: "/admin/orders",
+                    active: false,
+                },
+            ], ...services],
             "related": [
                 "/admin/orders/create",
                 "/admin/orders/*"

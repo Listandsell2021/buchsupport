@@ -3,14 +3,20 @@
 
         <Breadcrumbs :menu-items="breadcrumbConfig.order.create()" :title="$t('Order Create')"/>
 
+        <AddCustomerModal v-if="createCustomerModal"
+                          @close="closeCreateCustomerModal"
+        ></AddCustomerModal>
+
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
+
                     <Form @submit="createOrder" v-slot="{errors}">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>{{ $t('Customer') }}</label>
+
+                        <div class="form-group">
+                            <label>{{ $t('Customer') }}</label>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <BsSelect
                                         :filterable="false"
                                         v-model="form.user_id"
@@ -24,6 +30,18 @@
                                         </template>
                                     </BsSelect>
                                 </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-primary btn-xs"
+                                        @click.prevent="openCreateCustomerModal"
+                                    >
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{ $t('Service') }}</label>
                                     <BsSelect
@@ -38,28 +56,15 @@
                                     ></BsSelect>
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ $t('Service Status') }}</label>
-                                    <BsSelect
-                                        class=""
-                                        v-model="form.pipeline_id"
-                                        :options="pipelines"
-                                        label="name"
-                                        :reduce="pipeline => pipeline.id"
-                                        :clearable="false"
-                                        :placeholder="$t('Select Service')"
-                                    ></BsSelect>
-                                </div>
-                                <div class="form-group">
-                                    <label>{{ $t('Price') }}</label>
-                                    <Field class="form-control"
-                                           v-model="form.price"
-                                           type="number"
-                                           name="price"
-                                           rules="required"
-                                           :placeholder="$t('Enter price')"
-                                           :class="{'is-invalid': errors.price}"
-                                    />
-                                    <ErrorMessage class="text-danger d-block" name="name"/>
+                                    <label for="document">{{ $t('Contract Document') }}</label>
+                                    <div>
+                                        <input type="file"
+                                               value=""
+                                               placeholder="Document"
+                                               ref="documentFile"
+                                               @change="initOrderDocument"
+                                        />
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>{{ $t('Quantity') }}</label>
@@ -74,6 +79,18 @@
                                     <ErrorMessage class="text-danger d-block" name="quantity"/>
                                 </div>
                                 <div class="form-group">
+                                    <label>{{ $t('Price') }}</label>
+                                    <Field class="form-control"
+                                           v-model="form.price"
+                                           type="number"
+                                           name="price"
+                                           rules="required"
+                                           :placeholder="$t('Enter price')"
+                                           :class="{'is-invalid': errors.price}"
+                                    />
+                                    <ErrorMessage class="text-danger d-block" name="name"/>
+                                </div>
+                                <div class="form-group">
                                     <label>{{ $t('Note') }}</label>
                                     <textarea class="form-control"
                                               v-model="form.note"
@@ -83,7 +100,6 @@
                                     ></textarea>
                                 </div>
                             </div>
-
                         </div>
 
                         <button type="submit" class="btn btn-primary">{{ $t('Create') }}</button>
@@ -106,6 +122,8 @@ import {useI18n} from "vue-i18n";
 import {useRouter} from "vue-router";
 import {useMeta} from "vue-meta";
 import __debounce from "lodash/debounce";
+import BtModalHelper from "@/libraries/utils/BtModalHelper";
+import AddCustomerModal from "@/components/admin/Customer/AddCustomerModal.vue";
 
 
 const router = useRouter();
@@ -118,11 +136,13 @@ const form = ref({
     pipeline_id: '',
     quantity: 0,
     price: 0,
-    note: '',
+    note: "",
+    document: null,
 });
 
 const customers = ref([]);
 const pipelines = ref([]);
+const createCustomerModal = ref(false);
 
 const searchCustomers = __debounce((search, loading) => {
     if(search.length) {
@@ -153,7 +173,15 @@ function getPipelinesByService(serviceId) {
 }
 
 function createOrder() {
-    axios.post(route('admin.orders.store'), form.value).then((response) => {
+    let formData = new FormData();
+    formData.append('user_id', form.value.user_id);
+    formData.append('document', form.value.document);
+    formData.append('service_id', form.value.service_id);
+    formData.append('price', form.value.price);
+    formData.append('quantity', form.value.quantity);
+    formData.append('note', form.value.note);
+
+    axios.post(route('admin.orders.store'), formData).then((response) => {
         if (response.status == 201) {
             Notifier.toastSuccess(response.data.message);
             router.push('/admin/orders');
@@ -161,6 +189,19 @@ function createOrder() {
     });
 }
 
+function initOrderDocument(event) {
+    form.value.document = event.target.files[0];
+}
+
+function openCreateCustomerModal() {
+    createCustomerModal.value = true;
+    BtModalHelper.open();
+}
+
+function closeCreateCustomerModal() {
+    createCustomerModal.value = false;
+    BtModalHelper.close();
+}
 
 onMounted(async () => {
     await useServiceStore().refreshServices();

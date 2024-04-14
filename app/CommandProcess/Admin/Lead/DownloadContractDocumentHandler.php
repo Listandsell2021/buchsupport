@@ -22,10 +22,10 @@ class DownloadContractDocumentHandler implements Handler
 
     public function handle(Command $command)
     {
-        $contract = $this->leadService->getContractById($command->contractId);
+        $contract = $this->leadService->getContractByLead($command->leadId);
 
         $filePath = Storage::disk(ContractDocConfig::storageDisk())->path($contract->document_path);
 
-        return response()->download($filePath, $contract->document_name);
+        return response()->download($filePath, $contract->document);
     }
 }

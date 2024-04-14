@@ -5,7 +5,7 @@
     <div class="page-main-content data">
         <div class="container">
             <div class="legal__wrapper row flex-column">
-                <h4>Nutzungsbedingungen und Datenschutzerklärung für www.buch-kunstregister.de</h4>
+                <h4>Nutzungsbedingungen und Datenschutzerklärung für www.leadkompass.de</h4>
                 <br/>
                 <h6>I. Nutzungsbedingungen</h6>
                 <p>Soweit Sie als Kaufinteressent Ihre Daten auf der Website eingeben, erklären Sie sich mit den
@@ -40,11 +40,11 @@
                     <span>A.	VERANTWORTLICHER</span><br/>
                     <span>Verantwortliche Stelle im Sinne der Datenschutz-Grundverordnung (Art. 4 Abs. 7 DSGVO) und der übrigen nationalen Datenschutzgesetze und datenschutzrechtlicher Bestimmungen ist:</span>
                 <ul>
-                    <li>E+K Buch-Kunstregister GmbH</li>
+                    <li>Lead Kompass</li>
                     <li>Friedrichstraße 171</li>
                     <li>10117 Berlin</li>
-                    <li>E-Mail-Adresse: info@buch-kunstregister.de</li>
-                    <li>vollständige Anbieterkennung: www.buch-kunstregister.de/imprint</li>
+                    <li>E-Mail-Adresse: info@leadkompass.de</li>
+                    <li>vollständige Anbieterkennung: www.leadkompass.de/imprint</li>
                 </ul>
                 <span>Diese Kontaktdaten sind damit relevant für alle Fragen datenschutzrechtlicher Natur zu dieser Website sowie für alle datenschutzrechtlichen Ansprüche Ihrerseits. </span>
                 </p>

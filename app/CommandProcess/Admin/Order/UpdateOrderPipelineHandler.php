@@ -19,5 +19,6 @@ class UpdateOrderPipelineHandler implements Handler
     public function handle(Command $command): void
     {
         $this->dbService->updatePipeline($command->orderId, $command->pipelineId, $command->orderNo);
+        $this->dbService->updateOrderStage((int) $command->orderId, (int) $command->pipelineId);
     }
 }

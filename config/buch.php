@@ -19,7 +19,7 @@ return [
         'address' => 'Friedrichstraße 171 10117 Berlin',
         'phone_no' => '03050951811',
         'phone_no_link' => 'tel:00493050951811',
-        'email' => 'info@buch-kunstregister.de',
+        'email' => 'info@leadkompass.de',
     ],
 
     'vat_percentage' => 19,

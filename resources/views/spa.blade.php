@@ -7,14 +7,9 @@
     <link rel="icon" type="image/webp" href="{{ asset('assets/frontend/images/favicon.png') }}">
 
     @if(str_contains(url()->full(), 'login'))
-        <title>Buch Kunst Register | Jetzt in Ihren Kundenbereich einloggen</title>
-        <meta name="description" content="Buch Kunst Register | Loggen Sie sich jetzt in Ihren Kundenbereich ein! | Nutzen Sie unsere Plattform zum Handel mit exklusiven Buch- und Kunstsammlungen"/>
+        <title>{{ getAppName() }} | Login</title>
     @else
-        <title>Bücher-Register</title>
-        <meta name="theme-color" content="#d4af37">
-        <meta name="description" content="E+K Buch-Kunstregister GmbH">
-        <meta name="keywords" content="Online Buch-Kunstregister, Buchregister, Kunstregister">
-        <meta name="author" content="Robin Rick - YBM-Deutschland.de">
+        <title>{{ getAppName() }}</title>
     @endif
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
 </head>

@@ -175,7 +175,7 @@ export default {
                     : this.sidebar_toggle_var;
         },
     },
-    created() {
+    async created() {
         this.handleResize();
         this.resized = this.sidebar_toggle_var;
         useLayoutStore().set();

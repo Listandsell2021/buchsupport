@@ -245,7 +245,7 @@
         In diesem Sinne freuen wir uns auf eine erfolgreiche Zusammenarbeit.<br/>
         <br/>
         Mit freundlichen Grüßen<br/><br/><br/>
-        E+K Buch-Kunstregister GmbH
+        Lead Kompass
     </div>
 </div>
 

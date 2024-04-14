@@ -6,10 +6,10 @@ use Rosamarsky\CommandBus\Command;
 
 class DownloadContractDocument implements Command
 {
-    public int $contractId;
+    public int $leadId;
 
-    public function __construct(int $contractId)
+    public function __construct(int $leadId)
     {
-        $this->contractId = $contractId;
+        $this->leadId = $leadId;
     }
 }

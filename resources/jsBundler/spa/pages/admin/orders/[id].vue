@@ -1,16 +1,22 @@
 <template>
     <div>
-        <Breadcrumbs :menu-items="breadcrumbConfig.order.view(orderId)" :title="$t('View Order')"/>
+        <Breadcrumbs :menu-items="breadcrumbConfig.order.view(orderId)" :title="$t('Order')+' #'+orderId"/>
 
         <div class="container-fluid">
             <div class="card">
                 <div class="card-body">
 
+                    <OrderStage :stages="order.stages" :service-id="order.service_id"></OrderStage>
+
                     <table class="table table-striped">
                         <tbody>
                         <tr>
                             <td>{{ $t("Customer") }}</td>
-                            <td>{{ order.user.first_name+" "+order.user.last_name  }}</td>
+                            <td><ClickableCustomer :user="order.user"></ClickableCustomer></td>
+                        </tr>
+                        <tr v-if="order.lead">
+                            <td>{{ $t("Lead") }}</td>
+                            <td>{{ order.lead.first_name+" "+order.lead.last_name }}</td>
                         </tr>
                         <tr>
                             <td>{{ $t("Service") }}</td>
@@ -25,8 +31,24 @@
                             <td>{{ order.quantity  }}</td>
                         </tr>
                         <tr>
-                            <td>{{ $t('Price') }}</td>
-                            <td><TextCurrency :amount="order.price"/></td>
+                          <td>{{ $t('Price') }}</td>
+                          <td><TextCurrency :amount="order.price"/></td>
+                        </tr>
+                        <tr>
+                          <td>{{ $t('Subtotal') }}</td>
+                          <td><TextCurrency :amount="order.subtotal"/></td>
+                        </tr>
+                        <tr>
+                          <td>{{ $t('Tax') }}</td>
+                          <td>{{ order.tax }}%</td>
+                        </tr>
+                        <tr>
+                          <td>{{ $t('Tax Price') }}</td>
+                          <td><TextCurrency :amount="order.tax_price"/></td>
+                        </tr>
+                        <tr>
+                          <td>{{ $t('Total') }}</td>
+                          <td><TextCurrency :amount="order.total"/></td>
                         </tr>
                         <tr>
                             <td>{{ $t('Note') }}</td>
@@ -34,7 +56,22 @@
                         </tr>
                         <tr>
                             <td>{{ $t("Order Date") }}</td>
-                            <td>{{ order.order_at }}</td>
+                            <td>{{ HelperUtils.getDateTimeInGerman(order.order_at) }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ $t('Document') }}</td>
+                            <td>
+                                <a href="#" @click.prevent="downloadDocument">
+                                    <i class="fa fa-file"></i>
+                                    {{ order.document  }}
+                                </a>
+                            </td>
+                        </tr>
+                        <tr v-if="order.lead">
+                            <td>{{ $t("Salesperson") }}</td>
+                            <td>
+                                {{ order.lead.salesperson.first_name+" "+order.lead.salesperson.last_name }}
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -52,6 +89,10 @@ import {useRoute, useRouter} from "vue-router";
 import {useMeta} from "vue-meta";
 import HelperUtils from "@/libraries/utils/helpers/HelperUtils";
 import TextCurrency from "@/components/common/TextCurrency.vue";
+import OrderStage from "@/components/admin/Order/OrderStage.vue";
+import axios from "@/libraries/utils/clientapi/axios";
+import route from "@/libraries/utils/ZiggyRoute";
+import ClickableCustomer from "@/components/admin/Customer/ClickableCustomer.vue";
 
 const props = defineProps({
     data: {
@@ -71,6 +112,17 @@ let form = ref(null);
 let order = ref(null);
 
 order.value = props.data.value;
+
+function downloadDocument() {
+    axios.postDownload(route('admin.orders.download_contract_doc'), {
+        order_id: orderId
+    })
+        .then((response) => {
+            if (response.status === 200) {
+                HelperUtils.blobFileDownload(response, order.value.document);
+            }
+        });
+}
 
 onMounted( () => {
 

@@ -19,6 +19,7 @@ use App\Models\LeadContract;
 use App\Models\LeadNote;
 use App\Models\LeadStatus;
 use App\Models\Order;
+use App\Models\OrderStage;
 use App\Models\Service;
 use App\Models\ProductCategory;
 use App\Models\ServicePipeline;
@@ -476,7 +477,7 @@ class LeadService
         $tax = Setting::getVatPercentage();
         $subtotal = ($total * 100 / (100 + $tax));
 
-        return Order::create([
+        $order = Order::create([
             'lead_id' => $leadId,
             'service_id' => $leadContract->service_id,
             'pipeline_id' => $pipeline->id,
@@ -490,6 +491,14 @@ class LeadService
             'order_at' => getCurrentDateTime(),
             'order_no' => 1,
         ]);
+
+        OrderStage::create([
+            'order_id' => $order->id,
+            'pipeline_id' => $pipeline->id,
+            'created_at' => getCurrentDateTime(),
+        ]);
+
+        return $order;
     }
 
 

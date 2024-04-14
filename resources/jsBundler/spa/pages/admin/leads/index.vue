@@ -204,6 +204,7 @@
                                     </button>
 
                                     <button class="btn btn-danger btn-xs ms-1"
+                                            v-if="!hasConversionRequest(lead)"
                                             @click.prevent="deleteLead(lead.id, lead.first_name+' '+lead.last_name)"
                                             v-tooltip="$t('Delete Lead')"
                                     >
@@ -635,7 +636,10 @@ function updateFilters(filters) {
     if (hasFilter) {
         getLeadList();
     }
+}
 
+function hasConversionRequest(lead) {
+    return lead.has_conversion_request || lead.has_order;
 }
 
 onMounted(async () => {

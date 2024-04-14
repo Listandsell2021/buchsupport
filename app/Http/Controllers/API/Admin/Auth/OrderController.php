@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\API\Admin\Auth;
 
 
+use App\CommandProcess\Admin\Lead\DownloadContractDocument;
+use App\CommandProcess\Admin\Order\DownloadOrderContractDocument;
 use App\CommandProcess\Admin\Order\GetFilteredOrders;
 use App\CommandProcess\Admin\Order\SortOrders;
-use App\CommandProcess\Admin\Order\UpdateIncrementalOrder;
 use App\CommandProcess\Admin\Order\UpdateOrderPipeline;
 use App\CommandProcess\Admin\Service\GetAllServices;
 use App\CommandProcess\Admin\Order\GetOrder;
@@ -14,11 +15,15 @@ use App\CommandProcess\Admin\Service\DeleteService;
 use App\CommandProcess\Admin\Service\UpdateService;
 use App\Helpers\Trait\ApiResponseHelpers;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Lead\DownloadContractDocumentRequest;
 use App\Http\Requests\Admin\Order\CreateOrderRequest;
+use App\Http\Requests\Admin\Order\DownloadOrderContractDocumentRequest;
 use App\Http\Requests\Admin\Order\UpdateOrderRequest;
+use App\Models\ServicePipeline;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Rosamarsky\CommandBus\CommandBus;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
 class OrderController extends Controller
@@ -55,9 +60,7 @@ class OrderController extends Controller
      */
     public function store(CreateOrderRequest $request): JsonResponse
     {
-        $order = $this->commandBus->execute(
-            new StoreOrder($request->all())
-        );
+        $order = $this->commandBus->execute(new StoreOrder($request->all()));
 
         return $this->respondCreated(__('Order created successfully'), $order);
     }
@@ -126,7 +129,7 @@ class OrderController extends Controller
             )
         );
 
-        return $this->respondWithSuccess(__('Order deleted successfully'));
+        return $this->respondWithSuccess(__('Order status changed successfully'));
     }
 
     /**
@@ -144,6 +147,34 @@ class OrderController extends Controller
         return $this->respondWithSuccess(__('Order sorted successfully'));
     }
 
+
+    /**
+     * Get Service Pipeline In Kanban
+     *
+     * @param Request $request
+     * @param $serviceId
+     * @return JsonResponse
+     */
+    public function getOrderPipelineInKanban(Request $request, $serviceId): JsonResponse
+    {
+        $pipelines = ServicePipeline::with(['orders', 'orders.user', 'orders.lead'])
+            ->where('service_id', $serviceId)->orderBy('order_no')
+            ->get();
+
+        return $this->respondWithContentOnly($pipelines);
+    }
+
+
+    /**
+     * Get Contract Detail
+     *
+     * @param DownloadOrderContractDocumentRequest $request
+     * @return BinaryFileResponse
+     */
+    public function downloadContractDocument(DownloadOrderContractDocumentRequest $request): BinaryFileResponse
+    {
+        return $this->commandBus->execute(new DownloadOrderContractDocument((int) $request->get('order_id')));
+    }
 
 
     /**

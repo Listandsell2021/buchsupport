@@ -25,10 +25,10 @@ class CreateOrderFromLeadHandler implements Handler
     {
         $order = $this->leadService->createOrderByLead($command->leadId);
 
-        $this->userContractUpdate($order->id, $command->leadId);
+        $this->orderContractDocumentUpdate($order->id, $command->leadId);
     }
 
-    protected function userContractUpdate($orderId, $leadId): void
+    protected function orderContractDocumentUpdate($orderId, $leadId): void
     {
         $leadContract = LeadContract::where('lead_id', $leadId)->first();
         $orderDocPath = ContractDocConfig::getOrderContractRelativePath($orderId.'/'.$leadContract->document);

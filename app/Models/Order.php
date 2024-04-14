@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
@@ -79,6 +80,17 @@ class Order extends Model
     public function lead(): BelongsTo
     {
         return $this->belongsTo(Lead::class, 'lead_id');
+    }
+
+
+    /**
+     * Relation to Order Stages
+     *
+     * @return HasMany
+     */
+    public function stages(): HasMany
+    {
+        return $this->hasMany(OrderStage::class, 'order_id');
     }
 
 

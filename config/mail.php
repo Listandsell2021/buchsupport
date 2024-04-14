@@ -100,7 +100,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'buchapi@berlin-webdesign-agentur.de'),
-        'name' => env('MAIL_FROM_NAME', 'Buch-Kunstregister'),
+        'name' => env('MAIL_FROM_NAME', 'Lead Kompass'),
     ],
 
 

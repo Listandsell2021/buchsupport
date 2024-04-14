@@ -48,9 +48,9 @@ return [
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'selldn_db1'),
-            'username' => env('DB_USERNAME', 'selldn_1'),
-            'password' => env('DB_PASSWORD', 'E2TGbkeaU9iNtU9V'),
+            'database' => env('DB_DATABASE', 'd0402163'), //selldn_db1
+            'username' => env('DB_USERNAME', 'd0402163'), //selldn_1
+            'password' => env('DB_PASSWORD', 'y9bMbreSRP4KYUF5eunt'), //E2TGbkeaU9iNtU9V
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

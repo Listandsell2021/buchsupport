@@ -28,11 +28,12 @@
                                 :key="order.id"
                             >
                                 <td>{{ order.id  }}</td>
-                                <td>{{ order.user.first_name+" "+order.user.last_name  }}</td>
-                                <td>{{ order.pipeline.name }}</td>
-                                <td>{{ HelperUtils.getReadableDate(order.order_at) }}</td>
-                                <td><TextCurrency :amount="order.price"/></td>
+                                <td><ClickableCustomer :user="order.user"></ClickableCustomer></td>
+                                <td><ClickableLead :lead="order.lead" :show-id="!!order.user"></ClickableLead></td>
                                 <td>{{ order.service.name }}</td>
+                                <td>{{ order.pipeline.name }}</td>
+                                <td><TextCurrency :amount="order.total"/></td>
+                                <td>{{ HelperUtils.getDateTimeInGerman(order.order_at) }}</td>
                                 <td>
                                     <button class="btn btn-success btn-xs"
                                             @click="goToEdit(order.id)"
@@ -42,7 +43,7 @@
                                     </button>
                                     <DeleteBtn :id="order.id"
                                                :url="route('admin.orders.delete', {id: order.id})"
-                                               :name="order.user.first_name+' order'"
+                                               :name="'order#'+order.id"
                                                @updated="getOrderList"
                                     ></DeleteBtn>
                                 </td>
@@ -50,7 +51,7 @@
                         </template>
                         <template v-else>
                             <tr>
-                                <td colspan="6">
+                                <td colspan="8">
                                     <div class="alert alert-danger alert-t-box">
                                         {{ $t('No orders found') }}
                                     </div>
@@ -92,6 +93,8 @@ import {useMeta} from "vue-meta";
 import __has from 'lodash/has';
 import HelperUtils from "../../../libraries/utils/helpers/HelperUtils";
 import TextCurrency from "@/components/common/TextCurrency.vue";
+import ClickableCustomer from "@/components/admin/Customer/ClickableCustomer.vue";
+import ClickableLead from "@/components/admin/Customer/ClickableLead.vue";
 
 
 const router = useRouter();
@@ -115,13 +118,30 @@ const form = ref({
         },
         {
             name: 'Customer',
-            key: 'orders.user_id',
+            key: 'orders.user_name',
             sort: 'none',
             component: NameFilterComponent
         },
         {
+            name: 'Lead',
+            key: 'orders.lead_name',
+            sort: 'none',
+            component: NameFilterComponent
+        },
+        {
+            name: 'Service',
+            key: 'orders.service_id',
+            sort: 'none',
+            component: IsActiveFilterComponent
+        },
+        {
             name: 'Status',
             key: 'orders.pipeline_id',
+            sort: 'none',
+        },
+        {
+            name: 'Price',
+            key: 'orders.price',
             sort: 'none',
             component: IsActiveFilterComponent
         },
@@ -131,18 +151,6 @@ const form = ref({
             sort: 'none',
             component: IsActiveFilterComponent
         },
-        {
-            name: 'Price',
-            key: 'orders.price',
-            sort: 'none',
-            component: IsActiveFilterComponent
-        },
-        {
-            name: 'Service',
-            key: 'orders.service_id',
-            sort: 'none',
-            component: IsActiveFilterComponent
-        }
     ]
 });
 
@@ -171,7 +179,7 @@ const filterCategoryList = () => {
 }
 
 function goToEdit(adminId) {
-    return router.push('orders/' + adminId);
+    return router.push("orders/detail/" + adminId);
 }
 
 function setPageNumber(page, per_page) {

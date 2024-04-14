@@ -121,18 +121,7 @@ class Lead extends Model
      */
     public function salesperson(): BelongsTo
     {
-        return $this->belongsTo(SalesPerson::class, 'salesperson_id');
-    }
-
-
-    /**
-     * Lead Added Products
-     *
-     * @return HasMany
-     */
-    public function added_products(): HasMany
-    {
-        return $this->hasMany(LeadAddedProduct::class, 'lead_id');
+        return $this->belongsTo(Admin::class, 'salesperson_id');
     }
 
 
@@ -151,7 +140,6 @@ class Lead extends Model
     {
         $query->where('is_converted', 1);
     }
-
 
 
 }

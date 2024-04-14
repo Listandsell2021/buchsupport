@@ -92,15 +92,6 @@ class User extends Authenticatable
     }
 
 
-    /**
-     * Relation with contract
-     *
-     * @return HasOne
-     */
-    public function contract(): HasOne
-    {
-        return $this->hasOne(UserContract::class, 'user_id');
-    }
 
 
     /**

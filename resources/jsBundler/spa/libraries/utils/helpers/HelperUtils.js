@@ -144,6 +144,11 @@ export default {
     },
 
     getDateInGerman(date) {
+
+        if (!date) {
+            return ''
+        }
+
         return moment(date).format('DD.MM.YYYY');
     },
 
@@ -168,6 +173,15 @@ export default {
             message += "</ul>";
         }
         return message;
+    },
+
+    hasSomeParentTheClass(element, classname) {
+        if (typeof(element.className) != "undefined") {
+            if (element.className.split(' ').indexOf(classname)>=0) {
+                return true
+            }
+        }
+        return element.parentNode && this.hasSomeParentTheClass(element.parentNode, classname);
     }
 
 }

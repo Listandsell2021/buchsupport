@@ -1,7 +1,7 @@
 <template>
     <div class="contract-detail">
         <div class="contract-title">
-            <h4>{{ $t('Contract Detail') }}</h4>
+            <h4>{{ $t('Order Detail') }}</h4>
         </div>
         <div class="contract-body">
             <div class="contract-item">
@@ -28,19 +28,23 @@
                     <div class="col-md-8">
                         <div class="contract-item-desc">
                             <div>
-                                <label>{{ $t('Name') }}:</label>
+                                <label>{{ $t('Name') }}: </label>
                                 <span>{{ leadContract.service.name }}</span>
                             </div>
                             <div>
-                                <label>{{ $t('Price') }}:</label>
+                                <label>{{ $t('Price') }}: </label>
                                 <span v-html="HelperUtils.getCurrency(leadContract.price)"></span>
                             </div>
                             <div>
-                                <label>{{ $t('Quantity') }}:</label>
+                                <label>{{ $t('Quantity') }}: </label>
                                 <span>{{ leadContract.quantity }}</span>
                             </div>
                             <div>
-                                <label>{{ $t('Note') }}:</label>
+                                <label>{{ $t('Total') }}: </label>
+                                <span v-html="HelperUtils.getCurrency(leadContract.price * leadContract.quantity)"></span>
+                            </div>
+                            <div>
+                                <label>{{ $t('Note') }}: </label>
                                 <span>{{ leadContract.note }}</span>
                             </div>
                         </div>
@@ -78,7 +82,7 @@ function downloadLeadDocument() {
     })
         .then((response) => {
             if (response.status === 200) {
-                HelperUtils.blobFileDownload(response, leadContract.value.document_name);
+                HelperUtils.blobFileDownload(response, leadContract.value.document);
             }
         });
 }

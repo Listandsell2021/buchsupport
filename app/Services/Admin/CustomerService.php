@@ -4,8 +4,6 @@ namespace App\Services\Admin;
 
 use App\Models\Service;
 use App\Models\User;
-use App\Models\UserContract;
-use App\Models\UserService;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
@@ -64,7 +62,7 @@ class CustomerService
      */
     public function getById(int $id): mixed
     {
-        return User::with('contract')->where('id', $id)->first();
+        return User::with('orders')->where('id', $id)->first();
     }
 
     /**

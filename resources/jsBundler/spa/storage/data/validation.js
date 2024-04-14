@@ -27,5 +27,18 @@ export default {
             email: 'E-Mail ist ungültig',
             required: '{field} is required',
         },
+        names: {
+            first_name: 'Vorname',
+            last_name: 'Nachname',
+            email: 'Email',
+            password: 'Passwort',
+            phone_no: 'Telefon Nr.',
+            city: 'Stadt',
+            role: 'Rolle',
+            country: 'Land',
+            password_confirmation: 'Passwort bestätigen',
+            gender: 'Geschlecht',
+            status: 'Status'
+        },
     },
 }

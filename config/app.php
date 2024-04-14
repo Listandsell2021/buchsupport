@@ -55,9 +55,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://buchsupport.berlin-webdesign-agentur.de'),
+    'url' => env('APP_URL', 'https://leadkompass.de'),
 
-    'frontend_url' => env('FRONTEND_URL', 'https://buchsupport.berlin-webdesign-agentur.de'),
+    'frontend_url' => env('FRONTEND_URL', 'https://leadkompass.de'),
 
     'asset_url' => env('ASSET_URL', ''),
 

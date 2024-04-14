@@ -71,7 +71,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('services/change-status',   [ServiceController::class, 'changeActiveStatus'])->name('admin.services.change_status')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);
     Route::post('services/all',             [ServiceController::class, 'getAllServices'])->name('admin.services.all')->middleware('can:'.AdminPermission::LIST_SERVICE->name);
     Route::post('services/bulk-action',     [ServiceController::class, 'updateBulkAction'])->name('admin.services.bulk_action')->middleware('can:'.AdminPermission::UPDATE_SERVICE->name);
-    Route::get('services/{id}/pipeline',    [ServiceController::class, 'getServicePipelineInKanvan'])->name('admin.services.pipeline')->middleware('can:'.AdminPermission::SHOW_SERVICE->name);
+
 
     // Service Pipelines
     Route::get('service-pipelines/{service}',       [ServicePipelineController::class, 'index'])->name('admin.service_pipeline.index')->middleware('can:'.AdminPermission::LIST_SERVICE_PIPELINE->name);
@@ -111,7 +111,6 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('pipeline/sort',            [PipelineController::class, 'sort'])->name('admin.pipeline.sort')->middleware('can:'.AdminPermission::UPDATE_PIPELINE->name);
     Route::post('pipeline/add-customer',    [PipelineController::class, 'addCustomer'])->name('admin.pipeline.add_customer')->middleware('can:'.AdminPermission::UPDATE_PIPELINE->name);
 
-
     Route::get('orders/list',               [OrderController::class, 'list'])->name('admin.orders.list')->middleware('can:'.AdminPermission::LIST_ORDER->name);
     Route::post('orders/all',               [OrderController::class, 'all'])->name('admin.orders.all')->middleware('can:'.AdminPermission::LIST_ORDER->name);
     Route::post('orders/store',             [OrderController::class, 'store'])->name('admin.orders.store')->middleware('can:'.AdminPermission::CREATE_ORDER->name);
@@ -119,7 +118,8 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('orders/delete',            [OrderController::class, 'delete'])->name('admin.orders.delete')->middleware('can:'.AdminPermission::DELETE_ORDER->name);
     Route::post('orders/change-pipeline',   [OrderController::class, 'changePipeline'])->name('admin.orders.change_pipeline')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
     Route::post('orders/sort',              [OrderController::class, 'sortOrders'])->name('admin.orders.sort')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
-
+    Route::get('orders/{id}/pipeline',      [OrderController::class, 'getOrderPipelineInKanban'])->name('admin.orders.pipeline')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
+    Route::post('orders/download-contract-doc',  [OrderController::class, 'downloadContractDocument'])->name('admin.orders.download_contract_doc')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
 
     // Leads
     Route::get('leads',                         [LeadController::class, 'index'])->name('admin.leads.index')->middleware('can:'.AdminPermission::LIST_LEAD->name);

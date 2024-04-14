@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Admin\Lead;
+namespace App\Http\Requests\Admin\Order;
 
 use App\DataHolders\Enum\LeadStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DownloadContractDocumentRequest extends FormRequest
+class DownloadOrderContractDocumentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class DownloadContractDocumentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lead_id' => 'required|exists:leads,id',
+            'order_id' => 'required|exists:orders,id',
         ];
     }
 
@@ -36,8 +36,8 @@ class DownloadContractDocumentRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'lead_id.required' => trans('Lead is required'),
-            'lead_id.exists' => trans('Lead does not exists'),
+            'order_id.required' => trans('Order is required'),
+            'order_id.exists' => trans('Order does not exists'),
         ];
     }
 }
