@@ -40,6 +40,22 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label>{{ $t('Salesperson') }}</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <BsSelect
+                                        v-model="form.admin_id"
+                                        :options="salespersons"
+                                        :reduce="salesperson => salesperson.id"
+                                        label="fullname"
+                                        @update:model-value="updateSalesperson"
+                                        :placeholder="$t('Select salesperson')"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -51,7 +67,7 @@
                                         label="name"
                                         :reduce="service => service.id"
                                         :clearable="false"
-                                        @update:model-value="getPipelinesByService"
+                                        @update:model-value="updateService"
                                         :placeholder="$t('Select Service')"
                                     ></BsSelect>
                                 </div>
@@ -62,7 +78,7 @@
                                                value=""
                                                placeholder="Document"
                                                ref="documentFile"
-                                               @change="initOrderDocument"
+                                               @change="updateDocument"
                                         />
                                     </div>
                                 </div>
@@ -124,6 +140,7 @@ import {useMeta} from "vue-meta";
 import __debounce from "lodash/debounce";
 import BtModalHelper from "@/libraries/utils/BtModalHelper";
 import AddCustomerModal from "@/components/admin/Customer/AddCustomerModal.vue";
+import {useSalespersonsStore} from "@/storage/store/salespersons";
 
 
 const router = useRouter();
@@ -131,9 +148,9 @@ const { t: $t } = useI18n();
 useMeta({title: $t('Order Create')});
 
 const form = ref({
+    admin_id: '',
     user_id: '',
     service_id: '',
-    pipeline_id: '',
     quantity: 0,
     price: 0,
     note: "",
@@ -143,6 +160,7 @@ const form = ref({
 const customers = ref([]);
 const pipelines = ref([]);
 const createCustomerModal = ref(false);
+const salespersons = await useSalespersonsStore().getSalespersonsByRefresh();
 
 const searchCustomers = __debounce((search, loading) => {
     if(search.length) {
@@ -160,21 +178,16 @@ const searchCustomers = __debounce((search, loading) => {
 }, 500);
 
 
-function getPipelinesByService(serviceId) {
-    console.log(serviceId);
-    axios.post(route('admin.service_pipeline.by_service'), {
-        service_id: serviceId
-    }).then((response) => {
-        if (response.status === 200) {
-            pipelines.value = response.data.data;
-            form.value.pipeline_id = '';
-         }
-    });
+function updateService(serviceId) {
+    if (serviceId == null) {
+        form.value.service_id = '';
+    }
 }
 
 function createOrder() {
     let formData = new FormData();
     formData.append('user_id', form.value.user_id);
+    formData.append('admin_id', form.value.admin_id);
     formData.append('document', form.value.document);
     formData.append('service_id', form.value.service_id);
     formData.append('price', form.value.price);
@@ -189,7 +202,7 @@ function createOrder() {
     });
 }
 
-function initOrderDocument(event) {
+function updateDocument(event) {
     form.value.document = event.target.files[0];
 }
 
@@ -201,6 +214,12 @@ function openCreateCustomerModal() {
 function closeCreateCustomerModal() {
     createCustomerModal.value = false;
     BtModalHelper.close();
+}
+
+function updateSalesperson(selected) {
+    if (selected == null) {
+        form.value.admin_id = '';
+    }
 }
 
 onMounted(async () => {

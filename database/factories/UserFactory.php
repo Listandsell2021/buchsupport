@@ -30,8 +30,6 @@ class UserFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            'password_text' => 'password',
             'dob' => fake()->date(),
             'gender' => $gender[array_rand($gender)],
             'phone_no' => fake()->phoneNumber(),

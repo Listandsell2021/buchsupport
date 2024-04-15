@@ -4,10 +4,15 @@ namespace App\Http\Controllers\API\Admin\Auth;
 
 
 use App\CommandProcess\Admin\Lead\DownloadContractDocument;
+use App\CommandProcess\Admin\Order\CreateLeadCustomer;
 use App\CommandProcess\Admin\Order\DownloadOrderContractDocument;
 use App\CommandProcess\Admin\Order\GetFilteredOrders;
 use App\CommandProcess\Admin\Order\SortOrders;
+use App\CommandProcess\Admin\Order\UpdateNextOrderStage;
+use App\CommandProcess\Admin\Order\UpdateOrder;
 use App\CommandProcess\Admin\Order\UpdateOrderPipeline;
+use App\CommandProcess\Admin\Order\UpdateOrderShipment;
+use App\CommandProcess\Admin\Order\UpdateOrderToLastPipeline;
 use App\CommandProcess\Admin\Service\GetAllServices;
 use App\CommandProcess\Admin\Order\GetOrder;
 use App\CommandProcess\Admin\Order\StoreOrder;
@@ -16,12 +21,17 @@ use App\CommandProcess\Admin\Service\UpdateService;
 use App\Helpers\Trait\ApiResponseHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Lead\DownloadContractDocumentRequest;
+use App\Http\Requests\Admin\Order\ChangeOrderPipelineRequest;
+use App\Http\Requests\Admin\Order\CreateLeadCustomerRequest;
 use App\Http\Requests\Admin\Order\CreateOrderRequest;
 use App\Http\Requests\Admin\Order\DownloadOrderContractDocumentRequest;
 use App\Http\Requests\Admin\Order\UpdateOrderRequest;
+use App\Http\Requests\Admin\Order\UpdateOrderShipmentRequest;
+use App\Http\Requests\Admin\Order\UpdateOrderToLastPipelineRequest;
 use App\Models\ServicePipeline;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Rosamarsky\CommandBus\CommandBus;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
@@ -88,14 +98,13 @@ class OrderController extends Controller
      * Update specified resource
      *
      * @param UpdateOrderRequest $request
-     * @param $orderId
      * @return JsonResponse
      */
-    public function update(UpdateOrderRequest $request, $orderId): JsonResponse
+    public function update(UpdateOrderRequest $request): JsonResponse
     {
-        $this->commandBus->execute(new UpdateService((int) $request->get('id'), $request->all()));
+        $this->commandBus->execute(new UpdateOrder((int) $request->get('order_id'), $request->all()));
 
-        return $this->respondUpdated(__('Service updated successfully'));
+        return $this->respondUpdated(__('Order updated successfully'));
     }
 
 
@@ -116,10 +125,10 @@ class OrderController extends Controller
     /**
      * Remove specified resource
      *
-     * @param Request $request
+     * @param ChangeOrderPipelineRequest $request
      * @return JsonResponse
      */
-    public function changePipeline(Request $request): JsonResponse
+    public function changePipeline(ChangeOrderPipelineRequest $request): JsonResponse
     {
         $this->commandBus->execute(
             new UpdateOrderPipeline(
@@ -133,7 +142,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Remove specified resource
+     * Sort Orders
      *
      * @param Request $request
      * @return JsonResponse
@@ -149,6 +158,26 @@ class OrderController extends Controller
 
 
     /**
+     * Move to last pipeline
+     *
+     * @param UpdateOrderToLastPipelineRequest $request
+     * @return JsonResponse
+     */
+    public function addToLastPipeline(UpdateOrderToLastPipelineRequest $request): JsonResponse
+    {
+        $this->commandBus->execute(
+            new UpdateOrderToLastPipeline(
+                (int) $request->get('order_id'),
+                $request->get('pipeline_id'),
+                $request->get('status')
+            )
+        );
+
+        return $this->respondWithSuccess(__('Order updated successfully'));
+    }
+
+
+    /**
      * Get Service Pipeline In Kanban
      *
      * @param Request $request
@@ -157,7 +186,9 @@ class OrderController extends Controller
      */
     public function getOrderPipelineInKanban(Request $request, $serviceId): JsonResponse
     {
-        $pipelines = ServicePipeline::with(['orders', 'orders.user', 'orders.lead'])
+        $pipelines = ServicePipeline::with(['orders' => function ($query) {
+            $query->with(['user', 'stages', 'lead'])->where('status', null);
+        }, ]) //'orders.user', 'orders.stages', 'orders.lead'
             ->where('service_id', $serviceId)->orderBy('order_no')
             ->get();
 
@@ -175,6 +206,37 @@ class OrderController extends Controller
     {
         return $this->commandBus->execute(new DownloadOrderContractDocument((int) $request->get('order_id')));
     }
+
+
+    /**
+     * Get Service Pipeline In Kanban
+     *
+     * @param CreateLeadCustomerRequest $request
+     * @return JsonResponse
+     */
+    public function createCustomerFromLead(CreateLeadCustomerRequest $request): JsonResponse
+    {
+        $this->commandBus->execute(new CreateLeadCustomer($request->all()));
+
+        return $this->respondWithSuccess(__('Customer created successfully'));
+    }
+
+
+    /**
+     * Get Service Pipeline In Kanban
+     *
+     * @param UpdateOrderShipmentRequest $request
+     * @return JsonResponse
+     */
+    public function updateOrderShipment(UpdateOrderShipmentRequest $request): JsonResponse
+    {
+        $this->commandBus->execute(
+            new UpdateOrderShipment((int) $request->get('order_id'), (string) $request->get('shipment_no'))
+        );
+
+        return $this->respondWithSuccess(__('Customer created successfully'));
+    }
+
 
 
     /**

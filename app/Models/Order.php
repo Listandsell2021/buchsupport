@@ -21,9 +21,9 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'lead_id', 'service_id', 'pipeline_id', 'price', 'quantity', 'note',
+        'admin_id', 'user_id', 'lead_id', 'service_id', 'pipeline_id', 'price', 'quantity', 'note',
         'subtotal', 'tax', 'tax_price', 'total', 'shipment_no', 'document', 'document_path',
-        'is_converted', 'converted_at', 'order_at', 'order_no'
+        'commissioned', 'status', 'order_at', 'order_no'
     ];
 
 
@@ -47,6 +47,17 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+
+    /**
+     * Relation to Admin
+     *
+     * @return BelongsTo
+     */
+    public function admin(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class, 'admin_id');
     }
 
 

@@ -2,8 +2,11 @@
 
 namespace App\Http\Requests\Admin\Order;
 
+use App\Helpers\Config\ContractDocConfig;
+use App\Http\Rules\Admin\IsEitherSalesperson;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class UpdateOrderRequest extends FormRequest
 {
@@ -23,8 +26,19 @@ class UpdateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required'],
-            'name' => ['required'],
+            'order_id'       => ['required', 'exists:orders,id'],
+            'admin_id'       => ['nullable', new IsEitherSalesperson()],
+            'user_id'       => ['required', 'exists:users,id'],
+            'service_id'    => ['required', 'exists:services,id'],
+            'price'         => ['required', 'numeric'],
+            'quantity'      => ['required', 'numeric'],
+            'note'          => ['required', 'max:500'],
+            'document'  => [
+                'nullable',
+                File::types(ContractDocConfig::fileExtensions())
+                    ->min(ContractDocConfig::minFileSize())
+                    ->max(ContractDocConfig::maxFileSize()),
+            ],
         ];
     }
 
@@ -37,8 +51,17 @@ class UpdateOrderRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'id.required' => trans('Service does not exist'),
-            'name.required' => trans('Service name is required'),
+            'order_id.required'     => trans('Order is required'),
+            'order_id.exists'       => trans('Order does not exists'),
+            'user_id.required'      => trans('Customer is required'),
+            'user_id.exists'        => trans('Customer does not exists'),
+            'service_id.required'   => trans('Service is required'),
+            'service_id.exists'     => trans('Service does not exists'),
+            'price.required'        => trans('Price is required'),
+            'price.numeric'         => trans('Price must be number'),
+            'quantity.required'     => trans('Quantity is required'),
+            'quantity.numeric'      => trans('Quantity must be number'),
+            'note.max'              => trans('Note must not exceed 500 characters'),
         ];
     }
 }

@@ -38,6 +38,13 @@
                             ></StatusSwitcher>
                         </div>
 
+                        <div class="form-group">
+                            <label>{{ $t('Has status') }}</label>
+                            <StatusSwitcher :is_active="form.has_option"
+                                            @toggle="changeStatus"
+                            ></StatusSwitcher>
+                        </div>
+
                         <button type="submit" class="btn btn-primary m-t-30">{{ $t('Update Status') }}</button>
                     </Form>
 
@@ -79,6 +86,7 @@ const form = ref({
     name: props.pipeline.name,
     default: props.pipeline.default,
     has_tracking: props.pipeline.has_tracking,
+    has_option: props.pipeline.has_option,
 });
 
 onClickOutside(modalDialog, () => {
@@ -102,6 +110,10 @@ function changeHasTracking(hasTracking) {
 
 function changeDefault(defaultValue) {
     form.value.default = defaultValue;
+}
+
+function changeStatus(defaultValue) {
+    form.value.has_option = defaultValue;
 }
 
 function closeModal() {

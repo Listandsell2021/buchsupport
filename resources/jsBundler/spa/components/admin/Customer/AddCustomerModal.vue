@@ -144,15 +144,6 @@
                                     <ErrorMessage class="text-danger d-block" name="email"/>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>{{ $t('Password') }}</label>
-                                    <VisiblePasswordInput
-                                        initial=""
-                                        @change="updatePassword"
-                                    ></VisiblePasswordInput>
-                                </div>
-                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -218,10 +209,8 @@ import axios from "@/libraries/utils/clientapi/axios";
 import route from '@/libraries/utils/ZiggyRoute';
 import Notifier from "@/libraries/utils/Notifier";
 import Genders from "@/storage/data/genders";
-import { onClickOutside } from '@vueuse/core';
 import {useI18n} from "vue-i18n";
 import {useRouter} from "vue-router";
-import VisiblePasswordInput from "@/components/widgets/form/VisiblePasswordInput.vue";
 import StatusSwitcher from "@/components/widgets/form/StatusSwitcher.vue";
 import {useMeta} from "vue-meta";
 import {useMembershipStore} from "@/storage/store/memberships";
@@ -245,7 +234,6 @@ const form = ref({
     postal_code: '',
     city: '',
     country: '',
-    password: '',
     email: '',
     dob: null,
     is_active: 0,
@@ -270,9 +258,6 @@ function updateCountry(country) {
     }
 }
 
-function updatePassword(password) {
-    form.value.password = password;
-}
 
 function changeActiveStatus(isActive) {
     form.value.is_active = isActive;

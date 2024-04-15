@@ -14,22 +14,12 @@ class GetDashboardCardsHandler implements Handler
 
     public function handle(Command $command)
     {
-        $productsCount = Service::count();
         $customersCount = User::count();
         $adminsCount = Admin::admin()->count();
         $salespersonsCount = Admin::salesperson()->count();
         //$dailyVisitors = Visitor::where('date', date('Y-m-d'))->count();
 
         return [
-            [
-                "cardClass"     => "card-body primary",
-                "title"         => trans("Services"),
-                "dataInNumber"  => $productsCount,
-                "spanClass"     => "font-primary",
-                "iconClass"     => "icon-arrow-up",
-                "status"        => "+2%",
-                "svgIcon"       => "new-order"
-            ],
             [
                 "cardClass"     => "card-body primary",
                 "title"         => trans("Customers"),
@@ -46,7 +36,7 @@ class GetDashboardCardsHandler implements Handler
                 "spanClass"     => "font-primary",
                 "iconClass"     => "",
                 "status"        => "",
-                "svgIcon"       => "customers"
+                "svgIcon"       => "new-order"
             ],
             [
                 "cardClass"     => "card-body primary",

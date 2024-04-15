@@ -18,7 +18,7 @@ class CustomersMigrator
 	{
 		User::truncate();
         $users = DB::connection('mysql2')->table('users')->select(
-            'id as uid', 'first_name', 'last_name', 'address as street', DB::raw('CAST(zip AS UNSIGNED) as postal_code'), 'city', 'country', 'password', 'password_text','birth as dob', 'image_path', 'is_special', 'second_owner_first_name as secondary_first_name','second_owner_last_name as secondary_last_name', 'created_at', 'updated_at',
+            'id as uid', 'first_name', 'last_name', 'address as street', DB::raw('CAST(zip AS UNSIGNED) as postal_code'), 'city', 'country', 'birth as dob', 'image_path', 'is_special', 'second_owner_first_name as secondary_first_name','second_owner_last_name as secondary_last_name', 'created_at', 'updated_at',
             DB::raw('(CASE 
             WHEN membership_id = 3 THEN "'.Membership::gold->name.'"
             WHEN membership_id = 2 THEN "'.Membership::silver->name.'"

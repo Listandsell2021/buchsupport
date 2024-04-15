@@ -1,5 +1,6 @@
 <?php
 
+use App\DataHolders\Enum\ServicePipelineStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,13 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+
+            $table->unsignedBigInteger('admin_id')->nullable();
+            $table->foreign('admin_id')
+                ->references('id')
+                ->on('admins')
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')
@@ -49,12 +57,13 @@ return new class extends Migration
             $table->string('document')->nullable();
             $table->string('document_path')->nullable();
             $table->text('note')->nullable();
-            $table->boolean('is_converted')->default(0);
-            $table->dateTime('converted_at')->nullable();
-            $table->dateTime('order_at');
+            $table->boolean('commissioned')->default(0);
+            $table->enum('status', ServicePipelineStatus::onlyNames())->nullable();
             $table->smallInteger('order_no')->default(1);
+            $table->dateTime('order_at');
         });
 
+        \Illuminate\Support\Facades\DB::statement("ALTER TABLE orders AUTO_INCREMENT = 10000;");
 
     }
 

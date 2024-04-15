@@ -244,7 +244,7 @@
 
   .loader-5 {
     border: .2em solid transparent;
-    border-top-color: $warning-color;
+    border-top-color: var(--theme-deafult);
     border-radius: 50%;
     animation: 1s loader-05 linear infinite;
     position: relative;
@@ -259,7 +259,7 @@
       ;
       left: -.2em;
       ;
-      border: .2em solid $warning-color;
+      border: .2em solid var(--theme-deafult);
       border-radius: 50%;
       opacity: .5;
     }

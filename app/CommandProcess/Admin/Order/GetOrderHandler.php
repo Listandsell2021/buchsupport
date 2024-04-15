@@ -21,6 +21,13 @@ class GetOrderHandler implements Handler
 
     public function handle(Command $command)
     {
-        return $this->dbService->getById($command->orderId);
+        $order = $this->dbService->getById($command->orderId);
+
+        $nextStage = $this->dbService->getNextPipelineByOrderId($command->orderId);
+
+        return [
+            'order' => $order,
+            'next_stage' => $nextStage,
+        ];
     }
 }

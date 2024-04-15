@@ -20,7 +20,6 @@ class Lead extends Model
 
     /**
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -41,10 +40,9 @@ class Lead extends Model
         'is_converted',
         'converted_at',
         'converted_to',
+        'main_status',
         'created_by'
     ];
-
-
 
 
 

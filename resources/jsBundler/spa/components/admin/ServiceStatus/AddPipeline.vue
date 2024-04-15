@@ -38,6 +38,13 @@
                             ></StatusSwitcher>
                         </div>
 
+                        <div class="form-group">
+                            <label>{{ $t('Has status') }}</label>
+                            <StatusSwitcher :is_active="form.has_option"
+                                            @toggle="changeStatus"
+                            ></StatusSwitcher>
+                        </div>
+
                         <button type="submit" class="btn btn-primary m-t-30">{{ $t('Save Status') }}</button>
                     </Form>
 
@@ -72,6 +79,7 @@ const form = ref({
     service_id: props.serviceId,
     name: '',
     has_tracking: 0,
+    has_option: 0,
     default: 0,
 });
 
@@ -95,6 +103,10 @@ function changeHasTracking(hasTracking) {
 
 function changeDefault(defaultValue) {
     form.value.default = defaultValue;
+}
+
+function changeStatus(defaultValue) {
+    form.value.has_option = defaultValue;
 }
 
 function closeModal() {

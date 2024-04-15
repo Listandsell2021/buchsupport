@@ -41,6 +41,7 @@ class UpdateServicePipelineRequest extends FormRequest
             ],
             'has_tracking'  => 'required',
             'default'       => 'required',
+            'has_option'    => 'required',
         ];
     }
 

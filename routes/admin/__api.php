@@ -115,11 +115,16 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('orders/all',               [OrderController::class, 'all'])->name('admin.orders.all')->middleware('can:'.AdminPermission::LIST_ORDER->name);
     Route::post('orders/store',             [OrderController::class, 'store'])->name('admin.orders.store')->middleware('can:'.AdminPermission::CREATE_ORDER->name);
     Route::get('orders/show',               [OrderController::class, 'show'])->name('admin.orders.show')->middleware('can:'.AdminPermission::SHOW_ORDER->name);
-    Route::post('orders/delete',            [OrderController::class, 'delete'])->name('admin.orders.delete')->middleware('can:'.AdminPermission::DELETE_ORDER->name);
+    Route::post('orders/update',            [OrderController::class, 'update'])->name('admin.orders.update')->middleware('can:'.AdminPermission::CREATE_ORDER->name);
+    //Route::post('orders/delete',            [OrderController::class, 'delete'])->name('admin.orders.delete')->middleware('can:'.AdminPermission::DELETE_ORDER->name);
     Route::post('orders/change-pipeline',   [OrderController::class, 'changePipeline'])->name('admin.orders.change_pipeline')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
     Route::post('orders/sort',              [OrderController::class, 'sortOrders'])->name('admin.orders.sort')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
+    Route::post('orders/add-to-last-pipeline', [OrderController::class, 'addToLastPipeline'])->name('admin.orders.add_to_last_pipeline')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
     Route::get('orders/{id}/pipeline',      [OrderController::class, 'getOrderPipelineInKanban'])->name('admin.orders.pipeline')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
     Route::post('orders/download-contract-doc',  [OrderController::class, 'downloadContractDocument'])->name('admin.orders.download_contract_doc')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
+    Route::post('orders/create-customer',   [OrderController::class, 'createCustomerFromLead'])->name('admin.orders.create_customer')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
+    Route::post('orders/update-shipment-no', [OrderController::class, 'updateOrderShipment'])->name('admin.orders.update_shipment_no')->middleware('can:'.AdminPermission::UPDATE_ORDER->name);
+
 
     // Leads
     Route::get('leads',                         [LeadController::class, 'index'])->name('admin.leads.index')->middleware('can:'.AdminPermission::LIST_LEAD->name);

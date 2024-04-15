@@ -157,7 +157,7 @@ export default {
                 "/admin/leads/*"
             ]
         },
-        {
+        /*{
             "title": "Invoices",
             "icon": "fa fa-money",
             "type": "link",
@@ -166,8 +166,8 @@ export default {
             "permission": Permissions.LIST_INVOICE,
             "skip_permission": false,
             "related": [
-                "/admin/invoices/*"
+                "/admin/invoices/!*"
             ]
-        }
+        }*/
     ]
 }

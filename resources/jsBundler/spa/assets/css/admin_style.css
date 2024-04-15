@@ -653,6 +653,43 @@ a.bg-secondary:hover, a.bg-secondary:focus {
 .pipeline-user {
     color: var(--bs-body-color);
 }
-.draggable-item {
-
+.top-service-name {
+    color: #666;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.top-pipeline-name {
+    font-size: 14px;
+    margin-left: 10px;
+    display: inline-block;
+    color: #fff;
+    background-color: var(--theme-deafult);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 100;
+}
+.order-detail-table th, .order-detail-table td {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.shipment-btn .fa {
+    margin-right: 5px;
+}
+.pipeline-last-group {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 120px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}
+.top-pipeline-name.paid {
+    background-color: green;
+}
+.top-pipeline-name.rescued {
+    background-color: orange;
+}
+.top-pipeline-name.cancelled {
+    background-color: darkred;
 }

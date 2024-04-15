@@ -24,6 +24,9 @@ const props = defineProps({
     },
     serviceId: {
         required: true,
+    },
+    orderId: {
+        required: true,
     }
 });
 
@@ -33,7 +36,6 @@ function getServicePipelines() {
     axios.post(route('admin.service_pipeline.by_service', {service_id: props.serviceId}))
         .then((response) => {
             if (response.status === 200) {
-                console.log(response.data);
                 pipelines.value = response.data.data;
             }
         });
@@ -57,6 +59,8 @@ function getDateOfActiveStage(pipelineId) {
 
 onMounted(async () => {
     getServicePipelines();
+
+
 });
 
 </script>

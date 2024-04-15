@@ -38,6 +38,7 @@ return new class extends Migration
             $table->boolean('has_order')->default(0);
             $table->boolean('has_conversion_request')->default(0);
             $table->boolean('is_converted')->default(0);
+            $table->enum('main_status', \App\DataHolders\Enum\ServicePipelineStatus::onlyNames())->nullable();
             $table->dateTime('converted_at')->nullable();
             $table->unsignedBigInteger('converted_to')->nullable();
             $table->foreign('converted_to')->references('id')->on('users')->nullOnDelete();

@@ -127,20 +127,26 @@ class Admin extends Authenticatable
 
 
     /**
-     * Get Auth Admins
+     * Get Auth Admin only
      *
      * @param $query
      * @return void
      */
     public function scopeAdmin($query): void
     {
-        $authRoles = [AuthRole::getAdminRole()];
-        if (isAuthSuperAdmin()) {
-            $authRoles[] = AuthRole::getSuperAdminRole();
-        }
-        $query->whereIn('admins.auth_role', $authRoles);
+        $query->where('admins.auth_role', AuthRole::getAdminRole());
     }
 
+    /**
+     * Get Auth Admin/SuperAdmin
+     *
+     * @param $query
+     * @return void
+     */
+    public function scopeAdmins($query): void
+    {
+        $query->whereIn('admins.auth_role', [AuthRole::getAdminRole(), AuthRole::getSuperAdminRole()]);
+    }
 
 
 }

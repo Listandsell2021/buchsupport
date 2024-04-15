@@ -510,4 +510,5 @@ export default {
     "Tried Rescue": "Rettungsversuch",
     "Cancelled": "Widerrufen",
     "Create order": "Auftrag erstellen",
+    "Convert to customer": "Kundendaten übernehmen",
 }

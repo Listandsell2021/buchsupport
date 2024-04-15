@@ -27,10 +27,17 @@
                             <tr v-for="(order) in orders.data"
                                 :key="order.id"
                             >
-                                <td>{{ order.id  }}</td>
+                                <td>
+                                    <router-link :to="'/admin/orders/detail/'+order.id">#{{ order.id  }}</router-link>
+                                </td>
                                 <td><ClickableCustomer :user="order.user"></ClickableCustomer></td>
                                 <td><ClickableLead :lead="order.lead" :show-id="!!order.user"></ClickableLead></td>
-                                <td>{{ order.service.name }}</td>
+                                <td>
+                                    {{ order.service.name }}
+                                    <template v-if="order.status">
+                                        ({{ $t(PipelineStatus[order.status]) }})
+                                    </template>
+                                </td>
                                 <td>{{ order.pipeline.name }}</td>
                                 <td><TextCurrency :amount="order.total"/></td>
                                 <td>{{ HelperUtils.getDateTimeInGerman(order.order_at) }}</td>
@@ -41,11 +48,6 @@
                                     >
                                         <i class="fa fa-eye"></i>
                                     </button>
-                                    <DeleteBtn :id="order.id"
-                                               :url="route('admin.orders.delete', {id: order.id})"
-                                               :name="'order#'+order.id"
-                                               @updated="getOrderList"
-                                    ></DeleteBtn>
                                 </td>
                             </tr>
                         </template>
@@ -82,11 +84,11 @@ import breadcrumbConfig from "@/storage/data/breadcrumbs";
 import Sorting from '@/components/common/Sorting';
 import route from '@/libraries/utils/ZiggyRoute';
 import PaginationSetting from "@/storage/data/paginationSetting";
-import NameFilter from "@/components/admin/Service/Filters/NameFilter";
-import IsActiveFilter from "@/components/admin/Service/Filters/IsActiveFilter.vue";
-import AdvanceStatusSwitcher from "@/components/widgets/form/AdvanceStatusSwitcher.vue";
-import PasswordGenerator from "@/libraries/utils/helpers/PasswordGenerator";
-import DeleteBtn from "@/components/widgets/form/DeleteBtn.vue";
+import OrderIdFilter from "@/components/admin/Order/Filters/OrderIdFilter.vue";
+import CustomerFilter from "@/components/admin/Order/Filters/CustomerFilter.vue";
+import ServiceFilter from "@/components/admin/Order/Filters/ServiceFilter.vue";
+import PriceRangeFilter from "@/components/admin/Order/Filters/PriceRangeFilter.vue";
+import OrderDatesFilter from "@/components/admin/Order/Filters/OrderDatesFilter.vue";
 import {useRouter} from "vue-router";
 import {useI18n} from "vue-i18n";
 import {useMeta} from "vue-meta";
@@ -95,44 +97,51 @@ import HelperUtils from "../../../libraries/utils/helpers/HelperUtils";
 import TextCurrency from "@/components/common/TextCurrency.vue";
 import ClickableCustomer from "@/components/admin/Customer/ClickableCustomer.vue";
 import ClickableLead from "@/components/admin/Customer/ClickableLead.vue";
+import {PipelineStatus} from "@/storage/data/PipelineStatus";
 
 
 const router = useRouter();
 const { t: $t } = useI18n();
 useMeta({title: $t('Orders List')});
 
-const NameFilterComponent = shallowRef(NameFilter);
-const IsActiveFilterComponent = shallowRef(IsActiveFilter);
+const OrderIdFilterComponent = shallowRef(OrderIdFilter);
+const CustomerFilterComponent = shallowRef(CustomerFilter);
+const ServiceFilterComponent = shallowRef(ServiceFilter);
+const PriceRangeFilterComponent = shallowRef(PriceRangeFilter);
+const OrderDatesFilterComponent = shallowRef(OrderDatesFilter);
 const form = ref({
     page: 1,
     per_page: PaginationSetting.per_page,
     filters: {
-        name: '',
-        is_active: '',
+        order_id: '',
+        user_name: '',
+        service_ids: [],
+        price_from: '',
+        price_to: '',
     },
     columns: [
         {
             name: 'Order ID',
             key: 'orders.id',
             sort: 'none',
+            component: OrderIdFilterComponent
         },
         {
             name: 'Customer',
             key: 'orders.user_name',
             sort: 'none',
-            component: NameFilterComponent
+            component: CustomerFilterComponent,
         },
         {
             name: 'Lead',
             key: 'orders.lead_name',
             sort: 'none',
-            component: NameFilterComponent
         },
         {
             name: 'Service',
             key: 'orders.service_id',
             sort: 'none',
-            component: IsActiveFilterComponent
+            component: ServiceFilterComponent
         },
         {
             name: 'Status',
@@ -143,13 +152,13 @@ const form = ref({
             name: 'Price',
             key: 'orders.price',
             sort: 'none',
-            component: IsActiveFilterComponent
+            component: PriceRangeFilterComponent,
         },
         {
             name: 'Order Date',
             key: 'orders.order_at',
             sort: 'none',
-            component: IsActiveFilterComponent
+            component: OrderDatesFilterComponent
         },
     ]
 });

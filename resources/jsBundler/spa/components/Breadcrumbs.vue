@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-7">
                     <div class="d-flex">
-                        <h3>{{ title }}</h3>
+                        <h3 v-html="title"></h3>
                         <slot name="header"></slot>
                     </div>
                 </div>

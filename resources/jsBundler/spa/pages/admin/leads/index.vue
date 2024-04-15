@@ -193,7 +193,8 @@
                                 <td v-if="form.columns.lead_street.show">{{ HelperUtils.truncate(lead.street, 25)}}</td>
                                 <td v-if="form.columns.lead_postal_code.show">{{ lead.postal_code }}</td>
                                 <td v-if="form.columns.lead_status.show">
-                                    <template v-if="lead.lead_status_id">{{ lead.lead_status_name }}</template>
+                                    <template v-if="lead.main_status">{{ $t(PipelineStatus[lead.main_status]) }}</template>
+                                    <template v-else>{{ lead.lead_status_id ? lead.lead_status_name : '' }}</template>
                                 </td>
                                 <td>
                                     <button class="btn btn-success btn-xs"
@@ -266,6 +267,7 @@ import EmailFilter from "@/components/admin/Lead/Filters/EmailFilter.vue";
 import PhoneFilter from "@/components/admin/Lead/Filters/PhoneFilter.vue";
 import GenderFilter from "@/components/admin/Lead/Filters/GenderFilter.vue";
 import StreetFilter from "@/components/admin/Lead/Filters/StreetFilter.vue";
+import {PipelineStatus} from "@/storage/data/PipelineStatus";
 
 const router = useRouter();
 const { t: $t } = useI18n();

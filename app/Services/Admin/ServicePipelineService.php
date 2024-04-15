@@ -50,6 +50,7 @@ class ServicePipelineService
             'name'          => $data['name'],
             'default'       => (int) $data['default'],
             'has_tracking'  => (int) $data['has_tracking'],
+            'has_option'    => (int) $data['has_option'],
             'order_no'      => ++$orderNo,
         ]);
     }
@@ -69,6 +70,7 @@ class ServicePipelineService
             'name'          => $data['name'],
             'default'       => $default,
             'has_tracking'  => (int) $data['has_tracking'],
+            'has_option'    => (int) $data['has_option'],
         ]);
 
         if ($default) {

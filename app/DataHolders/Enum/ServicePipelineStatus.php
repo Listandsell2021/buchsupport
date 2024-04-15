@@ -2,7 +2,7 @@
 
 namespace App\DataHolders\Enum;
 
-enum ServicePipelineOption: string
+enum ServicePipelineStatus: string
 {
     case paid = 'Paid';
     case rescued = 'Tried Rescue';
@@ -10,38 +10,34 @@ enum ServicePipelineOption: string
 
     public static function all(): array
     {
-        $roles = [];
+        $data = [];
         foreach (self::cases() as $case) {
-            $roles[$case->name] = $case->value;
+            $data[$case->name] = $case->value;
         }
-        return $roles;
+        return $data;
     }
 
-    public static function onlyNames($skip = 0): array
+    public static function onlyNames(): array
     {
-        $roles = [];
+        $data = [];
         foreach (self::cases() as $case) {
-            $roles[] = $case->name;
+            $data[] = $case->name;
         }
-        return $roles;
+        return $data;
     }
 
     public static function forSelectOptions(): array
     {
-        $roles = [];
+        $data = [];
         foreach (self::cases() as $case) {
-            $roles[] = [
+            $data[] = [
                 'id' => $case->name,
                 'name' => $case->value
             ];
         }
-        return $roles;
+        return $data;
     }
 
 
-    public static function default(): string
-    {
-        return self::paid->name;
-    }
 
 }

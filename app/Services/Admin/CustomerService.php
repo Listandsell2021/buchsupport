@@ -73,8 +73,8 @@ class CustomerService
      */
     public function save($data)
     {
-        $data['password_text'] = $data['password'];
-        $data['password'] = bcrypt($data['password']);
+        /*$data['password_text'] = $data['password'];
+        $data['password'] = bcrypt($data['password']);*/
         $uid = (int) User::max('uid');
         $data['uid'] = ++$uid;
         $data['registered_at'] = getCurrentDateTime();

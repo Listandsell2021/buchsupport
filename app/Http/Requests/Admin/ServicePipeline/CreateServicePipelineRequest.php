@@ -39,6 +39,7 @@ class CreateServicePipelineRequest extends FormRequest
             'service_id'    => ['required', 'exists:services,id'],
             'has_tracking'  => 'required',
             'default'       => 'required',
+            'has_option'    => 'required',
         ];
     }
 

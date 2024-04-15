@@ -59,7 +59,8 @@ class ServiceSeeder extends Seeder
                         "name" => "Showroom angelegt",
                     ],
                     [
-                        "name" => "Erledigt"
+                        "name" => "Erledigt",
+                        "has_option" => 1
                     ]
                 ]
             ],
@@ -76,7 +77,8 @@ class ServiceSeeder extends Seeder
                         "name" => "Werk verschickt"
                     ],
                     [
-                        "name" => "Erledigt"
+                        "name" => "Erledigt",
+                        "has_option" => 1
                     ]
                 ]
             ],

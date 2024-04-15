@@ -28,7 +28,6 @@ class CreateCustomerRequest extends FormRequest
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'nullable|email|unique:users,email',
-            'password' => 'required|min:8',
             'dob' => 'required|date|before:today',//date_format:'.getLocaleDateFormat()
             'phone_no' => 'nullable',
             'gender' => 'required|in:'.implode(',', Gender::onlyNames()),

@@ -47,12 +47,12 @@
                     </div>
                     <div class="col-md-5 offset-md-1">
                         <div class="form-group">
-                            <label>{{ $t('Price') }}</label>
+                            <label>{{ $t('Quantity') }}</label>
                             <input class="form-control"
-                                   v-model="form.price"
+                                   v-model="form.quantity"
                                    type="number"
                                    min="1"
-                                   :placeholder="$t('Enter Price')"
+                                   :placeholder="$t('Enter Quantity')"
                             />
                         </div>
                     </div>
@@ -60,12 +60,12 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label>{{ $t('Quantity') }}</label>
+                            <label>{{ $t('Price') }}</label>
                             <input class="form-control"
-                                   v-model="form.quantity"
+                                   v-model="form.price"
                                    type="number"
                                    min="1"
-                                   :placeholder="$t('Enter Quantity')"
+                                   :placeholder="$t('Enter Price')"
                             />
                         </div>
                     </div>
@@ -123,7 +123,7 @@ const form = ref({
     document: "",
     document_name: "",
     service_id: null,
-    quantity: 0,
+    quantity: 1,
     price: 0,
     note: "",
 });

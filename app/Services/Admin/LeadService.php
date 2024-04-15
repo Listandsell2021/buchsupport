@@ -468,6 +468,7 @@ class LeadService
      */
     public function createOrderByLead(int $leadId): mixed
     {
+        $lead = Lead::find($leadId);
         $leadContract = LeadContract::where('lead_id', $leadId)->first();
         $pipeline = ServicePipeline::where('service_id', $leadContract->service_id)->orderBy('default', 'desc')->first();
 
@@ -478,6 +479,7 @@ class LeadService
         $subtotal = ($total * 100 / (100 + $tax));
 
         $order = Order::create([
+            'admin_id' => $lead->salesperson_id,
             'lead_id' => $leadId,
             'service_id' => $leadContract->service_id,
             'pipeline_id' => $pipeline->id,

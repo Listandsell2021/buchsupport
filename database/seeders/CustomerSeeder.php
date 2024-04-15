@@ -18,7 +18,6 @@ class CustomerSeeder extends Seeder
             'first_name' => 'Dhan Kumar',
             'last_name' => 'Lama',
             'email' => 'dhana@listandsell.de',
-            'password' => bcrypt('password'),
             'is_active' => 1,
         ]);
 

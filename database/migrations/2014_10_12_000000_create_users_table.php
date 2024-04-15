@@ -24,8 +24,6 @@ return new class extends Migration
             $table->integer('postal_code')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
-            $table->string('password');
-            $table->string('password_text', 30)->nullable();
             $table->date('dob')->nullable();
             $table->string('note')->nullable();
             $table->string('image_path')->nullable();
@@ -40,8 +38,6 @@ return new class extends Migration
             $table->timestamps();
         });
     }
-
-//`membership_id``is_admin``first_name``last_name``gender``address``zip``city``country``password``password_text``birth``has_gender``note``image_path``second_owner_first_name``second_owner_last_name``is_special``api_token`
 
 
     /**
