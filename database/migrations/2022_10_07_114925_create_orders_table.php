@@ -1,6 +1,6 @@
 <?php
 
-use App\DataHolders\Enum\ServicePipelineStatus;
+use App\DataHolders\Enum\OrderStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -58,7 +58,7 @@ return new class extends Migration
             $table->string('document_path')->nullable();
             $table->text('note')->nullable();
             $table->boolean('commissioned')->default(0);
-            $table->enum('status', ServicePipelineStatus::onlyNames())->nullable();
+            $table->enum('status', OrderStatus::onlyNames())->nullable();
             $table->smallInteger('order_no')->default(1);
             $table->dateTime('order_at');
         });

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Admin;
 
-use App\CommandProcess\Admin\Administrator\CreateSalespersonCommissionPdf;
+use App\CommandProcess\Admin\Administrator\CreateSalespersonCommission;
 use App\CommandProcess\Admin\Administrator\DeleteAdmin;
 use App\CommandProcess\Admin\Administrator\DownloadAdminCommissionDocument;
 use App\CommandProcess\Admin\Administrator\GetActiveSalespersons;
@@ -153,13 +153,13 @@ class AdminController extends Controller
      * @param CreateAdminCommissionRequest $request
      * @return JsonResponse
      */
-    public function createSalespersonCommissionPdf(CreateAdminCommissionRequest $request): JsonResponse
+    public function createSalespersonCommission(CreateAdminCommissionRequest $request): JsonResponse
     {
         $adminId = (int) $request->get('admin_id');
         $dateFrom = (string) $request->get('date_from');
         $dateTo = (string) $request->get('date_to');
 
-        $success = $this->commandBus->execute(new CreateSalespersonCommissionPdf($adminId, $dateFrom, $dateTo));
+        $success = $this->commandBus->execute(new CreateSalespersonCommission($adminId, $dateFrom, $dateTo));
 
         return $this->respondWithSuccess($success ? trans('Successfully created commission') : trans('Commission could not be created'), $success);
     }

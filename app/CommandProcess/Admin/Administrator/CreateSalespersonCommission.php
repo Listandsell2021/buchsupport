@@ -4,7 +4,7 @@ namespace App\CommandProcess\Admin\Administrator;
 
 use Rosamarsky\CommandBus\Command;
 
-class CreateSalespersonCommissionPdf implements Command
+class CreateSalespersonCommission implements Command
 {
     public int $adminId;
     public string $dateFrom;

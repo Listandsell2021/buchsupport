@@ -7,7 +7,7 @@
 
             <InfoCards></InfoCards>
 
-            <SalespersonGraph v-if="false"></SalespersonGraph>
+            <SalespersonGraph></SalespersonGraph>
 
         </div>
 

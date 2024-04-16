@@ -375,14 +375,14 @@ if (!function_exists('getCurrencySymbol')) {
 if (!function_exists('getCompanyLogoUrl')) {
     function getCompanyLogoUrl(): string
     {
-        return asset('assets/admin/images/logo.png');
+        return asset('assets/admin/images/logo.svg');
     }
 }
 
 if (!function_exists('getCompanyLogoPath')) {
     function getCompanyLogoPath(): string
     {
-        return public_path('assets/admin/images/logo.png');
+        return public_path('assets/admin/images/logo.svg');
     }
 }
 

@@ -23,6 +23,18 @@
             width: 100%;
             border-collapse: collapse;
         }
+        .logo-img {
+            height: 90px;
+        }
+        .t-logo-row {
+            width: 50%;
+        }
+        .logo-img {
+            float: right;
+        }
+        .invoice-box-header table {
+            width: 100%;
+        }
         .commission-table > tbody > tr > td {
             border-top: 1px solid #000;
             padding: 4px;

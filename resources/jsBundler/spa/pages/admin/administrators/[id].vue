@@ -261,6 +261,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <BsDatePicker
+                                            class="commission-datepicker"
                                             v-model:value="datePicker"
                                             type="date"
                                             range
@@ -269,7 +270,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <button class="btn btn-sm btn-primary"
-                                            @click.prevent="createSalespersonCommissionPdf()"
+                                            @click.prevent="createSalespersonCommission()"
                                     >{{ $t('Create Commission') }}</button>
                                 </div>
                                 <div class="col-md-4">
@@ -311,7 +312,7 @@
                                         <td>
                                             <a href="#"
                                                class="btn btn-xs btn-primary"
-                                               @click.prevent="downloadCommissionPdf(commission.id)"
+                                               @click.prevent="downloadCommissionPdf(commission.id, commission.document)"
                                             >
                                                 <i class="fa fa-file-o"></i>
                                             </a>
@@ -484,14 +485,14 @@ function changePaidStatus(commissionId, paid) {
     });
 }
 
-function downloadCommissionPdf(commissionId)
+function downloadCommissionPdf(commissionId, documentName)
 {
     axios.postDownload(route('admin.admins.download_commission'), {
         commission_id: commissionId
     })
         .then((response) => {
             if (response.status === 200) {
-                HelperUtils.blobFileDownload(response, commissionId+'.pdf');
+                HelperUtils.blobFileDownload(response, documentName);
             }
         });
 }
@@ -508,8 +509,8 @@ function setPageNumber(page, per_page) {
     }
 }
 
-function createSalespersonCommissionPdf() {
-    axios.post(route('admin.admins.create_commission_pdf'), {
+function createSalespersonCommission() {
+    axios.post(route('admin.admins.create_commission'), {
         admin_id: adminId,
         date_from: Array.isArray(datePicker.value) ? moment(datePicker.value[0]).format('YYYY-MM-DD') : '',
         date_to: Array.isArray(datePicker.value) ? moment(datePicker.value[1]).format('YYYY-MM-DD') : '',

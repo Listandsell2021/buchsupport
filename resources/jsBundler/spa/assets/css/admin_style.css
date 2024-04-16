@@ -693,3 +693,6 @@ a.bg-secondary:hover, a.bg-secondary:focus {
 .top-pipeline-name.cancelled {
     background-color: darkred;
 }
+.mx-datepicker.commission-datepicker {
+    width: 100%;
+}

@@ -22,15 +22,13 @@ return new class extends Migration
             $table->date('commission_from');
             $table->date('commission_to');
             $table->date('commission_date');
-            $table->float('total_gross');
+            $table->float('total_commission');
             $table->float('subtotal');
             $table->float('tax');
             $table->float('tax_total');
-            $table->unsignedBigInteger('previous_commission_id')->nullable();
-            $table->foreign('previous_commission_id')->references('id')->on('admin_commissions')->cascadeOnUpdate()->nullOnDelete();
-            $table->float('previous_unpaid');
             $table->float('total');
             $table->boolean('paid')->default(0);
+            $table->string('document')->nullable();
             $table->timestamps();
         });
     }

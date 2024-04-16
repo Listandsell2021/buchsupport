@@ -19,7 +19,7 @@ class AdminCommission extends Model
     protected $fillable = [
         'admin_id', 'incremental_no',
         'commission_no', 'commission_from', 'commission_to', 'commission_date',
-        'total_gross', 'subtotal', 'tax', 'tax_total', 'previous_commission_id', 'previous_unpaid', 'total', 'paid'
+        'total_commission', 'subtotal', 'tax', 'tax_total', 'total', 'paid', 'document'
     ];
 
 

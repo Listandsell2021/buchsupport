@@ -1,6 +1,6 @@
 <?php
 
-use App\CommandProcess\Admin\Administrator\CreateSalespersonCommissionPdf;
+use App\CommandProcess\Admin\Administrator\CreateSalespersonCommission;
 use App\Http\Controllers\FrontendController;
 use Illuminate\Support\Facades\Route;
 

@@ -4,6 +4,7 @@ namespace App\CommandProcess\Admin\Dashboard;
 
 use App\Models\Lead;
 use App\Models\LeadContract;
+use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Rosamarsky\CommandBus\Command;
 use Rosamarsky\CommandBus\Handler;
@@ -22,23 +23,22 @@ class GetSalespersonsCommissionGraphHandler implements Handler
             $dateTo = getGlobalDate($command->dateTo);
         }
 
-        $contracts = LeadContract::select(
-            DB::raw('SUM(lead_contract_products.price) as contract_price'),
-            DB::raw('DATE(leads.converted_at) as converted_at')
+        $orders = Order::select(
+            DB::raw('SUM(orders.total) as total_price'),
+            DB::raw('COUNT(*) as total_order'),
+            DB::raw('DATE(orders.order_at) as converted_at')
         )
-            ->join('leads', 'lead_contracts.lead_id', 'leads.id')
-            ->join('lead_contract_products', 'lead_contracts.id', 'lead_contract_products.contract_id')
             ->where(function ($query) use ($command) {
                 if (count($command->salespersonIds) > 0) {
-                    $query->whereIn('leads.salesperson_id', $command->salespersonIds);
+                    $query->whereIn('orders.admin_id', $command->salespersonIds);
                 }
             })
-            ->where('leads.is_converted', 1)
-            ->groupBy(DB::raw('DATE(leads.converted_at)'))
-            ->whereBetween(DB::raw('DATE(leads.converted_at)'), [$dateFrom, $dateTo])
+            ->where('orders.commissioned', 1)
+            ->groupBy(DB::raw('DATE(orders.order_at)'))
+            ->whereBetween(DB::raw('DATE(orders.order_at)'), [$dateFrom, $dateTo])
             ->get();
 
-        $data = $this->getData($contracts, $dateFrom, $dateTo);
+        $data = $this->getData($orders, $dateFrom, $dateTo);
 
         return [
             'labels'    => $data['labels'],
@@ -54,12 +54,15 @@ class GetSalespersonsCommissionGraphHandler implements Handler
 
         foreach ($weeklyDates as $index=>$weeklyDate) {
             $price = 0;
+            $totalOrder = 0;
             foreach ($data as $datum) {
                 if (in_array($datum->converted_at, $weeklyDate['dates'])) {
-                    $price += $datum->contract_price;
+                    $price += $datum->total_price;
+                    $totalOrder += $datum->total_order;
                 }
             }
             $weeklyDates[$index]['price'] = $price;
+            $weeklyDates[$index]['total_order'] = $totalOrder;
             $weeklyDates[$index]['__label'] = $this->getDateRangeText($weeklyDate['date_from'], $weeklyDate['date_to']);
         }
 
@@ -73,6 +76,7 @@ class GetSalespersonsCommissionGraphHandler implements Handler
                 'x'     => 0,
                 'y'     => $weeklyDate['price'],
                 'price' => $weeklyDate['price'],
+                'total_order' => $weeklyDate['total_order']
             ];
         }
 

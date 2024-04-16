@@ -40,7 +40,7 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'auth:admin', 'admin_permiss
     Route::post('admins/admin-roles',   [AdminController::class, 'getAdminRoles'])->name('admin.admins.roles.list');
     Route::post('admins/change-status', [AdminController::class, 'changeActiveStatus'])->name('admin.admins.change_status')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);
     Route::post('admins/bulk-action',   [AdminController::class, 'updateBulkAction'])->name('admin.admins.bulk_action')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);
-    Route::post('admins/create-commission-pdf', [AdminController::class, 'createSalespersonCommissionPdf'])->name('admin.admins.create_commission_pdf')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);
+    Route::post('admins/create-commission', [AdminController::class, 'createSalespersonCommission'])->name('admin.admins.create_commission')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);
     Route::post('admins/get-commissions', [AdminController::class, 'getSalespersonCommissions'])->name('admin.admins.commissions')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);
     Route::post('admins/update-commission-paid-status', [AdminController::class, 'updateCommissionPaidStatus'])->name('admin.admins.update_commission_paid_status')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);
     Route::post('admins/download-commission', [AdminController::class, 'downloadAdminCommission'])->name('admin.admins.download_commission')->middleware('can:'.AdminPermission::UPDATE_ADMIN->name);

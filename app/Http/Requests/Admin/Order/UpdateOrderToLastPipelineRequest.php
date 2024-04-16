@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Order;
 
-use App\DataHolders\Enum\ServicePipelineStatus;
+use App\DataHolders\Enum\OrderStatus;
 use App\Http\Rules\Admin\IsNextOrderPipeline;
 use App\Http\Rules\Admin\DoesOrderHaveFillableCondition;
 use App\Models\Order;
@@ -44,7 +44,7 @@ class UpdateOrderToLastPipelineRequest extends FormRequest
                 },
             ],
             'service_id'    => 'required',
-            'status'        => ['required', Rule::in(ServicePipelineStatus::onlyNames())],
+            'status'        => ['required', Rule::in(OrderStatus::onlyNames())],
         ];
     }
 
@@ -61,7 +61,7 @@ class UpdateOrderToLastPipelineRequest extends FormRequest
             'order_id.exists' => trans('Order does not exists'),
             'pipeline_id.required' => trans('Pipeline is required'),
             'status.required' => __('Pipeline option is required'),
-            'status.in' => __('Pipeline option must be one of '.implode(',', ServicePipelineStatus::onlyNames())),
+            'status.in' => __('Pipeline option must be one of '.implode(',', OrderStatus::onlyNames())),
         ];
     }
 }

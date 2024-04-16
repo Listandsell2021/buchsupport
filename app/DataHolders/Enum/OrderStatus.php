@@ -2,7 +2,7 @@
 
 namespace App\DataHolders\Enum;
 
-enum ServicePipelineStatus: string
+enum OrderStatus: string
 {
     case paid = 'Paid';
     case rescued = 'Tried Rescue';

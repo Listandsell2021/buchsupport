@@ -28,8 +28,8 @@
                         <span>{{ $setting['company_postal_code'].' '.$setting['company_city'] }}</span> <br/>
                     </div>
                 </td>
-                <td>
-                    <img src="{{ isset($check) ? getCompanyLogoUrl() : getCompanyLogoPath() }}" alt="logo"/>
+                <td class="t-logo-row">
+                    <img class="logo-img" src="{{ isset($check) ? getCompanyLogoUrl() : getCompanyLogoPath() }}" alt="logo"/>
                 </td>
             </tr>
         </table>
@@ -46,28 +46,28 @@
                 <td><strong>%{{ trans('Provision') }}</strong></td>
                 <td><strong>{{ trans('Payment') }}</strong></td>
             </tr>
-            @foreach($invoices as $invoice)
+            @foreach($orders as $order)
                 <tr>
-                    <td>{{ getDateInGermany($invoice->invoice_date) }}</td>
-                    <td>{{ $invoice->first_name.' '.$invoice->last_name }}</td>
-                    <td>{{ $invoice->invoice_no }}</td>
-                    <td>{!! getCurrencyPrice($invoice->total) !!}</td>
+                    <td>{{ getDateInGermany($order->order_at) }}</td>
+                    <td>{{ $order->first_name.' '.$order->last_name }}</td>
+                    <td>{{ $order->id }}</td>
+                    <td>{!! getCurrencyPrice($order->total) !!}</td>
                     <td>
-                        <?php $invoicePercentage = ($invoice->total >= $setting['threshold_amount'] ? $setting['percentage_above_threshold'] : $setting['commission_percentage']) ?>
-                        {{ $invoicePercentage }}%
+                        <?php $orderPercentage = ($order->total >= $setting['threshold_amount'] ? $setting['percentage_above_threshold'] : $setting['commission_percentage']) ?>
+                        {{ $orderPercentage }}%
                     </td>
-                    <td>{!! getCurrencyPrice(($invoicePercentage * $invoice->total)/100) !!}</td>
+                    <td>{!! getCurrencyPrice(($orderPercentage * $order->total)/100) !!}</td>
                 </tr>
             @endforeach
 
-            @for($i = (config('buch.admin_commission_rows') - $invoices->count()); $i>0; $i--)
+            @for($i = (config('buch.admin_commission_rows') - $orders->count()); $i>0; $i--)
                 <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
             @endfor
             <tr>
                 <td></td>
                 <td></td>
                 <td>@lang('Total gross')</td>
-                <td>{!! getCurrencyPrice($commission->total_gross) !!}</td>
+                <td>{!! getCurrencyPrice($commission->total_commission) !!}</td>
                 <td></td>
                 <td></td>
             </tr>

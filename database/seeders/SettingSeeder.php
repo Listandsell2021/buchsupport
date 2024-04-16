@@ -55,7 +55,7 @@ class SettingSeeder extends Seeder
                 'name' => 'Email',
                 'group' => 'company_info',
                 'key' => 'company_email',
-                'value' => 'info@buch-leadkompass.de',
+                'value' => 'info@leadkompass.de',
                 'type' => SettingType::string->name,
             ],
             [

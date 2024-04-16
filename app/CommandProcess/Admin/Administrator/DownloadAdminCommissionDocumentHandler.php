@@ -27,18 +27,17 @@ class DownloadAdminCommissionDocumentHandler implements Handler
     {
         $commission = $this->adminService->getCommissionById($command->commissionId);
 
-        $fileName = $commission->id.'.pdf';
 
         if (!$commission) {
             throw ValidationException::withMessages(['commission_id' => trans('Admin commission not found')]);
         }
 
-        $filePath = Storage::path(getAdminCommissionStorageRelativePath($fileName));
+        $filePath = Storage::path(getAdminCommissionStorageRelativePath($commission->document));
 
         if (!File::exists($filePath)) {
             throw ValidationException::withMessages(['commission_id' => trans('Admin commission file not found')]);
         }
 
-        return response()->download($filePath, $fileName);
+        return response()->download($filePath, $commission->document);
     }
 }
