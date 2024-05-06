@@ -3,6 +3,7 @@
 namespace App\Services\Admin;
 
 
+use App\DataHolders\Enum\AuthRole;
 use App\DataHolders\Enum\OrderStatus;
 use App\Libraries\Settings\Setting;
 use App\Models\Lead;
@@ -36,6 +37,9 @@ class OrderService
                 if (hasArrayInput($filters['service_ids'] ?? [])) {
                     $query->whereIn('orders.service_id', $filters['service_ids']);
                 }
+                if (hasArrayInput($filters['pipeline_ids'] ?? [])) {
+                    $query->whereIn('orders.pipeline_id', $filters['pipeline_ids']);
+                }
                 if (hasInput($priceFrom) || hasInput($priceTo)) {
                     if ($priceFrom) {
                         $query->where('orders.total', '>=', $priceFrom);
@@ -49,6 +53,11 @@ class OrderService
                 }
                 if (hasInput($filters['date_to'] ?? '') && isDate($filters['date_to'])) {
                     $query->where(DB::raw('DATE(orders.order_at)'), '<=', getGlobalDate($filters['date_to']));
+                }
+            })
+            ->where(function ($query) {
+                if (in_array(getAdminAuthRole(), [AuthRole::getAdminRole(), AuthRole::getSalespersonRole(), ''])) {
+                    $query->where('orders.admin_id', getAdminId());
                 }
             })
             ->orderBy('order_at', 'desc')

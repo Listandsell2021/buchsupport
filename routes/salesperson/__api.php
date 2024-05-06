@@ -9,6 +9,7 @@ use App\Http\Controllers\API\Admin\ProductCategoryController;
 use App\Http\Controllers\API\Admin\ServiceController;
 use App\Http\Controllers\API\Admin\SmartListController;
 use App\Http\Controllers\API\Salesperson\DashboardController;
+use App\Http\Controllers\API\Salesperson\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('salesperson')->middleware(['auth:sanctum'])->group( function () {
@@ -65,6 +66,7 @@ Route::prefix('salesperson')->middleware(['auth:sanctum'])->group( function () {
     // Lead Status
     Route::post('lead-status/create',           [LeadController::class, 'addLeadStatus'])->name('salesperson.lead_status.add');
     Route::post('lead/pipelines',               [LeadController::class, 'getLeadCustomerOrder'])->name('salesperson.lead_status.add');
+    Route::post('orders/list',                  [OrderController::class, 'list'])->name('salesperson.lead_status.add');
 });
 
 
